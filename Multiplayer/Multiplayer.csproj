@@ -203,11 +203,6 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="UI\Images\Icons\icons8-france-40.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="UI\Images\Icons\icons8-flag-of-europe-40.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -276,20 +271,12 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="UI\Images\Large\spider-man-anatomy-videoSixteenByNine3000.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="UI\Images\Large\alizur.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="UI\Images\Large\pls.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="UI\Images\Icons\icons8-elevator-doors-48.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
@@ -315,11 +302,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="UI\Images\Icons\icons8-discord-48 %281%29.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="UI\Images\Icons\1200px-Flag_of_ASEAN.svg.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
@@ -486,14 +468,6 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="UI\Images\Icons\icons8-russian-federation-40.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="UI\Images\Icons\icons8-usa-40.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="UI\Images\Icons\icons8-russian-federation-80.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -503,11 +477,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="UI\Images\Icons\icons8-room-50.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="UI\Images\Icons\ezgif.com-gif-maker %2819%29.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
