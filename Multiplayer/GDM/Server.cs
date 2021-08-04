@@ -66,7 +66,6 @@ namespace Multiplayer.GDM
                     Utilities.Utils.HandleException(ex);
                 }
             }
-
             isBinded = true;
             if (ReadThread == null)
             {
@@ -74,10 +73,6 @@ namespace Multiplayer.GDM
             }
             StartRead();
             SendHello();
-
-            // Tests.Smoothness.Start();
-
-
         }
         public void SendDiconnect()
         {
@@ -97,8 +92,7 @@ namespace Multiplayer.GDM
                         var helloPacket = Utilities.PacketParser.CreateHello();
                         Send(helloPacket);
                         Main.SetLocalPort(MyPP.Port);
-                        Debug.WriteLine("Trying to hello.");
-                        // check if client id has wrong icon ids
+                        Debug.WriteLine("Trying to hello. " + Utilities.Converter.BytesToString(Globals.Global_Data.Main.UserPref.Key));
                     }
                     Thread.Sleep(1000);
                 }

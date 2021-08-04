@@ -92,9 +92,8 @@ namespace Multiplayer.GDM.Client
         public void SetUsername(string i)
         {
 
-            if (!Globals.Global_Data.HideUsernames)
-            { // if hide usernames false
-              //ShowUsername();
+            if (Globals.Global_Data.ShowUsernames)
+            {
                 username = i;
                 if (represent != null)
                     represent.SetUsername(username);
@@ -152,11 +151,12 @@ namespace Multiplayer.GDM.Client
 
                                     g.represent.SetProgress(Convert.ToInt32(j));
                                 }
-                                catch (Exception ex){
-                            
+                                catch (Exception ex)
+                                {
+
                                     Globals.Global_Data.HandleException(ex);
                                 }
-                            
+
                             }));
                     }
                     //  player.FirstOrDefault().isIconIDDownloaded = true;
@@ -202,7 +202,7 @@ namespace Multiplayer.GDM.Client
                     {
                         try
                         {
-                            if (!Globals.Global_Data.HideUsernames)
+                            if (Globals.Global_Data.ShowUsernames)
                                 Globals.Global_Data.Initializer.Announce(Globals.Global_Data.Lang.Joined.Replace("%username%", this.username));
 
                             Debug.WriteLine(username + " joined");
@@ -259,7 +259,7 @@ namespace Multiplayer.GDM.Client
                         if (Globals.Global_Data.Main.UserPref.CachedUsernames)
                         {
                             if (!Utilities.JSON_Models.Username_Cache.PlayerIDAndUsername.ContainsKey(id))
-                            Utilities.JSON_Models.Username_Cache.PlayerIDAndUsername.Add(id, username);
+                                Utilities.JSON_Models.Username_Cache.PlayerIDAndUsername.Add(id, username);
                         }
                     }
                     usernameFound = true;

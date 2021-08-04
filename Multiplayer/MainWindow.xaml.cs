@@ -27,7 +27,7 @@ namespace Multiplayer
     public partial class MainWindow : Window
     {
         public GDM.Initialize Master;
-        public GDM.UserPref UserPref = new GDM.UserPref();
+        public GDM.Preferences UserPref = new GDM.Preferences();
         public MainWindow()
         {
             InitializeComponent();
@@ -94,7 +94,7 @@ namespace Multiplayer
         {
             GDM.Globals.Global_Data.MainState = this.WindowState;
         }
-
+        
         private void Singapore(object sender, MouseButtonEventArgs e)
         {
             if (GDM.Globals.Global_Data.PlayerID != 0 && GDM.Globals.Global_Data.IsInjected)
@@ -210,7 +210,7 @@ namespace Multiplayer
             minimalanims.IsChecked = UserPref.MinimalAnimations;
 
             renderselficons.IsChecked = UserPref.RenderCustomIcons;
-            showplayerusernames.IsChecked = !GDM.Globals.Global_Data.HideUsernames;
+            showplayerusernames.IsChecked = GDM.Globals.Global_Data.ShowUsernames;
 
             playersopactiry.Value = UserPref.PlayersOpacity;
         }
@@ -234,16 +234,16 @@ namespace Multiplayer
 
                 UserPref.MinimalAnimations = (bool)minimalanims.IsChecked;
                 UserPref.RenderCustomIcons = (bool)renderselficons.IsChecked;
-                GDM.Globals.Global_Data.HideUsernames = !(bool)showplayerusernames.IsChecked;
+                GDM.Globals.Global_Data.ShowUsernames = (bool)showplayerusernames.IsChecked;
                 UserPref.PlayersOpacity = (float)playersopactiry.Value;
-                UserPref.ShowSelfUsername = !GDM.Globals.Global_Data.HideUsernames;
+                UserPref.ShowSelfUsername = GDM.Globals.Global_Data.ShowUsernames;
                 Debug.WriteLine("Player Opacity: " + UserPref.PlayersOpacity);
 
                 if (!string.IsNullOrEmpty(vipkey_.Text))
                 {
 
                     var bytes = Utilities.Converter.StringToByteArray(vipkey_.Text.Replace(" ", ""));
-                    UserPref.ClientKey_fix = bytes;
+                    UserPref.Key = bytes;
                     GDM.Globals.Global_Data.VipKey = BitConverter.ToInt32(bytes, 0);
                     Debug.WriteLine("Key: " + GDM.Globals.Global_Data.VipKey);
                     GDM.Globals.Global_Data.VIPKeyOk = true;
@@ -426,7 +426,7 @@ namespace Multiplayer
             try
             {
                 var bytes = Utilities.Converter.StringToByteArray(password.Password.Replace(" ", ""));
-                UserPref.ClientKey_fix = bytes;
+                UserPref.Key = bytes;
                 GDM.Globals.Global_Data.VipKey = BitConverter.ToInt32(bytes, 0);
                 Debug.WriteLine("Key: " + GDM.Globals.Global_Data.VipKey);
                 GDM.Globals.Global_Data.VIPKeyOk = true;
@@ -520,8 +520,8 @@ namespace Multiplayer
         {
             try
             {
-                GDM.Globals.Global_Data.HideUsernames = false;
-                UserPref.ShowSelfUsername = !GDM.Globals.Global_Data.HideUsernames;
+                GDM.Globals.Global_Data.ShowUsernames = true;
+                UserPref.ShowSelfUsername = GDM.Globals.Global_Data.ShowUsernames;
                 if (GDM.Globals.Global_Data.Connection != null)
                     foreach (var j in GDM.Globals.Global_Data.Connection.model.players)
                     {
@@ -538,8 +538,8 @@ namespace Multiplayer
         {
             try
             {
-                GDM.Globals.Global_Data.HideUsernames = true;
-                UserPref.ShowSelfUsername = !GDM.Globals.Global_Data.HideUsernames;
+                GDM.Globals.Global_Data.ShowUsernames = false;
+                UserPref.ShowSelfUsername = GDM.Globals.Global_Data.ShowUsernames;
                 if (GDM.Globals.Global_Data.Connection != null)
                     foreach (var j in GDM.Globals.Global_Data.Connection.model.players)
                     {

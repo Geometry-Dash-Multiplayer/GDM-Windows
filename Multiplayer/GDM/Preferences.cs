@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Multiplayer.GDM
 {
-    public class UserPref
+    public class Preferences
     {
         public double Version = 1.9f;
         public string WindowName = "Geometry Dash";
@@ -19,7 +19,7 @@ namespace Multiplayer.GDM
         public bool MinimalAnimations = false;
         public int PlayerID = 0;
         public DateTime Used = DateTime.Now;
-        public byte[] ClientKey_fix = new byte[] { };
+        public byte[] Key = new byte[] { };
         public List<int> BlockedIDs = new List<int>();
         public int IsAlizer = 0;
         public bool CachedIcons = true;

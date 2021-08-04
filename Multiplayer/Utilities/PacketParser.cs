@@ -18,14 +18,14 @@ namespace Multiplayer.Utilities
             bytes.Add((byte)Prefixes.Disconnext);
             bytes.AddRange(GDM.Globals.Global_Data.ClientID);
             
-            bytes.AddRange(GDM.Globals.Global_Data.Main.UserPref.ClientKey_fix);
+            bytes.AddRange(GDM.Globals.Global_Data.Main.UserPref.Key);
             return bytes.ToArray();
         }
         public static byte[] CreateHello() {
             List<byte> bytes = new List<byte>();
             bytes.Add((byte)Prefixes.Hello);
             bytes.AddRange(GDM.Globals.Global_Data.ClientID);
-            bytes.AddRange(GDM.Globals.Global_Data.Main.UserPref.ClientKey_fix);
+            bytes.AddRange(GDM.Globals.Global_Data.Main.UserPref.Key);
             return bytes.ToArray();
         }
         public static byte[] CreatePing()
@@ -33,7 +33,7 @@ namespace Multiplayer.Utilities
             List<byte> bytes = new List<byte>();
             bytes.Add((byte)Prefixes.Ping);
             bytes.AddRange(GDM.Globals.Global_Data.ClientID);
-            bytes.AddRange(GDM.Globals.Global_Data.Main.UserPref.ClientKey_fix);
+            bytes.AddRange(GDM.Globals.Global_Data.Main.UserPref.Key);
             bytes.AddRange(Encoding.UTF8.GetBytes("i like sex"));
             return bytes.ToArray();
         }
@@ -42,7 +42,7 @@ namespace Multiplayer.Utilities
             List<byte> bytes = new List<byte>();
             bytes.Add((byte)Prefixes.OutsideLevel);
             bytes.AddRange(GDM.Globals.Global_Data.ClientID);
-            bytes.AddRange(GDM.Globals.Global_Data.Main.UserPref.ClientKey_fix);
+            bytes.AddRange(GDM.Globals.Global_Data.Main.UserPref.Key);
             return bytes.ToArray();
         }
         public static byte[] GetIcon(int clientID)
@@ -50,7 +50,7 @@ namespace Multiplayer.Utilities
             List<byte> bytes = new List<byte>();
             bytes.Add((byte)Prefixes.Ping);
             bytes.AddRange(GDM.Globals.Global_Data.ClientID);
-            bytes.AddRange(GDM.Globals.Global_Data.Main.UserPref.ClientKey_fix);
+            bytes.AddRange(GDM.Globals.Global_Data.Main.UserPref.Key);
             bytes.AddRange(BitConverter.GetBytes(clientID));
             return bytes.ToArray();
         }
@@ -58,7 +58,7 @@ namespace Multiplayer.Utilities
             List<byte> bytes = new List<byte>();
             bytes.Add((byte)Prefixes.Ping);
             bytes.AddRange(GDM.Globals.Global_Data.ClientID);
-            bytes.AddRange(GDM.Globals.Global_Data.Main.UserPref.ClientKey_fix);
+            bytes.AddRange(GDM.Globals.Global_Data.Main.UserPref.Key);
             bytes.Add((byte)Prefixes.VipActions);
             bytes.AddRange(BitConverter.GetBytes(GDM.Globals.Global_Data.VipKey));
             bytes.AddRange(BitConverter.GetBytes(lobbyCode));
@@ -69,7 +69,7 @@ namespace Multiplayer.Utilities
             List<byte> bytes = new List<byte>();
             bytes.Add((byte)Prefixes.ReceivedPlayerIcons);
             bytes.AddRange(GDM.Globals.Global_Data.ClientID);
-            bytes.AddRange(GDM.Globals.Global_Data.Main.UserPref.ClientKey_fix);
+            bytes.AddRange(GDM.Globals.Global_Data.Main.UserPref.Key);
             bytes.AddRange(Icons);
 
             return bytes.ToArray();
@@ -80,7 +80,7 @@ namespace Multiplayer.Utilities
 
             bytes.Add((byte)Prefixes.Message);
             bytes.AddRange(GDM.Globals.Global_Data.ClientID);
-            bytes.AddRange(GDM.Globals.Global_Data.Main.UserPref.ClientKey_fix);
+            bytes.AddRange(GDM.Globals.Global_Data.Main.UserPref.Key);
 
             bytes.AddRange(BitConverter.GetBytes(P1.x_position));
             bytes.AddRange(BitConverter.GetBytes(P1.y_position));

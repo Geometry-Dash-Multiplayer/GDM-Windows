@@ -98,10 +98,11 @@
     <Compile Include="GDM\Player Representor.cs" />
     <Compile Include="GDM\Player Watcher\Memory.cs" />
     <Compile Include="GDM\PositionMemory.cs" />
-    <Compile Include="GDM\UserPref.cs" />
+    <Compile Include="GDM\Preferences.cs" />
     <Compile Include="UI\TransparencyFix.cs" />
     <Compile Include="Utilities\Constants.cs" />
     <Compile Include="Utilities\Converter.cs" />
+    <Compile Include="Utilities\Files and Pathing.cs" />
     <Compile Include="Utilities\GIFHelper.cs" />
     <Compile Include="Utilities\JSON Models\Client Data.cs" />
     <Compile Include="Utilities\JSON Models\Language.cs" />

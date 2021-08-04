@@ -24,7 +24,7 @@ namespace Multiplayer.GDM.Globals
         public static Initialize Initializer;
         public static Utilities.JSON_Models.Language Lang = new Utilities.JSON_Models.Language();
 
-        public static bool HideUsernames = false;
+        public static bool ShowUsernames = false;
         public static bool IsPlayingLevel = false;
         public static bool ReceiveNewClients = true;
         public static bool IsConnected = false;

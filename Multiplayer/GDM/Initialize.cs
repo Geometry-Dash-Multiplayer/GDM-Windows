@@ -71,7 +71,7 @@ namespace Multiplayer.GDM
         {
             // because robtop servers are hosted on a laptop from 2003
             if (!File.Exists(Globals.Paths.LevelsCache)) File.Create(Globals.Paths.LevelsCache).Close();
-            Utilities.JSON_Models.Level_Cache.LevelIDandData = JsonConvert.DeserializeObject<Dictionary<int,string>>(
+            Utilities.JSON_Models.Level_Cache.LevelIDandData = JsonConvert.DeserializeObject<Dictionary<int, string>>(
                 File.ReadAllText(Globals.Paths.LevelsCache)
                    );
 
@@ -99,8 +99,10 @@ namespace Multiplayer.GDM
                 Globals.Global_Data.ReceiveNewClients = false;
                 if (Globals.Global_Data.Connection != null)
                 {
-                    foreach (var g in Globals.Global_Data.Connection.model.players) {
-                        try {
+                    foreach (var g in Globals.Global_Data.Connection.model.players)
+                    {
+                        try
+                        {
                             g.Disconnected();
                         }
                         catch (Exception ex)
@@ -164,7 +166,7 @@ namespace Multiplayer.GDM
                     LoadCaches();
                     LoadPlayerIDFromSaveFile();
                     if (Globals.Global_Data.PlayerIDLoaded)
-                    DownloadSelfIcons();
+                        DownloadSelfIcons();
                     Globals.Global_Data.Initializer.SetPlayerName(Utilities.TCP.GetUsernameFromPlayerID(Globals.Global_Data.PlayerID));
                     Globals.Global_Data.Initializer.SetAccountID(Globals.Global_Data.PlayerID);
 
@@ -263,27 +265,24 @@ namespace Multiplayer.GDM
                 Main.login.IsOpen = true;
             }));
         }
+
         public void LoadUserPrefs()
         {
             try
             {
-                var dirname = System.IO.Path.GetDirectoryName(Globals.Paths.UserDataFile);
-                System.IO.Directory.CreateDirectory(dirname);
-                if (!System.IO.File.Exists(Globals.Paths.UserDataFile))
-                {
-                    System.IO.File.Create(Globals.Paths.UserDataFile).Close();
-                    SaveUserPref();
-                }
-                Main.UserPref = JsonConvert.DeserializeObject<UserPref>(System.IO.File.ReadAllText(Globals.Paths.UserDataFile));
-                // generate key
-                if (Main.UserPref.ClientKey_fix == null || Main.UserPref.ClientKey_fix.Length != Globals.Global_Data.KeySize)
-                {
-                    Main.UserPref.ClientKey_fix = Utilities.Randomness.RandomBytes(Globals.Global_Data.KeySize);
-                    SaveUserPref();
-                }
-                Globals.Global_Data.VipKey = BitConverter.ToInt32(Main.UserPref.ClientKey_fix, 0);
-                if (Main.UserPref.IsVIP)
+                var user_data_folder = Path.GetDirectoryName(Globals.Paths.UserDataFile);
+
+                Utilities.Files_and_Pathing.ValidateDirectory(user_data_folder);
+                Utilities.Files_and_Pathing.ValidateFile(Globals.Paths.UserDataFile);
+
+                string user_data = File.ReadAllText(Globals.Paths.UserDataFile);
+
+                Main.UserPref = JsonConvert.DeserializeObject<Preferences>(user_data);
+
+                Globals.Global_Data.VipKey = BitConverter.ToInt32(Main.UserPref.Key, 0);
+                if (Main.UserPref.IsVIP) 
                     Main.border5.Visibility = Visibility.Collapsed;
+
                 Main.areiconscached.IsChecked = Main.UserPref.CachedIcons;
                 Main.arelevelscached.IsChecked = Main.UserPref.CachedLevels;
                 Main.areusernamescached.IsChecked = Main.UserPref.CachedUsernames;
@@ -296,20 +295,21 @@ namespace Multiplayer.GDM
                 if (string.IsNullOrEmpty(Main.UserPref.WindowName)) Main.UserPref.WindowName = "Geometry Dash";
                 if (string.IsNullOrEmpty(Main.UserPref.MainModule)) Main.UserPref.WindowName = "GeometryDash.exe";
 
-                Globals.Global_Data.HideUsernames = !Main.UserPref.ShowSelfUsername;
+                Globals.Global_Data.ShowUsernames = Main.UserPref.ShowSelfUsername;
                 // Main.UserPref.RenderCustomIcons = false;
-                if (Main.UserPref.Version != Globals.Global_Data.Version) {
-                    Directory.Delete(Globals.Paths.IconsFolder,true);
+                if (Main.UserPref.Version != Globals.Global_Data.Version)
+                {
+                    Directory.Delete(Globals.Paths.IconsFolder, true);
                 }
                 Main.UserPref.Version = Globals.Global_Data.Version;
 
             }
             catch (Exception ex)
-            {     
-            
+            {
+
                 Utilities.Utils.HandleException(ex);
-            
-            File.Delete(Globals.Paths.UserDataFile);
+
+                File.Delete(Globals.Paths.UserDataFile);
             }
         }
         public void ResetPrefs()
@@ -325,7 +325,8 @@ namespace Multiplayer.GDM
                 if (File.Exists(Globals.Paths.UsernamesCache)) File.Delete(Globals.Paths.UsernamesCache);
                 if (Directory.Exists(Globals.Paths.IconsFolder)) Directory.Delete(Globals.Paths.IconsFolder, true);
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
 
                 Utilities.Utils.HandleException(ex);
             }
@@ -373,7 +374,7 @@ namespace Multiplayer.GDM
                                                                           * Europe Connection = 0 */, this);
                 Globals.Global_Data.Connection = Connection;
                 Globals.Global_Data.ActiveServer = Globals.Global_Data.ServerIPs[index];
-                Main.SG_Key.Text = "Secret Key: " + Utilities.Converter.BytesToString(Main.UserPref.ClientKey_fix);
+                Main.SG_Key.Text = "Secret Key: " + Utilities.Converter.BytesToString(Main.UserPref.Key);
                 Main.StartAnimation("ServerSelected");
 
                 Main.border5.Visibility = Visibility.Collapsed;
@@ -545,8 +546,10 @@ namespace Multiplayer.GDM
             });
         }
         public bool pfpset = false;
-        public void DisableCustomIcons() {
-            UserPref j = new UserPref {
+        public void DisableCustomIcons()
+        {
+            Preferences j = new Preferences
+            {
                 RenderCustomIcons = false
             };
             if (!File.Exists(Globals.Paths.GDMTempDataFile)) File.Create(Globals.Paths.GDMTempDataFile).Close();
@@ -555,13 +558,15 @@ namespace Multiplayer.GDM
             File.WriteAllText(Globals.Paths.GDMTempDataFile, output);
             // File.WriteAllText(Globals.Paths.GDMTempDataFile, output);
         }
-        public void EnableCustomIcons() {
+        public void EnableCustomIcons()
+        {
             if (!File.Exists(Globals.Paths.GDMTempDataFile)) File.Create(Globals.Paths.GDMTempDataFile).Close();
 
             string output = JsonConvert.SerializeObject(Main.UserPref);
             File.WriteAllText(Globals.Paths.GDMTempDataFile, output);
         }
-        public void ClearSelfIcons() {
+        public void ClearSelfIcons()
+        {
             try
             {
                 string IconsDirectory = Path.GetFullPath(Globals.Paths.IconsFolder + "/0");
@@ -652,7 +657,8 @@ namespace Multiplayer.GDM
                 return u + "/" + index + "/image.gif";
             return null;
         }
-        public void ShowMainProgressBar() {
+        public void ShowMainProgressBar()
+        {
             Main.StartAnimation("ShowMainProg");
         }
         public void SetMainProgressBarValue(double value)
@@ -744,7 +750,7 @@ namespace Multiplayer.GDM
                             Main.accountID.Text = Globals.Global_Data.Lang.ping.Replace("%ping%", milliseconds.ToString()); // "Ping : " + milliseconds.ToString() + "ms";
                             if (milliseconds > 200)
                                 Main.accountID.Foreground = Main.redc.Background;
-                            else 
+                            else
                                 Main.accountID.Foreground = Main.tutrqiosecolor.Background;
                         }
                         catch (Exception ex)
