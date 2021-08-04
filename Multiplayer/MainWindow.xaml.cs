@@ -35,22 +35,23 @@ namespace Multiplayer
             };
             this.WindowStyle = WindowStyle.SingleBorderWindow;
             // very important
-            new Thread(() => {
-                try {
-                   GDM.Globals.Global_Data.GDBrowserEndpoint = 
-                    Utilities.TCP.ReadURL("http://95.111.251.138/gdm/getGDBrowserEndpoint.php").Result;
+            Task.Run(() =>
+            {
+                try
+                {
+                    GDM.Globals.Global_Data.GDBrowserEndpoint =
+                     Utilities.TCP.ReadURL("http://95.111.251.138/gdm/getGDBrowserEndpoint.php").Result;
                 }
                 catch (Exception ex)
                 {
                     GDM.Globals.Global_Data.HandleException(ex);
                 }
-            }).Start();
-
+            });
 
             GDM.Globals.Global_Data.Main = this;
 
             Master = new GDM.Initialize(this);
-           
+
             Placeholders.Visibility = Visibility.Collapsed;
             pl_pop_lvl_container.Visibility = Visibility.Collapsed;
         }
@@ -68,10 +69,11 @@ namespace Multiplayer
             transparencyFix.MakeTransparent();
 
             if (!UserPref.IsVIP)
-            Task.Run(() => {
-                Task.Delay(3000);
-                StartAnimation("ShowCost");
-            });
+                Task.Run(() =>
+                {
+                    Task.Delay(3000);
+                    StartAnimation("ShowCost");
+                });
 
             settings.Visibility = Visibility.Visible;
             this.StateChanged += MainWindow_StateChanged;
@@ -93,8 +95,10 @@ namespace Multiplayer
             GDM.Globals.Global_Data.MainState = this.WindowState;
         }
 
-        public void ShowError(string title, string desc, string help = "https://discord.gg/mNvPDCgB5M", string helpS = "Need Help?") {
-            Application.Current.Dispatcher.Invoke(new Action(() => {
+        public void ShowError(string title, string desc, string help = "https://discord.gg/mNvPDCgB5M", string helpS = "Need Help?")
+        {
+            Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
                 StartAnimation("ErrorApp");
                 e_title.Text = title;
                 e_desc.Text = desc;
@@ -104,10 +108,12 @@ namespace Multiplayer
         }
         public void StartAnimation(string animation)
         {
-            Application.Current.Dispatcher.Invoke(new Action(() => {
+            Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
                 Storyboard board = (Storyboard)this.FindResource(animation);
                 board.Begin();
-                if (UserPref.MinimalAnimations) {
+                if (UserPref.MinimalAnimations)
+                {
                     board.SkipToFill();
                 }
             }));
@@ -125,7 +131,8 @@ namespace Multiplayer
                 if (e != null)
                     e.Handled = true;
             }
-            catch (Exception ex){
+            catch (Exception ex)
+            {
                 Utilities.Utils.HandleException(ex);
             }
             Environment.Exit(0);
@@ -261,7 +268,7 @@ namespace Multiplayer
 
         private void ConsiderVIP(object sender, MouseButtonEventArgs e)
         {
-            OpenTag(sender,e);
+            OpenTag(sender, e);
             StartAnimation("UnShowCost");
             Task.Delay(1000);
         }
@@ -289,7 +296,8 @@ namespace Multiplayer
             }
             e.Handled = true;
         }
-        public async void SetLobby(short room) {
+        public async void SetLobby(short room)
+        {
             GDM.Globals.Global_Data.IsPlayingLevel = false;
             GDM.Globals.Global_Data.Room = room;
             Master.SetRoom(GDM.Globals.Global_Data.Room);
@@ -349,13 +357,14 @@ namespace Multiplayer
         private void Reconnect(object sender, RoutedEventArgs e)
         {
             if (Master.Connection != null)
-            Master.Connection.Reconnect();
+                Master.Connection.Reconnect();
         }
 
         private void NewLobby(object sender, MouseButtonEventArgs e)
         {
             lobbies.IsOpen = false;
-            if (GDM.Globals.Global_Data.Connection == null) {
+            if (GDM.Globals.Global_Data.Connection == null)
+            {
                 Master.Announce("Please connect to a server first.");
                 return;
             }
@@ -397,14 +406,16 @@ namespace Multiplayer
                 Debug.WriteLine("Key: " + GDM.Globals.Global_Data.VipKey);
                 GDM.Globals.Global_Data.VIPKeyOk = true;
                 vipstatus.Text = "Checking...";
-                await Task.Run(() => {
+                await Task.Run(() =>
+                {
                     try
                     {
                         UserPref.IsVIP = Utilities.TCP.isVip(GDM.Globals.Global_Data.PlayerID.ToString(), GDM.Globals.Global_Data.VipKey);
                         if (UserPref.IsVIP)
                         {
 
-                            Application.Current.Dispatcher.Invoke(new Action(() => {
+                            Application.Current.Dispatcher.Invoke(new Action(() =>
+                            {
                                 vipstatus.Text = "VIP Status confirmed!";
                             }));
 
@@ -414,7 +425,8 @@ namespace Multiplayer
                         }
                         else
                         {
-                            Application.Current.Dispatcher.Invoke(new Action(() => {
+                            Application.Current.Dispatcher.Invoke(new Action(() =>
+                            {
                                 vipstatus.Text = "Not VIP...";
                             }));
                         }
@@ -434,7 +446,7 @@ namespace Multiplayer
             }
             login.IsOpen = false;
             new Thread(() => { Master.DownloadSelfIcons(); }).Start();
-          
+
         }
 
         private void CloseLobbyDialogue(object sender, RoutedEventArgs e)
@@ -446,9 +458,10 @@ namespace Multiplayer
         {
             StartAnimation("UnShowCost");
             if (!GDM.Globals.Global_Data.PlayerIDLoaded)
-            await Task.Run(() => {
-                Master.WaitForGeometryDash();
-            });
+                await Task.Run(() =>
+                {
+                    Master.WaitForGeometryDash();
+                });
             Master.Relogin();
         }
 
@@ -497,7 +510,7 @@ namespace Multiplayer
         {
             new Thread(() =>
             {
-                
+
                 if (GDM.Player_Watcher.Memory.aMemory != null)
                 {
                     GDM.Player_Watcher.Memory.aMemory.isAlreadyInjected = false;
@@ -540,7 +553,8 @@ namespace Multiplayer
 
                 leftgrid.Width = double.NaN;
             }
-            else {
+            else
+            {
                 brand.Visibility = Visibility.Visible;
                 menuItem.Visibility = Visibility.Visible;
                 settings1.Visibility = Visibility.Visible;
