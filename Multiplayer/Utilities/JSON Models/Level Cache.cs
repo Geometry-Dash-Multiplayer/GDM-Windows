@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Multiplayer.Utilities.JSON_Models
 {
-    public static class LevelCache
+    public static class Level_Cache
     {
         /*
          * 

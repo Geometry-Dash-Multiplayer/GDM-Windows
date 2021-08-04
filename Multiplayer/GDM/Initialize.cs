@@ -23,7 +23,7 @@ namespace Multiplayer.GDM
         public Server Connection;
         public MainWindow Main;
 
-        public Utilities.JSON_Models.LevelID CurrentLevelData;
+        public Utilities.JSON_Models.Level_Data CurrentLevelData;
 
         public Initialize(MainWindow _main)
         {
@@ -71,24 +71,24 @@ namespace Multiplayer.GDM
         {
             // because robtop servers are hosted on a laptop from 2003
             if (!File.Exists(Globals.Paths.LevelsCache)) File.Create(Globals.Paths.LevelsCache).Close();
-            Utilities.JSON_Models.LevelCache.LevelIDandData = JsonConvert.DeserializeObject<Dictionary<int,string>>(
+            Utilities.JSON_Models.Level_Cache.LevelIDandData = JsonConvert.DeserializeObject<Dictionary<int,string>>(
                 File.ReadAllText(Globals.Paths.LevelsCache)
                    );
 
-            if (Utilities.JSON_Models.LevelCache.LevelIDandData == null) Utilities.JSON_Models.LevelCache.LevelIDandData = new Dictionary<int, string>();
+            if (Utilities.JSON_Models.Level_Cache.LevelIDandData == null) Utilities.JSON_Models.Level_Cache.LevelIDandData = new Dictionary<int, string>();
 
 
             if (!File.Exists(Globals.Paths.UsernamesCache)) File.Create(Globals.Paths.UsernamesCache).Close();
-            Utilities.JSON_Models.UsernameCache.PlayerIDAndUsername = JsonConvert.DeserializeObject<Dictionary<int, string>>(
+            Utilities.JSON_Models.Username_Cache.PlayerIDAndUsername = JsonConvert.DeserializeObject<Dictionary<int, string>>(
                 File.ReadAllText(Globals.Paths.UsernamesCache)
                    );
-            if (Utilities.JSON_Models.UsernameCache.PlayerIDAndUsername == null) Utilities.JSON_Models.UsernameCache.PlayerIDAndUsername = new Dictionary<int, string>();
+            if (Utilities.JSON_Models.Username_Cache.PlayerIDAndUsername == null) Utilities.JSON_Models.Username_Cache.PlayerIDAndUsername = new Dictionary<int, string>();
         }
         public void SaveCaches()
         {
-            string output = JsonConvert.SerializeObject(Utilities.JSON_Models.LevelCache.LevelIDandData);
+            string output = JsonConvert.SerializeObject(Utilities.JSON_Models.Level_Cache.LevelIDandData);
             System.IO.File.WriteAllText(Globals.Paths.LevelsCache, output);
-            output = JsonConvert.SerializeObject(Utilities.JSON_Models.UsernameCache.PlayerIDAndUsername);
+            output = JsonConvert.SerializeObject(Utilities.JSON_Models.Username_Cache.PlayerIDAndUsername);
             System.IO.File.WriteAllText(Globals.Paths.UsernamesCache, output);
         }
 
@@ -110,10 +110,10 @@ namespace Multiplayer.GDM
                     }
                 }
 
-                if (Utilities.JSON_Models.LevelCache.LevelIDandData != null)
-                    Utilities.JSON_Models.LevelCache.LevelIDandData.Clear();
-                if (Utilities.JSON_Models.UsernameCache.PlayerIDAndUsername != null)
-                    Utilities.JSON_Models.UsernameCache.PlayerIDAndUsername.Clear();
+                if (Utilities.JSON_Models.Level_Cache.LevelIDandData != null)
+                    Utilities.JSON_Models.Level_Cache.LevelIDandData.Clear();
+                if (Utilities.JSON_Models.Username_Cache.PlayerIDAndUsername != null)
+                    Utilities.JSON_Models.Username_Cache.PlayerIDAndUsername.Clear();
 
                 Main.pstacks.Children.Clear();
 
@@ -179,7 +179,7 @@ namespace Multiplayer.GDM
         }
         public void LoadPlayerIDFromSaveFile()
         {
-            int q = Utilities.SaveFile.SaveFileDescryptor.GetPlayerID();
+            int q = Utilities.SaveFile.Save_File_Descryptor.GetPlayerID();
             if (q > 0)
             {
                 Globals.Global_Data.PlayerID = q;
@@ -218,25 +218,25 @@ namespace Multiplayer.GDM
                 try
                 {
                     // check if show self rainbow
-                    Utilities.JSON_Models.VersionUpdate deserializedProduct = JsonConvert.DeserializeObject<Utilities.JSON_Models.VersionUpdate>(
+                    Utilities.JSON_Models.Version_Update deserializedProduct = JsonConvert.DeserializeObject<Utilities.JSON_Models.Version_Update>(
                         Utilities.TCP.ReadURL(Globals.Global_Data.VersionLink).Result
                         );
 
                     if (deserializedProduct != null)
                     {
-                        Globals.Global_Data.Main.UserPref.CachedLevels = deserializedProduct.caching != ":)";
-                        Globals.Global_Data.Main.UserPref.CachedUsernames = deserializedProduct.caching != ":)";
+                        Globals.Global_Data.Main.UserPref.CachedLevels = deserializedProduct.CachingEnabled != ":)";
+                        Globals.Global_Data.Main.UserPref.CachedUsernames = deserializedProduct.CachingEnabled != ":)";
 
                         Application.Current.Dispatcher.Invoke(new Action(() =>
                         {
                             Main.arelevelscached.IsChecked = Main.UserPref.CachedLevels;
                             Main.areusernamescached.IsChecked = Main.UserPref.CachedUsernames;
-                            if (deserializedProduct.version > Globals.Global_Data.Version)
+                            if (deserializedProduct.Version > Globals.Global_Data.Version)
                             {
                                 // Main.arelevelscached.IsChecked = Main.UserPref.CachedLevels;
                                 // Main.areusernamescached.IsChecked = Main.UserPref.CachedUsernames;
                                 Main.update.Visibility = Visibility.Visible;
-                                Main.updatetext.Text = deserializedProduct.desc;
+                                Main.updatetext.Text = deserializedProduct.PatchNotes;
                                 Main.update.IsOpen = true;
                                 Main.updateButt.Click += (k, t) =>
                                 {
@@ -418,7 +418,7 @@ namespace Multiplayer.GDM
                         Utilities.RubParser i = new Utilities.RubParser(output);
                         if (i.Parse())
                         {
-                            var CurrentLevelData = new Utilities.JSON_Models.LevelID();
+                            var CurrentLevelData = new Utilities.JSON_Models.Level_Data();
                             CurrentLevelData.name = i.KeysAndCrates[2];
                             CurrentLevelData.difficultyFace = i.GetDifficultyFace();
 
@@ -769,7 +769,7 @@ namespace Multiplayer.GDM
                     Globals.Global_Data.Main.UserPref.IsVIP = Utilities.TCP.isVip(Globals.Global_Data.PlayerID.ToString());
                     Debug.WriteLine("IsVip: " + Globals.Global_Data.Main.UserPref.IsVIP.ToString());
                     string j = Utilities.TCP.ReadURL("http://95.111.251.138/gdm/isRainbow.php?id=" + Globals.Global_Data.PlayerID.ToString()).Result;
-                    var deserializedProduct = JsonConvert.DeserializeObject<Utilities.JSON_Models.ClientData>(j);
+                    var deserializedProduct = JsonConvert.DeserializeObject<Utilities.JSON_Models.Client_Data>(j);
                     Globals.Global_Data.Main.UserPref.ShowSelfRainbow = Convert.ToBoolean(deserializedProduct.israinbow);
                     Globals.Global_Data.Main.UserPref.ShowSelfRainbowPastel = Convert.ToBoolean(deserializedProduct.israinbowpastel);
 

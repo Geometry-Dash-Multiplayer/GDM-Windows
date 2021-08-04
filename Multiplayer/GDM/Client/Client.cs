@@ -242,9 +242,9 @@ namespace Multiplayer.GDM.Client
                 {
                     if (Globals.Global_Data.Main.UserPref.CachedUsernames)
                     {
-                        if (Utilities.JSON_Models.UsernameCache.PlayerIDAndUsername.ContainsKey(id))
+                        if (Utilities.JSON_Models.Username_Cache.PlayerIDAndUsername.ContainsKey(id))
                         {
-                            username = Utilities.JSON_Models.UsernameCache.PlayerIDAndUsername[id];
+                            username = Utilities.JSON_Models.Username_Cache.PlayerIDAndUsername[id];
                             if (!string.IsNullOrEmpty(username))
                             {
                                 usernameFound = true;
@@ -258,8 +258,8 @@ namespace Multiplayer.GDM.Client
                         username = Utilities.TCP.GetUsernameFromPlayerID(id);
                         if (Globals.Global_Data.Main.UserPref.CachedUsernames)
                         {
-                            if (!Utilities.JSON_Models.UsernameCache.PlayerIDAndUsername.ContainsKey(id))
-                            Utilities.JSON_Models.UsernameCache.PlayerIDAndUsername.Add(id, username);
+                            if (!Utilities.JSON_Models.Username_Cache.PlayerIDAndUsername.ContainsKey(id))
+                            Utilities.JSON_Models.Username_Cache.PlayerIDAndUsername.Add(id, username);
                         }
                     }
                     usernameFound = true;
@@ -343,7 +343,7 @@ namespace Multiplayer.GDM.Client
                         if (IsVIP == 0x1)
                         {
                             string j = Utilities.TCP.ReadURL("http://95.111.251.138/gdm/isRainbow.php?id=" + id.ToString()).Result;
-                            var deserializedProduct = JsonConvert.DeserializeObject<Utilities.JSON_Models.ClientData>(j);
+                            var deserializedProduct = JsonConvert.DeserializeObject<Utilities.JSON_Models.Client_Data>(j);
                             IsRainbow = (byte)deserializedProduct.israinbow;
                             IsPastelColor = (byte)deserializedProduct.israinbowpastel;
 
@@ -396,7 +396,7 @@ namespace Multiplayer.GDM.Client
                         if (IsVIP == 0x1)
                         {
                             string lj = Utilities.TCP.ReadURL("http://95.111.251.138/gdm/isRainbow.php?id=" + id.ToString()).Result;
-                            var deserializedProduct = JsonConvert.DeserializeObject<Utilities.JSON_Models.ClientData>(lj);
+                            var deserializedProduct = JsonConvert.DeserializeObject<Utilities.JSON_Models.Client_Data>(lj);
                             IsRainbow = (byte)deserializedProduct.israinbow;
                             IsPastelColor = (byte)deserializedProduct.israinbowpastel;
 

@@ -10,12 +10,11 @@ using System.Windows;
 
 namespace Multiplayer.Utilities.SaveFile
 {
-    public static class SaveFileDescryptor
+    public static class Save_File_Descryptor
     {
         public static string UserSaveFilePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/GeometryDash/CCGameManager.dat";
 
         public static int GetPlayerID() {
-			// check if correct gd
 			if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/GeometryDash/"))
 				UserSaveFilePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/Geometry Dash/CCGameManager.dat";
 			try
@@ -50,7 +49,6 @@ namespace Multiplayer.Utilities.SaveFile
 				return 0;
 			}
         }
-
 
         public static string XorBD(string s) {
 			List<byte> h = new List<byte>();

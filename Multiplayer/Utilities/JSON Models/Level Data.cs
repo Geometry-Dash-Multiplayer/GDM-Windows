@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Multiplayer.Utilities.JSON_Models
 {
-    public class LevelID
+    public class Level_Data
     {
         // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse); 
 

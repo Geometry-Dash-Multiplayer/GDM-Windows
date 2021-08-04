@@ -44,11 +44,11 @@ namespace Multiplayer.GDM
                                 // MessageBox.Show("cached? " + GlobalData.Main.UserPref.CachedLevels.ToString());
                                 if (Globals.Global_Data.Main.UserPref.CachedLevels)
                                 {
-                                    if (!Utilities.JSON_Models.LevelCache.LevelIDandData.TryGetValue(h.Key, out output))
+                                    if (!Utilities.JSON_Models.Level_Cache.LevelIDandData.TryGetValue(h.Key, out output))
                                     {
                                         output = Utilities.TCP.GetLevelDataResponse(h.Key.ToString());
 
-                                        Utilities.JSON_Models.LevelCache.LevelIDandData.Add(h.Key, output);
+                                        Utilities.JSON_Models.Level_Cache.LevelIDandData.Add(h.Key, output);
                                     }
                                 }
                                 else output = Utilities.TCP.GetLevelDataResponse(h.Key.ToString());
@@ -61,7 +61,7 @@ namespace Multiplayer.GDM
                                         Utilities.RubParser i = new Utilities.RubParser(output);
                                         if (i.Parse())
                                         {
-                                            var CurrentLevelData = new Utilities.JSON_Models.LevelID();
+                                            var CurrentLevelData = new Utilities.JSON_Models.Level_Data();
                                             CurrentLevelData.name = i.KeysAndCrates[2];
                                             CurrentLevelData.difficultyFace = i.GetDifficultyFace();
                                             if (CurrentLevelData.difficultyFace != null)

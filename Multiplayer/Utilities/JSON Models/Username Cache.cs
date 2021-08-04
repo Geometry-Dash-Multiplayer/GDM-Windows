@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace Multiplayer.Utilities.JSON_Models
 {
-   public class ClientData
+    public static class Username_Cache
     {
-        public int israinbow { get; set; }
-        public int israinbowpastel { get; set; }
-        public string hexcolor { get; set; }
+        // once again for the gd servers
+        public static Dictionary<int, string> PlayerIDAndUsername = new Dictionary<int, string>();
     }
 }
