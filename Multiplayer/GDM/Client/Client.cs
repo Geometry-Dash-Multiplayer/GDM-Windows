@@ -9,7 +9,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
-namespace Multiplayer.GDM
+
+namespace Multiplayer.GDM.Client
 {
     public class Client
     {
@@ -51,7 +52,7 @@ namespace Multiplayer.GDM
         [JsonIgnore]
         public Player_Representor represent;
         [JsonIgnore]
-        public Utilities.JSONModels.Player PlayerData;
+        public Utilities.JSON_Models.Player PlayerData;
         [JsonIgnore]
         System.Timers.Timer ProgressTimer = new System.Timers.Timer();
         public Client(int clientID, PositionMemory _p1, PositionMemory _p2, byte Color1, byte Color2, byte isGlow, byte[] iconIDs)
@@ -241,9 +242,9 @@ namespace Multiplayer.GDM
                 {
                     if (Globals.Global_Data.Main.UserPref.CachedUsernames)
                     {
-                        if (Utilities.JSONModels.UsernameCache.PlayerIDAndUsername.ContainsKey(id))
+                        if (Utilities.JSON_Models.UsernameCache.PlayerIDAndUsername.ContainsKey(id))
                         {
-                            username = Utilities.JSONModels.UsernameCache.PlayerIDAndUsername[id];
+                            username = Utilities.JSON_Models.UsernameCache.PlayerIDAndUsername[id];
                             if (!string.IsNullOrEmpty(username))
                             {
                                 usernameFound = true;
@@ -257,8 +258,8 @@ namespace Multiplayer.GDM
                         username = Utilities.TCP.GetUsernameFromPlayerID(id);
                         if (Globals.Global_Data.Main.UserPref.CachedUsernames)
                         {
-                            if (!Utilities.JSONModels.UsernameCache.PlayerIDAndUsername.ContainsKey(id))
-                            Utilities.JSONModels.UsernameCache.PlayerIDAndUsername.Add(id, username);
+                            if (!Utilities.JSON_Models.UsernameCache.PlayerIDAndUsername.ContainsKey(id))
+                            Utilities.JSON_Models.UsernameCache.PlayerIDAndUsername.Add(id, username);
                         }
                     }
                     usernameFound = true;
@@ -342,7 +343,7 @@ namespace Multiplayer.GDM
                         if (IsVIP == 0x1)
                         {
                             string j = Utilities.TCP.ReadURL("http://95.111.251.138/gdm/isRainbow.php?id=" + id.ToString()).Result;
-                            var deserializedProduct = JsonConvert.DeserializeObject<Utilities.JSONModels.ClientData>(j);
+                            var deserializedProduct = JsonConvert.DeserializeObject<Utilities.JSON_Models.ClientData>(j);
                             IsRainbow = (byte)deserializedProduct.israinbow;
                             IsPastelColor = (byte)deserializedProduct.israinbowpastel;
 
@@ -395,7 +396,7 @@ namespace Multiplayer.GDM
                         if (IsVIP == 0x1)
                         {
                             string lj = Utilities.TCP.ReadURL("http://95.111.251.138/gdm/isRainbow.php?id=" + id.ToString()).Result;
-                            var deserializedProduct = JsonConvert.DeserializeObject<Utilities.JSONModels.ClientData>(lj);
+                            var deserializedProduct = JsonConvert.DeserializeObject<Utilities.JSON_Models.ClientData>(lj);
                             IsRainbow = (byte)deserializedProduct.israinbow;
                             IsPastelColor = (byte)deserializedProduct.israinbowpastel;
 
@@ -463,10 +464,5 @@ namespace Multiplayer.GDM
             this.IconIDs = iconIDs;
             this.IsDead = isDead;
         }
-    }
-
-    public class JSONModel
-    {
-        public List<Client> players = new List<Client>();
     }
 }

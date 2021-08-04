@@ -20,7 +20,7 @@ namespace Multiplayer.GDM
         public UdpClient sock;
         public IPEndPoint EndP;
         public IPEndPoint MyPP;
-        public JSONModel model;
+        public Utilities.JSON_Models.Players model;
         // public Stopwatch PingCounter = new Stopwatch();
         private Initialize Main;
         private string IPaddr;
@@ -31,7 +31,7 @@ namespace Multiplayer.GDM
         public bool AckedIcons = false;
         public Server(string ip, Initialize _main)
         {
-            model = new JSONModel();
+            model = new Utilities.JSON_Models.Players();
             Globals.Global_Data.ActiveModel = model;
             Lobby_Status.Start();
             Init(ip, _main);
@@ -196,7 +196,7 @@ namespace Multiplayer.GDM
                                     var clinet = model.players.FindIndex(x => x.id == r.clientID);
                                     if (clinet == -1)
                                     {
-                                        var op = new Client(r.clientID, r.player1, r.player2, r.col1, r.col2, r.isglow, r.IconIDs);
+                                        var op = new Client.Client(r.clientID, r.player1, r.player2, r.col1, r.col2, r.isglow, r.IconIDs);
                                         op.Lobby = Globals.Global_Data.Room;
                                         op.IsVIP = r.isvip;
                                         if (op.IsVIP == 0x1)

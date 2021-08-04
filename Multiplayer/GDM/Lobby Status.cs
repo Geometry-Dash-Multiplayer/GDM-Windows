@@ -31,8 +31,8 @@ namespace Multiplayer.GDM
                     if (!string.IsNullOrEmpty(result))
                     {
                         int Index = 0;
-                        Utilities.JSONModels.lc deserializedProduct =
-                        JsonConvert.DeserializeObject<Utilities.JSONModels.lc>(result);
+                        Utilities.JSON_Models.lc deserializedProduct =
+                        JsonConvert.DeserializeObject<Utilities.JSON_Models.lc>(result);
                         if (deserializedProduct != null)
                         {
                             List<int> availableLevels = new List<int>();
@@ -44,11 +44,11 @@ namespace Multiplayer.GDM
                                 // MessageBox.Show("cached? " + GlobalData.Main.UserPref.CachedLevels.ToString());
                                 if (Globals.Global_Data.Main.UserPref.CachedLevels)
                                 {
-                                    if (!Utilities.JSONModels.LevelCache.LevelIDandData.TryGetValue(h.Key, out output))
+                                    if (!Utilities.JSON_Models.LevelCache.LevelIDandData.TryGetValue(h.Key, out output))
                                     {
                                         output = Utilities.TCP.GetLevelDataResponse(h.Key.ToString());
 
-                                        Utilities.JSONModels.LevelCache.LevelIDandData.Add(h.Key, output);
+                                        Utilities.JSON_Models.LevelCache.LevelIDandData.Add(h.Key, output);
                                     }
                                 }
                                 else output = Utilities.TCP.GetLevelDataResponse(h.Key.ToString());
@@ -61,7 +61,7 @@ namespace Multiplayer.GDM
                                         Utilities.RubParser i = new Utilities.RubParser(output);
                                         if (i.Parse())
                                         {
-                                            var CurrentLevelData = new Utilities.JSONModels.LevelID();
+                                            var CurrentLevelData = new Utilities.JSON_Models.LevelID();
                                             CurrentLevelData.name = i.KeysAndCrates[2];
                                             CurrentLevelData.difficultyFace = i.GetDifficultyFace();
                                             if (CurrentLevelData.difficultyFace != null)

@@ -19,12 +19,12 @@ namespace Multiplayer.GDM
     {
         public Border Me;
 
-        private Client _client;
+        private Client.Client _client;
         private Image _iconpfp;
         private ProgressBar _progress;
         private TextBlock _tbt;
         private TextBlock _tbp;
-        public Player_Representor(Client client)
+        public Player_Representor(Client.Client client)
         {
             _client = client;
         }

@@ -81,7 +81,7 @@ namespace Multiplayer
             GDM.Player_Watcher.Memory.Start();
             foreach (var foo in Enum.GetValues(typeof(Utilities.FormLongs)))
             {
-                GDM.Client.IconsAndIDs.Add((int)foo, foo.ToString());
+                GDM.Client.Client.IconsAndIDs.Add((int)foo, foo.ToString());
             }
             vinfo.Text = "public release " + GDM.Globals.Global_Data.Version.ToString("0.00") + "-main";
             border6.Opacity = 0;

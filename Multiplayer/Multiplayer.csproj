@@ -84,7 +84,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="GDM\Client.cs" />
+    <Compile Include="GDM\Client\Client.cs" />
+    <Compile Include="GDM\Client\Player Data.cs" />
     <Compile Include="GDM\Globals\Paths.cs" />
     <Compile Include="GDM\Load Language.cs" />
     <Compile Include="GDM\Player Watcher\Cached Addresses.cs" />
@@ -102,16 +103,17 @@
     <Compile Include="Utilities\Constants.cs" />
     <Compile Include="Utilities\Converter.cs" />
     <Compile Include="Utilities\GIFHelper.cs" />
-    <Compile Include="Utilities\JSONModels\ClientData.cs" />
-    <Compile Include="Utilities\JSONModels\ImageInfo.cs" />
-    <Compile Include="Utilities\JSONModels\Language.cs" />
-    <Compile Include="Utilities\JSONModels\LevelCache.cs" />
-    <Compile Include="Utilities\JSONModels\LevelID.cs" />
-    <Compile Include="Utilities\JSONModels\Player.cs" />
-    <Compile Include="Utilities\JSONModels\PlayerStatus.cs" />
-    <Compile Include="Utilities\JSONModels\server status.cs" />
-    <Compile Include="Utilities\JSONModels\UsernameCache.cs" />
-    <Compile Include="Utilities\JSONModels\VersionUpdate.cs" />
+    <Compile Include="Utilities\JSON Models\ClientData.cs" />
+    <Compile Include="Utilities\JSON Models\ImageInfo.cs" />
+    <Compile Include="Utilities\JSON Models\Language.cs" />
+    <Compile Include="Utilities\JSON Models\LevelCache.cs" />
+    <Compile Include="Utilities\JSON Models\LevelID.cs" />
+    <Compile Include="Utilities\JSON Models\Player.cs" />
+    <Compile Include="Utilities\JSON Models\Players.cs" />
+    <Compile Include="Utilities\JSON Models\PlayerStatus.cs" />
+    <Compile Include="Utilities\JSON Models\server status.cs" />
+    <Compile Include="Utilities\JSON Models\UsernameCache.cs" />
+    <Compile Include="Utilities\JSON Models\VersionUpdate.cs" />
     <Compile Include="Utilities\Memory\aMemory.cs" />
     <Compile Include="Utilities\Memory\MEMORY BASIC INFORMATION.cs" />
     <Compile Include="Utilities\Memory\NATIVE FUNCTIONS.cs" />

@@ -22,7 +22,7 @@ namespace Multiplayer.GDM.Globals
         public static MainWindow Main;
         public static Server Connection;
         public static Initialize Initializer;
-        public static Utilities.JSONModels.Language Lang = new Utilities.JSONModels.Language();
+        public static Utilities.JSON_Models.Language Lang = new Utilities.JSON_Models.Language();
 
         public static bool HideUsernames = false;
         public static bool IsPlayingLevel = false;
@@ -69,7 +69,7 @@ namespace Multiplayer.GDM.Globals
         public static WindowState MainState = WindowState.Normal;
         public static short Room = 0; // public
         public static string DLLPath = AppDomain.CurrentDomain.BaseDirectory + @"\Multiplayer.dll";
-        public static JSONModel ActiveModel;
+        public static Utilities.JSON_Models.Players ActiveModel;
         public static bool LevelStatsShow = false;
         public static string GDBrowserEndpoint = "95.111.251.138:2000"; // -1 if no shit
             // "194.233.71.142:8080";

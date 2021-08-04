@@ -26,9 +26,9 @@ namespace Multiplayer.GDM
             }
             string y = File.ReadAllText(Globals.Global_Data.LanguageFile);
 
-            Globals.Global_Data.Lang = JsonConvert.DeserializeObject<Utilities.JSONModels.Language>(y);
+            Globals.Global_Data.Lang = JsonConvert.DeserializeObject<Utilities.JSON_Models.Language>(y);
             if (Globals.Global_Data.Lang == null) {
-                Globals.Global_Data.Lang = new Utilities.JSONModels.Language();
+                Globals.Global_Data.Lang = new Utilities.JSON_Models.Language();
             }
 
             Globals.Global_Data.Main.textBlock1.Text = Globals.Global_Data.Lang.SelectServer;

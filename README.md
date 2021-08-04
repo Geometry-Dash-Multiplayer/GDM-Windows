@@ -8,9 +8,6 @@
 [![Discord](https://img.shields.io/badge/Join%20our-Discord!-6E85D3)](https://discord.gg/bZZsjWpbAV)
 ![](https://img.shields.io/badge/Made%20in-C%23-c7ff00)
 
-## 🚧 Under Construction 
-Due to me being lazy and wrote bad code, I'm rewriting my code from scratch for open source standards. An announcement will be made once the repo is complete.
-
 ## 📝 Requirements
 - Visual Studio 2019
 - .NET 4.6.1 framework

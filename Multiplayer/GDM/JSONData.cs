@@ -23,7 +23,7 @@ namespace Multiplayer.GDM
             Stream.Write(s, 0, s.Length);
             Stream.Flush();
         }
-        public void Write(List<Client> o) {
+        public void Write(List<Client.Client> o) {
             string output = JsonConvert.SerializeObject(o);
             var bytes = Encoding.UTF8.GetBytes(output);
             Write(bytes, false);

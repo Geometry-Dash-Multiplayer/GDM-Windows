@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Multiplayer.Utilities.JSONModels
+namespace Multiplayer.Utilities.JSON_Models
 {
     public class Player
     {// Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse); 
