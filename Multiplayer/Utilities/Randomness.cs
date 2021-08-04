@@ -12,15 +12,6 @@ namespace Multiplayer.Utilities
     {
         public static Random rand = new Random(DateTime.Now.Millisecond + DateTime.Now.Second + DateTime.Now.Minute);
 
-        public static string[] quotes = new string[] { 
-            "Not on 2.2!",
-            "Please donate, servers aren't cheap.",
-            "Go to discord.link/alizer!",
-            "UDP is hell.",
-            "Adafcaefc is god.",
-            "Purely C#!",
-            "Problems? discord.link/alizer",
-        };
         public static string[] serverdesc = new string[] {
             "Pick one, preferably the one nearest to you...",
         };
