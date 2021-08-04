@@ -19,6 +19,6 @@ namespace Multiplayer.Utilities.JSON_Models
         public string PatchNotes { get; set; }
 
         [JsonProperty("caching")]
-        public string CachingEnabled { get; set; }
+        public bool CachingEnabled { get; set; }
     }
 }

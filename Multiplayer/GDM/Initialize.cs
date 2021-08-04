@@ -196,8 +196,8 @@ namespace Multiplayer.GDM
 
                     if (deserializedProduct != null)
                     {
-                        Globals.Global_Data.Main.UserPref.CachedLevels = deserializedProduct.CachingEnabled != ":)";
-                        Globals.Global_Data.Main.UserPref.CachedUsernames = deserializedProduct.CachingEnabled != ":)";
+                        Globals.Global_Data.Main.UserPref.CachedLevels = deserializedProduct.CachingEnabled;
+                        Globals.Global_Data.Main.UserPref.CachedUsernames = deserializedProduct.CachingEnabled;
 
                         Application.Current.Dispatcher.Invoke(new Action(() =>
                         {
