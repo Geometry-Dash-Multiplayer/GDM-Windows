@@ -1,0 +1,10 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <FontFamily x:Key="Avenir">pack://application:,,,/UI/Fonts/Avenir/#AvenirNext LT Pro</FontFamily>
+    <FontFamily x:Key="TTNorms">pack://application:,,,/UI/Fonts/TTPro/#TT Norms Regular</FontFamily>
+    <FontFamily x:Key="TTNorms-Heavy">pack://application:,,,/UI/Fonts/TTPro/#TT Norms Heavy</FontFamily>
+    <FontFamily x:Key="TTNorms-Bolds">pack://application:,,,/UI/Fonts/TTPro/#TT Norms Bold</FontFamily>
+    <FontFamily x:Key="Uni-Sans">pack://application:,,,/UI/Fonts/UniSans/#Uni Sans Heavy CAPS</FontFamily>
+
+</ResourceDictionary>
