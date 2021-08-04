@@ -30,42 +30,12 @@ namespace Multiplayer.GDM
             this.Main = _main;
             // check from old versions
             LoadUserPrefs();
-            CheckOldData();
             InitializeClient();
 
             // load language
             GDM.Load_Language.Load();
             WebRequest.DefaultWebProxy = null;
             Globals.Global_Data.Initializer = this;
-        }
-        public void CheckOldData()
-        {
-            try
-            {
-                string OldUserDataFile = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/Alizer/gdm.dat";
-                string ParentDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/Alizer";
-                if (!Directory.Exists(ParentDir))
-                    Directory.CreateDirectory(ParentDir);
-                // MessageBox.Show(Globals.Paths.UserDataFile);
-                if (File.Exists(OldUserDataFile))
-                {
-                    if (!File.Exists(Globals.Paths.UserDataFile))
-                    {
-                        File.Create(Globals.Paths.UserDataFile).Close();
-                    }
-
-                    File.WriteAllText(Globals.Paths.UserDataFile,
-                        File.ReadAllText(OldUserDataFile)
-                        );
-                    File.Delete(OldUserDataFile);
-                }
-            }
-            catch (Exception ex)
-            {
-
-                Utilities.Utils.HandleException(ex);
-
-            }
         }
         public void LoadCaches()
         {
@@ -278,7 +248,8 @@ namespace Multiplayer.GDM
                 string user_data = File.ReadAllText(Globals.Paths.UserDataFile);
 
                 Main.UserPref = JsonConvert.DeserializeObject<Preferences>(user_data);
-
+                if (Main.UserPref == null) Main.UserPref = new Preferences();
+                if (Main.UserPref.Key.Length <= 0) Main.UserPref.Key = Utilities.Randomness.RandomBytes(4);
                 Globals.Global_Data.VipKey = BitConverter.ToInt32(Main.UserPref.Key, 0);
                 if (Main.UserPref.IsVIP) 
                     Main.border5.Visibility = Visibility.Collapsed;
@@ -306,7 +277,6 @@ namespace Multiplayer.GDM
             }
             catch (Exception ex)
             {
-
                 Utilities.Utils.HandleException(ex);
 
                 File.Delete(Globals.Paths.UserDataFile);
@@ -351,18 +321,6 @@ namespace Multiplayer.GDM
 
             if (!File.Exists(Globals.Paths.GDMTempDataFile)) File.Create(Globals.Paths.GDMTempDataFile).Close();
             File.WriteAllText(Globals.Paths.GDMTempDataFile, output);
-        }
-        public void ConnectEU()
-        {
-            ServerConnected(0);
-        }
-        public void ConnectEast()
-        {
-            ServerConnected(2);
-        }
-        public void ConnectAS1()
-        {
-            ServerConnected(1);
         }
         int ServerIndex = 0;
         public void ServerConnected(int index)

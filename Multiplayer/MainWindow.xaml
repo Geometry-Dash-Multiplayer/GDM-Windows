@@ -6,7 +6,6 @@
         xmlns:local="clr-namespace:Multiplayer"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         x:Class="Multiplayer.MainWindow"
-        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         TextOptions.TextFormattingMode="Display" 
         TextOptions.TextRenderingMode="Grayscale"
@@ -717,7 +716,7 @@
                             <TextBlock x:Name="serverdesc" TextWrapping="Wrap" Text="Preferably pick the nearest to your location." FontSize="14" FontFamily="{DynamicResource Avenir}" VerticalAlignment="Top" Margin="10,5,0,10" Height="32" Opacity="0.5"/>
                         </StackPanel>
                         <DockPanel  x:Name="stackPanel" Margin="0,0,10,0" Cursor="Hand" Height="70">
-                            <Border DockPanel.Dock="Top" MouseDown="Singapore" x:Name="border" Margin="0,10" Height="50" CornerRadius="10" Background="{DynamicResource BackgroundLight}" Width="180">
+                            <Border DockPanel.Dock="Top" MouseDown="OpenServer" Tag="0" x:Name="border" Margin="0,10" Height="50" CornerRadius="10" Background="{DynamicResource BackgroundLight}" Width="180">
                                 <Border.Effect>
                                     <DropShadowEffect BlurRadius="25" Direction="0" ShadowDepth="0" Opacity="0.25"/>
                                 </Border.Effect>
@@ -744,7 +743,7 @@
                             </StackPanel>
                         </DockPanel>
                         <DockPanel  x:Name="stackPanel_Copy1" Margin="0,0,10,0" Cursor="Hand" Height="70">
-                            <Border DockPanel.Dock="Top" MouseDown="AsiaEast" x:Name="border2" Margin="0,10" Height="50" CornerRadius="10" Background="{DynamicResource BackgroundLight}" Width="180">
+                            <Border DockPanel.Dock="Top"  MouseDown="OpenServer" Tag="1"  x:Name="border2" Margin="0,10" Height="50" CornerRadius="10" Background="{DynamicResource BackgroundLight}" Width="180">
                                 <Border.Effect>
                                     <DropShadowEffect BlurRadius="25" Direction="0" ShadowDepth="0" Opacity="0.25"/>
                                 </Border.Effect>
@@ -773,13 +772,7 @@
                     </StackPanel>
                 </Grid>
                 <DockPanel x:Name="stackPanel2" DockPanel.Dock="Left" Margin="0,0,10,0">
-                    <DockPanel.Resources>
-                        <Style TargetType="lvc:LineSeries">
-                            <Setter Property="StrokeThickness" Value="2"></Setter>
-                            <Setter Property="PointGeometrySize" Value="0"></Setter>
-                            <Setter Property="LineSmoothness" Value="0.75"></Setter>
-                        </Style>
-                    </DockPanel.Resources>
+                  
                     <DockPanel DockPanel.Dock="Top" Width="286" Margin="0,10,0,0">
                         <Image x:Name="image6" Margin="0,0,10,5" Width="0" Height="35"/>
                         <Grid DockPanel.Dock="Top"  Opacity="0.75" >

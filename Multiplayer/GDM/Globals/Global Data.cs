@@ -35,7 +35,7 @@ namespace Multiplayer.GDM.Globals
         public static string ClientName;
         public static int StandardPort = 7010;
         public static string ActiveServer = ""; // 194.233.71.142
-        public static string[] ServerIPs = new string[] { "51.75.52.158", "192.99.245.3", "194.233.71.142" };
+        public static string[] ServerIPs = new string[] { "51.75.52.158", "194.233.71.142" };
         public static int VipKey = 0;
 
         public static bool PlayerIDLoaded = false;

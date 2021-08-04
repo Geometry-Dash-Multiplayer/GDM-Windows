@@ -15,8 +15,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using LiveCharts;
-using LiveCharts.Wpf;
 using Multiplayer.GDM;
 
 namespace Multiplayer
@@ -94,39 +92,7 @@ namespace Multiplayer
         {
             GDM.Globals.Global_Data.MainState = this.WindowState;
         }
-        
-        private void Singapore(object sender, MouseButtonEventArgs e)
-        {
-            if (GDM.Globals.Global_Data.PlayerID != 0 && GDM.Globals.Global_Data.IsInjected)
-            {
-                Master.ConnectEU();
-            }
-            else if (!GDM.Globals.Global_Data.IsInjected)
-            {
-                if (!GDM.Globals.Global_Data.IsGDThere)
-                    Master.Announce(GDM.Globals.Global_Data.Lang.PleaseRunGD);
-                else Master.Announce(GDM.Globals.Global_Data.Lang.DLLInjecting);
-            }
-            else
-            {
-                ShowError(GDM.Globals.Global_Data.Lang.NotRegistered, GDM.Globals.Global_Data.Lang.PleaseLogin, "https://www.youtube.com/watch?v=2KcWgc3xYhc");
-            }
 
-
-            //if (GDM.Globals.Global_Data.Connection == null && GDM.Globals.Global_Data.IsInjected)
-            //{
-
-            //}
-            //else if (!GDM.Globals.Global_Data.IsInjected)
-            //{
-            //    if (!GDM.Globals.Global_Data.IsGDThere)
-            //    Master.Announce("Please run Geometry Dash first.");
-            //    else Master.Announce("Injector busy, please try again.");
-            //}
-
-
-            e.Handled = true;
-        }
         public void ShowError(string title, string desc, string help = "https://discord.gg/mNvPDCgB5M", string helpS = "Need Help?") {
             Application.Current.Dispatcher.Invoke(new Action(() => {
                 StartAnimation("ErrorApp");
@@ -476,36 +442,6 @@ namespace Multiplayer
             lobbyCopied.IsOpen = false;
         }
 
-        private void Asia(object sender, MouseButtonEventArgs e)
-        {
-            if (GDM.Globals.Global_Data.PlayerID != 0 && GDM.Globals.Global_Data.IsInjected)
-            {
-                Master.ConnectAS1();
-            }
-            else if (!GDM.Globals.Global_Data.IsInjected)
-            {
-                if (!GDM.Globals.Global_Data.IsGDThere)
-                    Master.Announce(GDM.Globals.Global_Data.Lang.PleaseRunGD);
-                else Master.Announce(GDM.Globals.Global_Data.Lang.DLLInjecting);
-            }
-            else
-            {
-                ShowError("You're not registered on Geometry Dash", "Please login an account on Geometry Dash to play Multiplayer, need help?", "https://www.youtube.com/watch?v=2KcWgc3xYhc");
-            }
-
-            //if (GDM.Globals.Global_Data.Connection == null && GDM.Globals.Global_Data.IsInjected)
-            //{
-            //}
-            //else if (!GDM.Globals.Global_Data.IsInjected)
-            //{
-            //    if (!GDM.Globals.Global_Data.IsGDThere)
-            //        Master.Announce("Please run Geometry Dash first.");
-            //    else Master.Announce("Injector busy, please try again.");
-            //}
-
-            e.Handled = true;
-        }
-
         private async void EnterKey(object sender, MouseButtonEventArgs e)
         {
             StartAnimation("UnShowCost");
@@ -635,12 +571,11 @@ namespace Multiplayer
             langs.IsOpen = false;
         }
 
-        private void AsiaEast(object sender, MouseButtonEventArgs e)
+        private void OpenServer(object sender, MouseButtonEventArgs e)
         {
-            if (GDM.Globals.Global_Data.PlayerID != 0 && GDM.Globals.Global_Data.IsInjected)
-            {
-                Master.ConnectEast();
-            }
+            var ui_sender = sender as FrameworkElement;
+            int server_index = int.Parse(ui_sender.Tag.ToString());
+            if (GDM.Globals.Global_Data.PlayerID != 0 && GDM.Globals.Global_Data.IsInjected) Master.ServerConnected(server_index);
             else if (!GDM.Globals.Global_Data.IsInjected)
             {
                 if (!GDM.Globals.Global_Data.IsGDThere)
@@ -651,7 +586,7 @@ namespace Multiplayer
             {
                 ShowError("You're not registered on Geometry Dash", "Please login an account on Geometry Dash to play Multiplayer, need help?", "https://www.youtube.com/watch?v=2KcWgc3xYhc");
             }
-
+            e.Handled = true;
         }
     }
 }
