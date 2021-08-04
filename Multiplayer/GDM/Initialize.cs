@@ -34,7 +34,7 @@ namespace Multiplayer.GDM
             InitializeClient();
 
             // load language
-            GDM.LoadLanguage.Load();
+            GDM.Load_Language.Load();
             WebRequest.DefaultWebProxy = null;
             Globals.Global_Data.Initializer = this;
         }
@@ -186,7 +186,7 @@ namespace Multiplayer.GDM
                 Globals.Global_Data.PlayerIDLoaded = true;
                 // try to add the user to server db if he doesnt exist
                 var temp = Utilities.TCP.ReadURL("http://95.111.251.138/gdm/getInfo.php?id=" + q.ToString()).Result;
-                PlayerWatcher.InitClient();
+                GDM.Player_Watcher.Memory.InitClient();
                 Debug.WriteLine("User check: " + temp);
 
             }
@@ -609,15 +609,15 @@ namespace Multiplayer.GDM
                     for (int i = 0; i < 7; i++)
                     {
                         string icon_type = Client.IconsAndIDs[i];
-                        int iconID = PlayerWatcher.MyIcons[i];
+                        int iconID = GDM.Player_Watcher.Memory.Icons[i];
                         string apiurl = Utilities.TCP.GetAPIUrl(
                             icon_type,
-                            ((int)PlayerWatcher.Col1).ToString(),
-                            ((int)PlayerWatcher.Col2).ToString(),
+                            ((int)GDM.Player_Watcher.Memory.Col1).ToString(),
+                            ((int)GDM.Player_Watcher.Memory.Col2).ToString(),
                             iconID.ToString(),
                             Globals.Global_Data.PlayerID.ToString(),
-                            ((int)PlayerWatcher.IsGlow).ToString(),
-                            PlayerWatcher.MyIcons[0].ToString()
+                            ((int)GDM.Player_Watcher.Memory.IsGlow).ToString(),
+                            GDM.Player_Watcher.Memory.Icons[0].ToString()
                             );
                         string path = null;
                         if (Main.UserPref.CachedIcons)

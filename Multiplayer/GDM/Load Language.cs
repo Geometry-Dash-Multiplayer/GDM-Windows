@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Multiplayer.GDM
 {
-    public static class LoadLanguage
+    public static class Load_Language
     {
         public static void Load() {
 

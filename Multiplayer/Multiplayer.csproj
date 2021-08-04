@@ -86,15 +86,16 @@
     </ApplicationDefinition>
     <Compile Include="GDM\Client.cs" />
     <Compile Include="GDM\Globals\Paths.cs" />
+    <Compile Include="GDM\Load Language.cs" />
+    <Compile Include="GDM\Player Watcher\Cached Addresses.cs" />
     <Compile Include="GDM\Server.cs" />
     <Compile Include="GDM\Globals\Global Data.cs" />
     <Compile Include="GDM\Initialize.cs" />
     <Compile Include="GDM\JSONData.cs" />
     <Compile Include="UI\Controls\Levels Panel.cs" />
-    <Compile Include="GDM\LoadLanguage.cs" />
-    <Compile Include="GDM\LobbyStatus.cs" />
-    <Compile Include="GDM\PlayerRepresentor.cs" />
-    <Compile Include="GDM\PlayerWatcher.cs" />
+    <Compile Include="GDM\Lobby Status.cs" />
+    <Compile Include="GDM\Player Representor.cs" />
+    <Compile Include="GDM\Player Watcher\Memory.cs" />
     <Compile Include="GDM\PositionMemory.cs" />
     <Compile Include="GDM\UserPref.cs" />
     <Compile Include="UI\TransparencyFix.cs" />

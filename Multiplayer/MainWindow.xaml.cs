@@ -78,7 +78,7 @@ namespace Multiplayer
             settings.Visibility = Visibility.Visible;
             this.StateChanged += MainWindow_StateChanged;
 
-            GDM.PlayerWatcher.Start();
+            GDM.Player_Watcher.Memory.Start();
             foreach (var foo in Enum.GetValues(typeof(Utilities.FormLongs)))
             {
                 GDM.Client.IconsAndIDs.Add((int)foo, foo.ToString());
@@ -153,7 +153,7 @@ namespace Multiplayer
             {
                 Master.SaveUserPref();
                 Master.SaveCaches();
-                GDM.LoadLanguage.SaveJSON();
+                GDM.Load_Language.SaveJSON();
                 if (GDM.Globals.Global_Data.Connection != null)
                     GDM.Globals.Global_Data.Connection.SendDiconnect();
                 if (e != null)
@@ -561,10 +561,11 @@ namespace Multiplayer
         {
             new Thread(() =>
             {
-                if (GDM.PlayerWatcher.aMemory != null)
+                
+                if (GDM.Player_Watcher.Memory.aMemory != null)
                 {
-                    GDM.PlayerWatcher.aMemory.isAlreadyInjected = false;
-                    if (!GDM.PlayerWatcher.aMemory.dllInject(GDM.Globals.Global_Data.DLLPath)) ;
+                    GDM.Player_Watcher.Memory.aMemory.isAlreadyInjected = false;
+                    if (!GDM.Player_Watcher.Memory.aMemory.dllInject(GDM.Globals.Global_Data.DLLPath)) ;
                 }
             }).Start();
             settings.IsOpen = false;
@@ -573,14 +574,14 @@ namespace Multiplayer
         private void SetLangEn(object sender, MouseButtonEventArgs e)
         {
             UserPref.Lang = "en";
-            GDM.LoadLanguage.Load();
+            GDM.Load_Language.Load();
             langs.IsOpen = false;
         }
 
         private void SetLangRu(object sender, MouseButtonEventArgs e)
         {
             UserPref.Lang = "ru";
-            GDM.LoadLanguage.Load();
+            GDM.Load_Language.Load();
             langs.IsOpen = false;
         }
 
@@ -630,7 +631,7 @@ namespace Multiplayer
         {
 
             UserPref.Lang = "es";
-            GDM.LoadLanguage.Load();
+            GDM.Load_Language.Load();
             langs.IsOpen = false;
         }
 

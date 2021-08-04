@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 
 namespace Multiplayer.GDM
 {
-    public static class LobbyStatus
+    public static class Lobby_Status
     {
         public static bool hasStarted = false;
         public static void Start()

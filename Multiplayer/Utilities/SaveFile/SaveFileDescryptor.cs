@@ -26,7 +26,7 @@ namespace Multiplayer.Utilities.SaveFile
 				var g = GZipDecompress(b);
 				string a = Encoding.UTF8.GetString(g);
 
-				GDM.PlayerWatcher.MyIcons = new byte[] {
+				GDM.Player_Watcher.Memory.Icons = new byte[] {
 					(byte)int.Parse(Utils.FindTextBetween(a, "<k>playerFrame</k><i>", "</i>")),
 					(byte)int.Parse(Utils.FindTextBetween(a, "<k>playerShip</k><i>", "</i>")),
 					(byte)int.Parse(Utils.FindTextBetween(a, "<k>playerBall</k><i>", "</i>")),
@@ -35,8 +35,8 @@ namespace Multiplayer.Utilities.SaveFile
 					(byte)int.Parse(Utils.FindTextBetween(a, "<k>playerRobot</k><i>", "</i>")),
 					(byte)int.Parse(Utils.FindTextBetween(a, "<k>playerSpider</k><i>", "</i>")),
 				};
-				GDM.PlayerWatcher.Col1 = (byte)int.Parse(Utils.FindTextBetween(a, "<k>playerColor</k><i>", "</i>"));
-				GDM.PlayerWatcher.Col2 = (byte)int.Parse(Utils.FindTextBetween(a, "<k>playerColor2</k><i>", "</i>"));
+				GDM.Player_Watcher.Memory.Col1 = (byte)int.Parse(Utils.FindTextBetween(a, "<k>playerColor</k><i>", "</i>"));
+				GDM.Player_Watcher.Memory.Col2 = (byte)int.Parse(Utils.FindTextBetween(a, "<k>playerColor2</k><i>", "</i>"));
 
 				string playerID = Utils.FindTextBetween(a, "<k>playerUserID</k><i>", "</i>");
 				int q;

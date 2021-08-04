@@ -15,18 +15,18 @@ using WpfAnimatedGif;
 
 namespace Multiplayer.GDM
 {
-    public class PlayerRepresentor
+    public class Player_Representor
     {
-        // p_border1
-        public Image iconpfp;
-        public ProgressBar progress;
-        public TextBlock tbt;
-        public TextBlock tbp;
-        public Border me;
-        public Client client;
-        public PlayerRepresentor(Client client)
+        public Border Me;
+
+        private Client _client;
+        private Image _iconpfp;
+        private ProgressBar _progress;
+        private TextBlock _tbt;
+        private TextBlock _tbp;
+        public Player_Representor(Client client)
         {
-            this.client = client;
+            _client = client;
         }
 
         public void RemovePlayer()
@@ -35,7 +35,7 @@ namespace Multiplayer.GDM
             {
                 try
                 {
-                    if (GDM.Globals.Global_Data.Main.pstacks.Children.Contains(me))
+                    if (GDM.Globals.Global_Data.Main.pstacks.Children.Contains(Me))
                     {
 
                         var anim = new DoubleAnimation
@@ -47,11 +47,11 @@ namespace Multiplayer.GDM
 
                         anim.Completed += (s, e) =>
                         {
-                            me.Height = 0;
-                            GDM.Globals.Global_Data.Main.pstacks.Children.Remove(me);
+                            Me.Height = 0;
+                            GDM.Globals.Global_Data.Main.pstacks.Children.Remove(Me);
                         };
 
-                        me.BeginAnimation(Border.HeightProperty, anim);
+                        Me.BeginAnimation(Border.HeightProperty, anim);
                     }
                 }
                 catch (Exception ex){
@@ -80,10 +80,10 @@ namespace Multiplayer.GDM
                 colorChangeAnimation.Completed += (o, p) =>
                 {
 
-                    progress.Foreground = new SolidColorBrush((Color)colorChangeAnimation.To);
+                    _progress.Foreground = new SolidColorBrush((Color)colorChangeAnimation.To);
 
                 };
-                progress.Foreground.BeginAnimation(SolidColorBrush.ColorProperty, colorChangeAnimation);
+                _progress.Foreground.BeginAnimation(SolidColorBrush.ColorProperty, colorChangeAnimation);
             }
         }
         public void DoneIcons(string username = "unkown")
@@ -106,10 +106,10 @@ namespace Multiplayer.GDM
                 colorChangeAnimation.Completed += (o, p) =>
                 {
 
-                   progress.Foreground = new SolidColorBrush((Color)colorChangeAnimation.To);
+                   _progress.Foreground = new SolidColorBrush((Color)colorChangeAnimation.To);
 
                 };
-                progress.Foreground.BeginAnimation(SolidColorBrush.ColorProperty, colorChangeAnimation);
+                _progress.Foreground.BeginAnimation(SolidColorBrush.ColorProperty, colorChangeAnimation);
                 Debug.WriteLine("icons downloaded for " + username); 
                 
                 SetStatus("Playing...");
@@ -121,7 +121,7 @@ namespace Multiplayer.GDM
                 logo.BeginInit();
                 logo.UriSource = new Uri(path);
                 logo.EndInit();
-                iconpfp.Source = logo;
+                _iconpfp.Source = logo;
             }
             catch (Exception ex)
             {
@@ -142,15 +142,15 @@ namespace Multiplayer.GDM
                     };
                     anim.Completed += (s, e) =>
                     {
-                        if (progress != null)
-                            progress.Value = val;
+                        if (_progress != null)
+                            _progress.Value = val;
                     };
-                    if (progress != null)
-                    progress.BeginAnimation(ProgressBar.ValueProperty, anim);
+                    if (_progress != null)
+                    _progress.BeginAnimation(ProgressBar.ValueProperty, anim);
                 }
                 else {
-                    if (progress != null)
-                        progress.Value = val;
+                    if (_progress != null)
+                        _progress.Value = val;
                 }
             }
         }
@@ -159,7 +159,7 @@ namespace Multiplayer.GDM
             {
                 var converter = new System.Windows.Media.BrushConverter();
                 var brush = (Brush)converter.ConvertFromString(hex);
-                tbt.Foreground = brush;
+                _tbt.Foreground = brush;
             }
             catch (Exception ex)
             {
@@ -169,8 +169,8 @@ namespace Multiplayer.GDM
         public void SetUsername(string username) {
             try
             {
-                if (tbt != null)
-                    tbt.Text = username;
+                if (_tbt != null)
+                    _tbt.Text = username;
             }
             catch (Exception ex)
             {
@@ -180,8 +180,8 @@ namespace Multiplayer.GDM
         public void SetStatus(string status) {
             try
             {
-                if (tbp != null)
-                    tbp.Text = status;
+                if (_tbp != null)
+                    _tbp.Text = status;
             }
             catch (Exception ex)
             {
@@ -200,7 +200,7 @@ namespace Multiplayer.GDM
                     if (!Directory.Exists(Path.GetDirectoryName(newFile))) Directory.CreateDirectory(Path.GetDirectoryName(newFile));
 
                     File.Copy(from, newFile, true);
-                    ImageBehavior.SetAnimatedSource(iconpfp, new BitmapImage(new Uri(newFile)));
+                    ImageBehavior.SetAnimatedSource(_iconpfp, new BitmapImage(new Uri(newFile)));
 
                     //var bitmap = new BitmapImage();
                     //var stream = File.OpenRead(from);
@@ -245,7 +245,7 @@ namespace Multiplayer.GDM
             {
                 string k = "i am god";
                 b.MouseDown += (l, f) => {
-                    PlayerWatcher.TeleportTo(client.player_1.x_position, client.player_1.y_position);
+                    GDM.Player_Watcher.Memory.TeleportTo(_client.player_1.x_position, _client.player_1.y_position);
                 };
             }
             //  <Border x:Name="p_border1" Background="{DynamicResource BackgroundLight}" CornerRadius="7.5" Margin="0,0,0,10">
@@ -256,7 +256,7 @@ namespace Multiplayer.GDM
             };
             //   <DockPanel x:Name="pl_level" Margin="0" Visibility="Visible">
 
-            iconpfp = new Image
+            _iconpfp = new Image
             {
                 HorizontalAlignment = GDM.Globals.Global_Data.Main.pl_dif.HorizontalAlignment,
                 Margin = GDM.Globals.Global_Data.Main.pl_dif.Margin,
@@ -264,7 +264,7 @@ namespace Multiplayer.GDM
             };
             try
             {
-                ImageBehavior.SetAnimatedSource(iconpfp, Utilities.TCP.GetPlayerIcon(client.id.ToString()));
+                ImageBehavior.SetAnimatedSource(_iconpfp, Utilities.TCP.GetPlayerIcon(_client.id.ToString()));
                 // ImageBehavior.SetAnimatedSource(Main.image6, h);
             }
             catch (Exception ex){
@@ -272,7 +272,7 @@ namespace Multiplayer.GDM
             }
             // DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="10" Width="30" Source="UI/Images/Large/0.png"
 
-            DockPanel.SetDock(iconpfp, Dock.Left); dp.Children.Add(iconpfp);
+            DockPanel.SetDock(_iconpfp, Dock.Left); dp.Children.Add(_iconpfp);
 
 
             StackPanel sp = new StackPanel
@@ -284,27 +284,27 @@ namespace Multiplayer.GDM
 
             //  Text="Adafcaefc" FontFamily="{DynamicResource TTNorms-Bolds}" FontSize="14" Opacity="0.9"
 
-            tbt = new TextBlock
+            _tbt = new TextBlock
             {
                 FontFamily = GDM.Globals.Global_Data.Main.pl_lvlname.FontFamily,
                 FontSize = GDM.Globals.Global_Data.Main.pl_lvlname.FontSize,
                 Opacity = GDM.Globals.Global_Data.Main.pl_lvlname.Opacity,
                 Foreground = GDM.Globals.Global_Data.Main.pl_lvlname.Foreground,
-                Text = client.username,
+                Text = _client.username,
             };
-            sp.Children.Add(tbt);
+            sp.Children.Add(_tbt);
             //  <TextBlock x:Name="pl_players" Text="Downloading Icons..." FontFamily="{DynamicResource TTNorms}" Opacity="0.5"/>
 
-            tbp = new TextBlock
+            _tbp = new TextBlock
             {
                 FontFamily = GDM.Globals.Global_Data.Main.pl_players.FontFamily,
                 Opacity = GDM.Globals.Global_Data.Main.pl_players.Opacity,
                 Foreground = GDM.Globals.Global_Data.Main.pl_players.Foreground,
                 Text = "Downloading Icons..."
             };
-            sp.Children.Add(tbp);
+            sp.Children.Add(_tbp);
             // <ProgressBar Margin="0,5,10,0" BorderBrush="{x:Null}" Foreground="{DynamicResource Red}" Value="50" Background="{x:Null}"/>
-            progress = new ProgressBar
+            _progress = new ProgressBar
             {
                 Margin = GDM.Globals.Global_Data.Main.pl_pgr.Margin,
                 BorderBrush = GDM.Globals.Global_Data.Main.pl_pgr.BorderBrush,
@@ -315,9 +315,9 @@ namespace Multiplayer.GDM
                 Background = GDM.Globals.Global_Data.Main.pl_pgr.Background
             };
 
-            sp.Children.Add(progress);
+            sp.Children.Add(_progress);
             b.Child = dp;
-            me = b;
+            Me = b;
             if (!GDM.Globals.Global_Data.Main.UserPref.MinimalAnimations)
             {
                 // do animation

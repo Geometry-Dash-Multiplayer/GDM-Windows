@@ -49,7 +49,7 @@ namespace Multiplayer.GDM
         [JsonIgnore]
         public string IconsDirectory = Globals.Paths.IconsFolder + "/";
         [JsonIgnore]
-        public PlayerRepresentor represent;
+        public Player_Representor represent;
         [JsonIgnore]
         public Utilities.JSONModels.Player PlayerData;
         [JsonIgnore]
@@ -224,7 +224,7 @@ namespace Multiplayer.GDM
         public void InitializeRepresentor()
         {
 
-            represent = new PlayerRepresentor(this);
+            represent = new Player_Representor(this);
             Application.Current.Dispatcher.Invoke(new Action(() =>
             {
                 var border = represent.Container();

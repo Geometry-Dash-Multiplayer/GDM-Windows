@@ -33,7 +33,7 @@ namespace Multiplayer.GDM
         {
             model = new JSONModel();
             Globals.Global_Data.ActiveModel = model;
-            LobbyStatus.Start();
+            Lobby_Status.Start();
             Init(ip, _main);
         }
 
@@ -102,9 +102,9 @@ namespace Multiplayer.GDM
                     }
                     Thread.Sleep(1000);
                 }
-                if (PlayerWatcher.LevelID > 0)
+                if (GDM.Player_Watcher.Memory.LevelID > 0)
                 {
-                    Globals.Global_Data.Initializer.LoadLevelID(PlayerWatcher.LevelID);
+                    Globals.Global_Data.Initializer.LoadLevelID(GDM.Player_Watcher.Memory.LevelID);
                 }
 
                 StartPingSend();
