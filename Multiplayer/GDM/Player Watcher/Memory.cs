@@ -61,9 +61,9 @@ namespace Multiplayer.GDM.Player_Watcher
 
                         gd = processes.FirstOrDefault();
 
-                        bool isAdmin = Utilities.ProcAdminDetect.IsProcessOwnerAdmin(gd);
+                        bool isAdmin = Utilities.Processing.Administrator_Detection.IsProcessOwnerAdmin(gd);
                         Debug.WriteLine("Geometry Dash is admin? " + isAdmin.ToString());
-                        if (isAdmin && !Utilities.ProcAdminDetect.AmIAdmin())
+                        if (isAdmin && !Utilities.Processing.Administrator_Detection.AmIAdmin())
                         {
                             GDM.Globals.Global_Data.Main.ShowError("GD is running as admin.", "GeometryDash.exe is running as admin, please run GDM as admin too.");
                             return;

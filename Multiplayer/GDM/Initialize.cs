@@ -151,7 +151,7 @@ namespace Multiplayer.GDM
         }
         public void LoadPlayerIDFromSaveFile()
         {
-            int q = Utilities.SaveFile.Save_File_Descryptor.GetPlayerID();
+            int q = Utilities.Encryption.Save_File_Decryptor.GetPlayerID();
             if (q > 0)
             {
                 Globals.Global_Data.PlayerID = q;
@@ -374,7 +374,7 @@ namespace Multiplayer.GDM
                     if (output != "-1")
                     {
 
-                        Utilities.RubParser i = new Utilities.RubParser(output);
+                        Utilities.Encryption.Robtop_Parser i = new Utilities.Encryption.Robtop_Parser(output);
                         if (i.Parse())
                         {
                             var CurrentLevelData = new Utilities.JSON_Models.Level_Data();

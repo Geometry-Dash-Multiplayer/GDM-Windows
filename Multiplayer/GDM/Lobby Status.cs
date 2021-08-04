@@ -58,7 +58,7 @@ namespace Multiplayer.GDM
                                 {
                                     if (output != "-1")
                                     {
-                                        Utilities.RubParser i = new Utilities.RubParser(output);
+                                        Utilities.Encryption.Robtop_Parser i = new Utilities.Encryption.Robtop_Parser(output);
                                         if (i.Parse())
                                         {
                                             var CurrentLevelData = new Utilities.JSON_Models.Level_Data();

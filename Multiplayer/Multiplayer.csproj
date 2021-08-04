@@ -97,8 +97,10 @@
     <Compile Include="UI\TransparencyFix.cs" />
     <Compile Include="Utilities\Constants.cs" />
     <Compile Include="Utilities\Converter.cs" />
+    <Compile Include="Utilities\Encryption\GZip.cs" />
+    <Compile Include="Utilities\Encryption\Xor.cs" />
     <Compile Include="Utilities\Files and Pathing.cs" />
-    <Compile Include="Utilities\GIFHelper.cs" />
+    <Compile Include="Utilities\GIF Helper.cs" />
     <Compile Include="Utilities\JSON Models\Client Data.cs" />
     <Compile Include="Utilities\JSON Models\Language.cs" />
     <Compile Include="Utilities\JSON Models\Level Cache.cs" />
@@ -112,11 +114,11 @@
     <Compile Include="Utilities\Memory\MEMORY BASIC INFORMATION.cs" />
     <Compile Include="Utilities\Memory\NATIVE FUNCTIONS.cs" />
     <Compile Include="Utilities\PacketParser.cs" />
-    <Compile Include="Utilities\ProcAdminDetect.cs" />
+    <Compile Include="Utilities\Processing\Administrator Detection.cs" />
     <Compile Include="Utilities\Randomness.cs" />
     <Compile Include="Utilities\ReceivePacketParser.cs" />
-    <Compile Include="Utilities\RubParser.cs" />
-    <Compile Include="Utilities\SaveFile\Save File Descryptor.cs" />
+    <Compile Include="Utilities\Encryption\Robtop Parser.cs" />
+    <Compile Include="Utilities\Encryption\Save File Decryptor.cs" />
     <Compile Include="Utilities\TCP.cs" />
     <Compile Include="Utilities\Utils.cs" />
     <Page Include="MainWindow.xaml">

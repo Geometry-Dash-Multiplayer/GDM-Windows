@@ -8,9 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Multiplayer.Utilities.SaveFile
+namespace Multiplayer.Utilities.Encryption
 {
-    public static class Save_File_Descryptor
+    public static class Save_File_Decryptor
     {
         public static string UserSaveFilePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/GeometryDash/CCGameManager.dat";
 
@@ -20,9 +20,9 @@ namespace Multiplayer.Utilities.SaveFile
 			try
 			{
 				string j = File.ReadAllText(UserSaveFilePath);
-				string h = XorBD(j).Replace("_", "/").Replace("-", "+");
+				string h = Xor.XorBD(j).Replace("_", "/").Replace("-", "+");
 				var b = Convert.FromBase64String(h);
-				var g = GZipDecompress(b);
+				var g = GZip.GZipDecompress(b);
 				string a = Encoding.UTF8.GetString(g);
 
 				GDM.Player_Watcher.Memory.Icons = new byte[] {
@@ -49,41 +49,5 @@ namespace Multiplayer.Utilities.SaveFile
 				return 0;
 			}
         }
-
-        public static string XorBD(string s) {
-			List<byte> h = new List<byte>();
-			for (int i = 0; i < s.Length; i++)
-			{
-				var f = (byte)(s[i] ^ 11);
-				if (f != 0) h.Add(f);
-			}
-			return Encoding.UTF8.GetString(h.ToArray());
-		}
-		public static byte[] GZipDecompress(byte[] data)
-		{
-			byte[] array;
-			using (MemoryStream memoryStream = new MemoryStream(data))
-			{
-				using (GZipStream gZipStream = new GZipStream(memoryStream, CompressionMode.Decompress))
-				{
-					using (MemoryStream memoryStream1 = new MemoryStream())
-					{
-						byte[] numArray = new byte[4096];
-						while (true)
-						{
-							int num = gZipStream.Read(numArray, 0, (int)numArray.Length);
-							int num1 = num;
-							if (num <= 0)
-							{
-								break;
-							}
-							memoryStream1.Write(numArray, 0, num1);
-						}
-						array = memoryStream1.ToArray();
-					}
-				}
-			}
-			return array;
-		}
 	}
 }

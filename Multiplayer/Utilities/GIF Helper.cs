@@ -12,7 +12,7 @@ using Point = System.Drawing.Point;
 
 namespace Multiplayer.Utilities
 {
-    public static class GIFHelper
+    public static class GIF_Helper
     {
 
         public static void SplitGIFs(string gifLocation)

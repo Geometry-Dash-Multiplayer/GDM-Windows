@@ -203,7 +203,7 @@ namespace Multiplayer.Utilities
                     if (isGif)
                     {
                         // split gif
-                        Utilities.GIFHelper.SplitGIFs(supposedToBeTheFileNameButFFS);
+                        Utilities.GIF_Helper.SplitGIFs(supposedToBeTheFileNameButFFS);
                     }
                     return supposedToBeTheFileNameButFFS;
                 }

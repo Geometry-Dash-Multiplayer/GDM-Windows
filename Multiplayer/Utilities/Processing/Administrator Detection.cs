@@ -7,9 +7,9 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Multiplayer.Utilities
+namespace Multiplayer.Utilities.Processing
 {
-    public static class ProcAdminDetect
+    public static class Administrator_Detection
     {
         [DllImport("advapi32.dll", SetLastError = true)]
         private static extern bool OpenProcessToken(IntPtr ProcessHandle, UInt32 DesiredAccess, out IntPtr TokenHandle);

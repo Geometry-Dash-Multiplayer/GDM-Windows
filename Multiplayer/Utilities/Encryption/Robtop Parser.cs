@@ -5,14 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Multiplayer.Utilities
+namespace Multiplayer.Utilities.Encryption
 {
 
-    public class RubParser
+    public class Robtop_Parser
     {
         public string Response;
         public Dictionary<int, string> KeysAndCrates = new Dictionary<int, string>();
-        public RubParser(string response)
+        public Robtop_Parser(string response)
         {
             this.Response = response;
         }
