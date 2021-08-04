@@ -29,7 +29,8 @@ namespace Multiplayer.Utilities
                 result = Post("http://www.boomlings.com/database/getGJUsers20.php", "gameVersion=21&binaryVersion=35&gdw=0&str=" + playerID.ToString() + "&total=0&page=0&secret=Wmfd2893gb7");
             return Utils.FindTextBetween(result, "1:", ":2:");
         }
-        public static string Post(string url, string param) {
+        public static string Post(string url, string param)
+        {
             try
             {
                 var request = (HttpWebRequest)WebRequest.Create(url);
@@ -52,15 +53,18 @@ namespace Multiplayer.Utilities
                 var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
                 return responseString;
             }
-            catch { 
+            catch
+            {
 
             }
             return null;
         }
-        public static bool isVip(string id, int key = 0) {
+        public static bool isVip(string id, int key = 0)
+        {
             string url = "http://95.111.251.138/gdm/isVip.php?id=" + id.Trim() + "&cv=true&pass=" + key.ToString();
-            if (key == 0) {
-                 url = "http://95.111.251.138/gdm/isVip.php?id=" + id.Trim();
+            if (key == 0)
+            {
+                url = "http://95.111.251.138/gdm/isVip.php?id=" + id.Trim();
             }
             return bool.Parse(ReadURL(url).Result);
         }
@@ -83,20 +87,20 @@ namespace Multiplayer.Utilities
         }
         public static string GetCustomImageURL(string id, string form)
         {
-            string h = "http://95.111.251.138/gdm/getInfo.php?id=" + id + "&iid=" + form;
+            string h = $"{GDM.Globals.Endpoints.GetInfo}?id={id}&iid={form}";
             return ReadURL(h).Result;
         }
 
         public static BitmapImage GetPlayerIcon(string playerIDorUsername)
         {
-            return FromURL("http://" + GDM.Globals.Global_Data.GDBrowserEndpoint + "/icon/" + playerIDorUsername.Trim());
+            return FromURL("http://" + GDM.Globals.Endpoints.ProxiedGDBrowser + "/icon/" + playerIDorUsername.Trim());
         }
         public static string GetNewImageAsync(string url)
         {
             try
             {
                 string filename = Utilities.Randomness.rand.Next().ToString();
-                
+
                 filename += ".png";
                 string dataFolderName = GDM.Globals.Paths.DataFolder + "/" + filename;
 
@@ -114,20 +118,22 @@ namespace Multiplayer.Utilities
             return null;
         }
 
-        public static BitmapImage FromURL(string url) {
+        public static BitmapImage FromURL(string url)
+        {
             var bitmapImage = new BitmapImage();
             bitmapImage.BeginInit();
-            bitmapImage.UriSource = new Uri(url); 
+            bitmapImage.UriSource = new Uri(url);
             bitmapImage.EndInit();
             return bitmapImage;
         }
         public static string FromLevelDiff(string id)
         {
-            return "http://" + GDM.Globals.Global_Data.GDBrowserEndpoint + "/assets/difficulties/" + id.Trim().ToLower() + ".png";
+            return "http://" + GDM.Globals.Endpoints.ProxiedGDBrowser + "/assets/difficulties/" + id.Trim().ToLower() + ".png";
         }
         // unused
-        public static string PlayerDataFromID(string id) {
-            return "http://" + GDM.Globals.Global_Data.GDBrowserEndpoint + "/api/profile/" + id.Trim() + "?player=true";
+        public static string PlayerDataFromID(string id)
+        {
+            return "http://" + GDM.Globals.Endpoints.ProxiedGDBrowser + "/api/profile/" + id.Trim() + "?player=true";
         }
 
 
@@ -176,10 +182,10 @@ namespace Multiplayer.Utilities
                     var ext = client.ResponseHeaders["Extension"].Replace(".", "").ToLower();
                     isGif = ext.Contains("gif");
 
-                    string supposedToBeTheFileNameButFFS = dir+index + "." + ext;
+                    string supposedToBeTheFileNameButFFS = dir + index + "." + ext;
                     if (isGif)
                     {
-                        supposedToBeTheFileNameButFFS = dir +  index + "/" + "image.gif";
+                        supposedToBeTheFileNameButFFS = dir + index + "/" + "image.gif";
                     }
                     if (File.Exists(supposedToBeTheFileNameButFFS) && IsFileLocked(supposedToBeTheFileNameButFFS))
                     {
@@ -205,7 +211,7 @@ namespace Multiplayer.Utilities
                 {
                     // its a png
                     var ext = "png";
-                    string supposedToBeTheFileNameButFFS = dir +  index + "." + ext;
+                    string supposedToBeTheFileNameButFFS = dir + index + "." + ext;
                     if (File.Exists(supposedToBeTheFileNameButFFS) && IsFileLocked(supposedToBeTheFileNameButFFS))
                     {
                         return supposedToBeTheFileNameButFFS;

@@ -71,8 +71,6 @@ namespace Multiplayer.GDM.Globals
         public static string DLLPath = AppDomain.CurrentDomain.BaseDirectory + @"\Multiplayer.dll";
         public static Utilities.JSON_Models.Players ActiveModel;
         public static bool LevelStatsShow = false;
-        public static string GDBrowserEndpoint = "95.111.251.138:2000"; // -1 if no shit
-            // "194.233.71.142:8080";
         public static void HandleException(Exception ex)
         {
             Utilities.Utils.HandleException(ex);

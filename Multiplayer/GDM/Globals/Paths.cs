@@ -9,15 +9,15 @@ namespace Multiplayer.GDM.Globals
 {
     public static class Paths
     {
-        public static string DataFolder = Path.GetFullPath(Path.GetTempPath() + "/gdm");
-        public static string GDMTempDataFile = Path.GetFullPath(DataFolder + "/gdm.dat");
-        public static string JsonInputFile = Path.GetFullPath(DataFolder + "/in.dat");
-        public static string IconsFolder = Path.GetFullPath(DataFolder + "/icons");
-        public static string TempIcons = Path.GetFullPath(DataFolder + "/temp_icons");
-        public static string SelfIconsFolder = Path.GetFullPath(IconsFolder + "/0") + "/";
+        public static readonly string DataFolder = Path.GetFullPath(Path.GetTempPath() + "/gdm");
+        public static readonly string GDMTempDataFile = Path.GetFullPath(DataFolder + "/gdm.dat");
+        public static readonly string JsonInputFile = Path.GetFullPath(DataFolder + "/in.dat");
+        public static readonly string IconsFolder = Path.GetFullPath(DataFolder + "/icons");
+        public static readonly string TempIcons = Path.GetFullPath(DataFolder + "/temp_icons");
+        public static readonly string SelfIconsFolder = Path.GetFullPath(IconsFolder + "/0") + "/";
 
-        public static string LevelsCache = Path.GetFullPath(DataFolder + "/levels_cache.dat");
-        public static string UsernamesCache = Path.GetFullPath(DataFolder + "/usernames_cache.dat");
-        public static string UserDataFile = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/Alizer/gdm.dat";
+        public static readonly string LevelsCache = Path.GetFullPath(DataFolder + "/levels_cache.dat");
+        public static readonly string UsernamesCache = Path.GetFullPath(DataFolder + "/usernames_cache.dat");
+        public static readonly string UserDataFile = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/Alizer/gdm.dat";
     }
 }

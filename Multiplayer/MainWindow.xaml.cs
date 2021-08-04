@@ -34,19 +34,6 @@ namespace Multiplayer
                 Utilities.Utils.HandleException(eventArgs.Exception, "Noise", true);
             };
             this.WindowStyle = WindowStyle.SingleBorderWindow;
-            // very important
-            Task.Run(() =>
-            {
-                try
-                {
-                    GDM.Globals.Global_Data.GDBrowserEndpoint =
-                     Utilities.TCP.ReadURL("http://95.111.251.138/gdm/getGDBrowserEndpoint.php").Result;
-                }
-                catch (Exception ex)
-                {
-                    GDM.Globals.Global_Data.HandleException(ex);
-                }
-            });
 
             GDM.Globals.Global_Data.Main = this;
 

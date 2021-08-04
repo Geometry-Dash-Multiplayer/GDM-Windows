@@ -80,6 +80,7 @@
     </ApplicationDefinition>
     <Compile Include="GDM\Client\Client.cs" />
     <Compile Include="GDM\Client\Player Data.cs" />
+    <Compile Include="GDM\Globals\Endpoints.cs" />
     <Compile Include="GDM\Globals\Paths.cs" />
     <Compile Include="GDM\Load Language.cs" />
     <Compile Include="GDM\Player Watcher\Cached Addresses.cs" />
