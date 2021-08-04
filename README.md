@@ -1,3 +1,6 @@
+<p align="center">
+  <img src="Repo/product.png" alt="Sublime's custom image"/>
+</p>
 <div>
   <img width="220" height="210" align="left" src="Repo/logo.png" alt="LoveLetter"/>
   <br>
