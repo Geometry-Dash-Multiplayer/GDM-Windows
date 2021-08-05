@@ -507,20 +507,6 @@ namespace Multiplayer
             settings.IsOpen = false;
         }
 
-        private void SetLangEn(object sender, MouseButtonEventArgs e)
-        {
-            UserPref.Lang = "en";
-            GDM.Load_Language.Load();
-            langs.IsOpen = false;
-        }
-
-        private void SetLangRu(object sender, MouseButtonEventArgs e)
-        {
-            UserPref.Lang = "ru";
-            GDM.Load_Language.Load();
-            langs.IsOpen = false;
-        }
-
         private void changelang(object sender, RoutedEventArgs e)
         {
             langs.IsOpen = true;
@@ -563,15 +549,6 @@ namespace Multiplayer
         {
             StartAnimation("ShowAbout_R");
         }
-
-        private void SetLangSp(object sender, MouseButtonEventArgs e)
-        {
-
-            UserPref.Lang = "es";
-            GDM.Load_Language.Load();
-            langs.IsOpen = false;
-        }
-
         private void OpenServer(object sender, MouseButtonEventArgs e)
         {
             var ui_sender = sender as FrameworkElement;
@@ -590,12 +567,16 @@ namespace Multiplayer
             e.Handled = true;
         }
 
-        private void SetLangPt(object sender, MouseButtonEventArgs e)
-        {
+        public void SetLang(string code) {
 
-            UserPref.Lang = "pt";
+            UserPref.Lang = code;
             GDM.Load_Language.Load();
             langs.IsOpen = false;
+        }
+        private void SetLang(object sender, MouseButtonEventArgs e)
+        {
+            var control = sender as FrameworkElement;
+            SetLang(control.Tag.ToString());
         }
     }
 }
