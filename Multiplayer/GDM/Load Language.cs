@@ -74,6 +74,9 @@ namespace Multiplayer.GDM
             Globals.Global_Data.Main.areusernamescached.Header = Globals.Global_Data.Lang.Usernames;
             Globals.Global_Data.Main.clearcache.Header = Globals.Global_Data.Lang.ClearCache;
             Globals.Global_Data.Main.about.Content = Globals.Global_Data.Lang.About;
+            Globals.Global_Data.Main.window_name.Text = Globals.Global_Data.Lang.WindowName;
+            Globals.Global_Data.Main.filename.Text = Globals.Global_Data.Lang.FileName;
+
 
         }
         public static void SaveJSON() {
