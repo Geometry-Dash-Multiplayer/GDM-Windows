@@ -29,18 +29,26 @@ namespace Multiplayer
         public MainWindow()
         {
             InitializeComponent();
+
             AppDomain.CurrentDomain.FirstChanceException += (sender, eventArgs) =>
             {
                 Utilities.Utils.HandleException(eventArgs.Exception, "Noise", true);
             };
+
             this.WindowStyle = WindowStyle.SingleBorderWindow;
-
-            GDM.Globals.Global_Data.Main = this;
-
-            Master = new GDM.Initialize(this);
+            this.StateChanged += MainWindow_StateChanged;
 
             Placeholders.Visibility = Visibility.Collapsed;
             pl_pop_lvl_container.Visibility = Visibility.Collapsed;
+            settings.Visibility = Visibility.Visible;
+            border6.Opacity = 0;
+
+            vinfo.Text = "public release " + GDM.Globals.Global_Data.Version.ToString("0.00") + "-main";
+
+            GDM.Globals.Global_Data.Main = this;
+
+            GDM.Player_Watcher.Memory.Start();
+            Master = new GDM.Initialize(this);
         }
 
         private void MoveWindow(object sender, MouseButtonEventArgs e)
@@ -51,30 +59,11 @@ namespace Multiplayer
 
         private void WindowLoaded(object sender, RoutedEventArgs e)
         {
-
             UI.TransparencyFix transparencyFix = new UI.TransparencyFix(this);
             transparencyFix.MakeTransparent();
 
             if (!UserPref.IsVIP)
-                Task.Run(() =>
-                {
-                    Task.Delay(3000);
-                    StartAnimation("ShowCost");
-                });
-
-            settings.Visibility = Visibility.Visible;
-            this.StateChanged += MainWindow_StateChanged;
-
-            GDM.Player_Watcher.Memory.Start();
-            foreach (var foo in Enum.GetValues(typeof(Utilities.FormLongs)))
-            {
-                GDM.Client.Client.IconsAndIDs.Add((int)foo, foo.ToString());
-            }
-            vinfo.Text = "public release " + GDM.Globals.Global_Data.Version.ToString("0.00") + "-main";
-            border6.Opacity = 0;
-
-            // MessageBox.Show((RenderCapability.Tier >> 16).ToString());
-
+                StartAnimation("ShowCost");
         }
 
         private void MainWindow_StateChanged(object sender, EventArgs e)
@@ -567,7 +556,8 @@ namespace Multiplayer
             e.Handled = true;
         }
 
-        public void SetLang(string code) {
+        public void SetLang(string code)
+        {
 
             UserPref.Lang = code;
             GDM.Load_Language.Load();

@@ -36,10 +36,14 @@ namespace Multiplayer.GDM
             GDM.Load_Language.Load();
             WebRequest.DefaultWebProxy = null;
             Globals.Global_Data.Initializer = this;
+
+            foreach (var foo in Enum.GetValues(typeof(Utilities.FormLongs)))
+            {
+                GDM.Client.Client.IconsAndIDs.Add((int)foo, foo.ToString());
+            }
         }
         public void LoadCaches()
         {
-            // because robtop servers are hosted on a laptop from 2003
             if (!File.Exists(Globals.Paths.LevelsCache)) File.Create(Globals.Paths.LevelsCache).Close();
             Utilities.JSON_Models.Level_Cache.LevelIDandData = JsonConvert.DeserializeObject<Dictionary<int, string>>(
                 File.ReadAllText(Globals.Paths.LevelsCache)
