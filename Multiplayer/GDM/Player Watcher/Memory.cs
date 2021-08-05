@@ -101,9 +101,6 @@ namespace Multiplayer.GDM.Player_Watcher
                                 (IntPtr)Cached_Addresses.Icon2FormAddr,
                                 Cached_Addresses.Player2GravityAddress);
 
-
-                            Debug.WriteLine($"y post: {P1.y_position}");
-
                             RefreshLevelInformation();
 
                             if (P1.y_position == 0) // if not on level
@@ -121,8 +118,6 @@ namespace Multiplayer.GDM.Player_Watcher
 
                                 if (GDM.Globals.Global_Data.Connection != null)
                                     GDM.Globals.Global_Data.Connection.Send(Array2);
-
-                                Debug.WriteLine("Initializing address");
 
                                 ClearPlayers();
 

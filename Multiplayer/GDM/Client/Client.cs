@@ -158,7 +158,6 @@ namespace Multiplayer.GDM.Client
 
                                     Globals.Global_Data.HandleException(ex);
                                 }
-
                             }));
                     }
                 }
