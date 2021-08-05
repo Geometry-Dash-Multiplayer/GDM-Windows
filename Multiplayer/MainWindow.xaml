@@ -18,7 +18,8 @@
         ResizeMode="CanResize"
         UseLayoutRounding="True"
         Closing="Closing_"    
-    MaxWidth="510" SizeChanged="SizeChangedf"
+    MinHeight="500" MinWidth="300"
+        MaxWidth="510" SizeChanged="SizeChangedf"
         Title="Geometry Dash Multiplayer" Height="500" Width="510"  Background="{x:Null}" MouseDown="MoveWindow" Loaded="WindowLoaded" Foreground="White" FontFamily="{DynamicResource TTNorms}" Icon="icon.ico">
     <Window.Resources>
         <SolidColorBrush x:Key="StandardBorderBrush" Color="#888" />
