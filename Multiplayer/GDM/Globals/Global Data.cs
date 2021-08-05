@@ -39,30 +39,8 @@ namespace Multiplayer.GDM.Globals
         public static int VipKey = 0;
 
         public static bool PlayerIDLoaded = false;
+
         public static int PlayerID = 0;
-        public static int BaseAddr = 0x3222D0; //
-        public static int Player1 = 0x224;
-        public static int Player2 = 0x228;
-        public static int[] RealTimePlayerOffsets1 = new int[] { 0x164, Player1 };
-        public static int[] RealTimePlayerOffsets2 = new int[] { 0x164, Player2 };
-        public static int Xpos = 0x67C;
-        public static int Ypos = 0x680;
-        public static int Xrotation = 0x020;
-        public static int Yrotation = 0x024;
-        public static int PlayerSize = 0x644;
-        public static int PlayerForm = 0x638;
-        public static int IsGlow = 0x27C;
-        public static int AddrPlayerID = 0x1BC;
-        public static int IconFormOffset = 0x638;
-        public static int GravityOffset = 0x63E;
-        public static int[] LevelObjectsCountOffsets = new int[] { 0x164, 0x22c, 0x114, 0x1d8 };
-        public static int[] IsDead = new int[] { 0x164, 0x39C };
-        public static int[] LevelLengthOffets1 = new int[] { 0x164, 0x3B4 };
-        public static float LevelLength = 0;
-        public static int[] AttemptOffsets1 = new int[] { 0x164, 0x39C };
-        public static int[] AttemptOffsets2 = new int[] { 0x164, 0x39C };
-        public static int LevelIDOffset = 0x2A0;
-        public static int AttemptAddr = 0;
         public static string Username = "";
         public static JSONData JSONCommunication;
         public static string VersionLink = "https://adaf.xyz/gdm/update.version";

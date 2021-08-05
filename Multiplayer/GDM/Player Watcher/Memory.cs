@@ -83,7 +83,7 @@ namespace Multiplayer.GDM.Player_Watcher
                             while (!GDM.Globals.Global_Data.IsConnected) { Thread.Sleep(1000); }
                             Globals.Global_Data.LevelID = LevelID;
                             LevelID = GetLevelID();
-                            IsDead = aMemory.ReadMemory<byte>((IntPtr)Globals.Global_Data.AttemptAddr);
+                            IsDead = aMemory.ReadMemory<byte>((IntPtr)Globals.Addresses.AttemptAddr);
 
                             var P1 = GetPositionMemoryFromAddress(
                                 (IntPtr)Cached_Addresses.X1Position_StaticAddress,
@@ -214,7 +214,7 @@ namespace Multiplayer.GDM.Player_Watcher
         {
             if (!GDM.Globals.Global_Data.PlayerIDLoaded)
             {
-                var pLid = aMemory.ReadMemory<int>((IntPtr)Cached_Addresses.ModuleBaseAddr + GDM.Globals.Global_Data.AddrPlayerID);
+                var pLid = aMemory.ReadMemory<int>((IntPtr)Cached_Addresses.ModuleBaseAddr + GDM.Globals.Addresses.AddrPlayerID);
                 if (pLid != GDM.Globals.Global_Data.PlayerID)
                 {
                     GDM.Globals.Global_Data.PlayerID = pLid;
@@ -275,49 +275,41 @@ namespace Multiplayer.GDM.Player_Watcher
                 aMemory = new Utilities.Memory.aMemory(gd);
             aMemory.InitProc(gd);
             aMemory.dllInject(GDM.Globals.Global_Data.DLLPath);
-            Cached_Addresses.ModuleBaseAddr = aMemory.ReadMemory<int>((IntPtr)aMemory.GetModuleAddress(GDM.Globals.Global_Data.Main.UserPref.MainModule) + GDM.Globals.Global_Data.BaseAddr);
+            Cached_Addresses.ModuleBaseAddr = aMemory.ReadMemory<int>((IntPtr)aMemory.GetModuleAddress(GDM.Globals.Global_Data.Main.UserPref.MainModule) + GDM.Globals.Addresses.BaseAddr);
             int u1 = Cached_Addresses.ModuleBaseAddr;
-            foreach (var i in GDM.Globals.Global_Data.RealTimePlayerOffsets1) u1 = aMemory.ReadMemory<int>((IntPtr)u1 + i);
+            foreach (var i in GDM.Globals.Addresses.Player1Layer) u1 = aMemory.ReadMemory<int>((IntPtr)u1 + i);
             int u2 = Cached_Addresses.ModuleBaseAddr;
-            foreach (var i in GDM.Globals.Global_Data.RealTimePlayerOffsets2) u2 = aMemory.ReadMemory<int>((IntPtr)u2 + i);
-            Cached_Addresses.X1Position_StaticAddress = u1 + GDM.Globals.Global_Data.Xpos;
-            Cached_Addresses.Y1Position_StaticAddress = u1 + GDM.Globals.Global_Data.Ypos;
-            Cached_Addresses.X1Rotation_StaticAddress = u1 + GDM.Globals.Global_Data.Xrotation;
-            Cached_Addresses.Y1Rotation_StaticAddress = u1 + GDM.Globals.Global_Data.Yrotation;
-            Cached_Addresses.Size1_StaticAddress = u1 + GDM.Globals.Global_Data.PlayerSize;
-            Cached_Addresses.Icon1FormAddr = u1 + GDM.Globals.Global_Data.IconFormOffset;
-            Cached_Addresses.Player1GravityAddress = (IntPtr)u1 + GDM.Globals.Global_Data.GravityOffset;
-            Cached_Addresses.X2Position_StaticAddress = u2 + GDM.Globals.Global_Data.Xpos;
-            Cached_Addresses.Y2Position_StaticAddress = u2 + GDM.Globals.Global_Data.Ypos;
-            Cached_Addresses.X2Rotation_StaticAddress = u2 + GDM.Globals.Global_Data.Xrotation;
-            Cached_Addresses.Y2Rotation_StaticAddress = u2 + GDM.Globals.Global_Data.Yrotation;
-            Cached_Addresses.Size2_StaticAddress = u2 + GDM.Globals.Global_Data.PlayerSize;
-            Cached_Addresses.Icon2FormAddr = u2 + GDM.Globals.Global_Data.IconFormOffset;
-            Cached_Addresses.Player1GravityAddress = (IntPtr)u2 + GDM.Globals.Global_Data.GravityOffset;
+            foreach (var i in GDM.Globals.Addresses.Player2Layer) u2 = aMemory.ReadMemory<int>((IntPtr)u2 + i);
+            Cached_Addresses.X1Position_StaticAddress = u1 + GDM.Globals.Addresses.XPositionOffset;
+            Cached_Addresses.Y1Position_StaticAddress = u1 + GDM.Globals.Addresses.YPositionOffset;
+            Cached_Addresses.X1Rotation_StaticAddress = u1 + GDM.Globals.Addresses.XRotationOffset;
+            Cached_Addresses.Y1Rotation_StaticAddress = u1 + GDM.Globals.Addresses.YRotationOffset;
+            Cached_Addresses.Size1_StaticAddress = u1 + GDM.Globals.Addresses.PlayerSizeOffset;
+            Cached_Addresses.Icon1FormAddr = u1 + GDM.Globals.Addresses.IconFormOffset;
+            Cached_Addresses.Player1GravityAddress = (IntPtr)u1 + GDM.Globals.Addresses.GravityOffset;
+            Cached_Addresses.X2Position_StaticAddress = u2 + GDM.Globals.Addresses.XPositionOffset;
+            Cached_Addresses.Y2Position_StaticAddress = u2 + GDM.Globals.Addresses.YPositionOffset;
+            Cached_Addresses.X2Rotation_StaticAddress = u2 + GDM.Globals.Addresses.XRotationOffset;
+            Cached_Addresses.Y2Rotation_StaticAddress = u2 + GDM.Globals.Addresses.YRotationOffset;
+            Cached_Addresses.Size2_StaticAddress = u2 + GDM.Globals.Addresses.PlayerSizeOffset;
+            Cached_Addresses.Icon2FormAddr = u2 + GDM.Globals.Addresses.IconFormOffset;
+            Cached_Addresses.Player1GravityAddress = (IntPtr)u2 + GDM.Globals.Addresses.GravityOffset;
             InitClient();
             int lvAddr = 0;
             lvAddr = Cached_Addresses.ModuleBaseAddr;
-            lvAddr = aMemory.ReadMemory<int>((IntPtr)lvAddr + GDM.Globals.Global_Data.LevelLengthOffets1[0]);
-            Globals.Global_Data.LevelLength = aMemory.ReadMemory<float>((IntPtr)lvAddr + GDM.Globals.Global_Data.LevelLengthOffets1[1]);
-            Cached_Addresses.LevelLengthAddr = (IntPtr)lvAddr + GDM.Globals.Global_Data.LevelLengthOffets1[1];
-            int lvlobjcount = Cached_Addresses.ModuleBaseAddr;
-            lvlobjcount = aMemory.ReadMemory<int>((IntPtr)lvlobjcount + GDM.Globals.Global_Data.LevelObjectsCountOffsets[0]);
-            lvlobjcount = aMemory.ReadMemory<int>((IntPtr)lvlobjcount + GDM.Globals.Global_Data.LevelObjectsCountOffsets[1]);
-            lvlobjcount = aMemory.ReadMemory<int>((IntPtr)lvlobjcount + GDM.Globals.Global_Data.LevelObjectsCountOffsets[2]);
-            Cached_Addresses.LevelObjectsListAddr = (IntPtr)lvlobjcount + GDM.Globals.Global_Data.LevelObjectsCountOffsets[3];
-            Globals.Global_Data.AttemptAddr = Cached_Addresses.ModuleBaseAddr;
-            Globals.Global_Data.AttemptAddr = aMemory.ReadMemory<int>((IntPtr)GDM.Globals.Global_Data.AttemptAddr + GDM.Globals.Global_Data.AttemptOffsets1[0]);
-            Globals.Global_Data.AttemptAddr = GDM.Globals.Global_Data.AttemptAddr + GDM.Globals.Global_Data.AttemptOffsets1[1];
-            Cached_Addresses.LevelAddr = (IntPtr)Cached_Addresses.ModuleBaseAddr + GDM.Globals.Global_Data.LevelIDOffset;
+            lvAddr = aMemory.ReadMemory<int>((IntPtr)lvAddr + GDM.Globals.Addresses.LevelLengthOffets1[0]);
+            Globals.Addresses.LevelLength = aMemory.ReadMemory<float>((IntPtr)lvAddr + GDM.Globals.Addresses.LevelLengthOffets1[1]);
+            Cached_Addresses.LevelLengthAddr = (IntPtr)lvAddr + GDM.Globals.Addresses.LevelLengthOffets1[1];
+            Cached_Addresses.LevelAddr = (IntPtr)Cached_Addresses.ModuleBaseAddr + GDM.Globals.Addresses.LevelIDOffset;
             int nLevelID = GetLevelID();
             if (LevelID != nLevelID)
             {
                 LevelID = nLevelID;
+                // wtf
                 new Thread(() =>
                 {
                     GDM.Globals.Global_Data.Initializer.LoadLevelID(nLevelID);
                 }).Start();
-
             }
             Cached_Addresses.CubeIconAddr1 = (IntPtr)Cached_Addresses.ModuleBaseAddr + 0x1E8;
             Cached_Addresses.ShipIconAddr1 = (IntPtr)Cached_Addresses.ModuleBaseAddr + 0x1F4;
@@ -330,9 +322,9 @@ namespace Multiplayer.GDM.Player_Watcher
             Col1 = (byte)(aMemory.ReadMemory<byte>(Cached_Addresses.Color1Addr) - aMemory.ReadMemory<byte>(Cached_Addresses.Color1Addr + 0x4));
             Cached_Addresses.Color2Addr = (IntPtr)Cached_Addresses.ModuleBaseAddr + 0x248;
             Col2 = (byte)(aMemory.ReadMemory<byte>(Cached_Addresses.Color2Addr) - aMemory.ReadMemory<byte>(Cached_Addresses.Color2Addr + 0x4));
-            IsGlow = aMemory.ReadMemory<byte>((IntPtr)Cached_Addresses.ModuleBaseAddr + GDM.Globals.Global_Data.IsGlow);
+            IsGlow = aMemory.ReadMemory<byte>((IntPtr)Cached_Addresses.ModuleBaseAddr + GDM.Globals.Addresses.IsGlow);
             Icons = GetIconIDs();
-            var pLid2 = aMemory.ReadMemory<int>((IntPtr)Cached_Addresses.ModuleBaseAddr + GDM.Globals.Global_Data.AddrPlayerID);
+            var pLid2 = aMemory.ReadMemory<int>((IntPtr)Cached_Addresses.ModuleBaseAddr + GDM.Globals.Addresses.AddrPlayerID);
             if (!Globals.Global_Data.PlayerIDLoaded)
             {
                 Globals.Global_Data.PlayerID = pLid2;

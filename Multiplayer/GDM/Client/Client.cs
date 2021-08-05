@@ -128,7 +128,7 @@ namespace Multiplayer.GDM.Client
                     {
                         float y = BitConverter.ToSingle(BitConverter.GetBytes(player_1.x_position), 0);
 
-                        float percentage = (y / Globals.Global_Data.LevelLength) * 100;
+                        float percentage = (y / Globals.Addresses.LevelLength) * 100;
                         double j = Math.Round(percentage, 2, MidpointRounding.AwayFromZero);
 
                         if (represent != null)
