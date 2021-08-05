@@ -75,9 +75,7 @@ namespace Multiplayer.GDM.Player_Watcher
 
                         InitializeJSON();
 
-                        int LevelID = 0;
                         byte IsDead = 0;
-
                         while (!gd.HasExited)
                         {
                             while (!GDM.Globals.Global_Data.IsConnected) { Thread.Sleep(1000); }
@@ -104,9 +102,12 @@ namespace Multiplayer.GDM.Player_Watcher
                                 Cached_Addresses.Player2GravityAddress);
 
 
-                            if (LevelID == 0 || P1.y_position == 0) // if not on level
-                            {
+                            Debug.WriteLine($"y post: {P1.y_position}");
 
+                            RefreshLevelInformation();
+
+                            if (P1.y_position == 0) // if not on level
+                            {
                                 if (!HasSentDc)
                                 {
                                     var Array = Utilities.PacketParser.OutsideLevel();
@@ -120,14 +121,24 @@ namespace Multiplayer.GDM.Player_Watcher
 
                                 if (GDM.Globals.Global_Data.Connection != null)
                                     GDM.Globals.Global_Data.Connection.Send(Array2);
+
                                 Debug.WriteLine("Initializing address");
+
+                                ClearPlayers();
+
+                                RefreshPositionAddresses();
+
                                 InitializeAddressList();
+
                                 Thread.Sleep(1000);
                             }
                             else // if on level
                             {
 
+                                RefreshPositionAddresses();
+
                                 HasSentDc = false;
+
                                 GDM.Globals.Global_Data.IsPlayingLevel = true;
                                 // send to server
                                 Icons = GetIconIDs();
@@ -251,10 +262,8 @@ namespace Multiplayer.GDM.Player_Watcher
                 }).Start();
             }
         }
+        public static void ClearPlayers() {
 
-        // my favorite method
-        public static void InitializeAddressList()
-        {
             if (GDM.Globals.Global_Data.Connection != null)
                 if (GDM.Globals.Global_Data.Connection.model.players.Count > 0)
                     foreach (var g in GDM.Globals.Global_Data.Connection.model.players.ToList())
@@ -269,13 +278,17 @@ namespace Multiplayer.GDM.Player_Watcher
                             Utilities.Utils.HandleException(ex);
                         }
                     }
-            if (GDM.Globals.Global_Data.JSONCommunication != null) GDM.Globals.Global_Data.JSONCommunication.Clear();
-            GDM.Globals.Global_Data.Initializer.ClearPlayers();
-            if (aMemory == null)
-                aMemory = new Utilities.Memory.aMemory(gd);
-            aMemory.InitProc(gd);
-            aMemory.dllInject(GDM.Globals.Global_Data.DLLPath);
-            Cached_Addresses.ModuleBaseAddr = aMemory.ReadMemory<int>((IntPtr)aMemory.GetModuleAddress(GDM.Globals.Global_Data.Main.UserPref.MainModule) + GDM.Globals.Addresses.BaseAddr);
+        }
+        public static void RefreshLevelInformation() {
+            int lvAddr = 0;
+            lvAddr = Cached_Addresses.ModuleBaseAddr;
+            lvAddr = aMemory.ReadMemory<int>((IntPtr)lvAddr + GDM.Globals.Addresses.LevelLengthOffets1[0]);
+            Globals.Addresses.LevelLength = aMemory.ReadMemory<float>((IntPtr)lvAddr + GDM.Globals.Addresses.LevelLengthOffets1[1]);
+
+            Cached_Addresses.LevelLengthAddr = (IntPtr)lvAddr + GDM.Globals.Addresses.LevelLengthOffets1[1];
+            Cached_Addresses.LevelAddr = (IntPtr)Cached_Addresses.ModuleBaseAddr + GDM.Globals.Addresses.LevelIDOffset;
+        }
+        public static void RefreshPositionAddresses() {
             int u1 = Cached_Addresses.ModuleBaseAddr;
             foreach (var i in GDM.Globals.Addresses.Player1Layer) u1 = aMemory.ReadMemory<int>((IntPtr)u1 + i);
             int u2 = Cached_Addresses.ModuleBaseAddr;
@@ -294,13 +307,23 @@ namespace Multiplayer.GDM.Player_Watcher
             Cached_Addresses.Size2_StaticAddress = u2 + GDM.Globals.Addresses.PlayerSizeOffset;
             Cached_Addresses.Icon2FormAddr = u2 + GDM.Globals.Addresses.IconFormOffset;
             Cached_Addresses.Player1GravityAddress = (IntPtr)u2 + GDM.Globals.Addresses.GravityOffset;
+        }
+        // my favorite method
+        public static void InitializeAddressList()
+        {
+            if (GDM.Globals.Global_Data.JSONCommunication != null) GDM.Globals.Global_Data.JSONCommunication.Clear();
+            if (GDM.Globals.Global_Data.Initializer != null) GDM.Globals.Global_Data.Initializer.ClearPlayers();
+
+            aMemory = aMemory ?? new Utilities.Memory.aMemory(gd);
+            aMemory.InitProc(gd);
+            aMemory.dllInject(GDM.Globals.Global_Data.DLLPath);
+
+            Cached_Addresses.ModuleBaseAddr = aMemory.ReadMemory<int>((IntPtr)aMemory.GetModuleAddress(GDM.Globals.Global_Data.Main.UserPref.MainModule) + GDM.Globals.Addresses.BaseAddr);
+            RefreshPositionAddresses();
             InitClient();
-            int lvAddr = 0;
-            lvAddr = Cached_Addresses.ModuleBaseAddr;
-            lvAddr = aMemory.ReadMemory<int>((IntPtr)lvAddr + GDM.Globals.Addresses.LevelLengthOffets1[0]);
-            Globals.Addresses.LevelLength = aMemory.ReadMemory<float>((IntPtr)lvAddr + GDM.Globals.Addresses.LevelLengthOffets1[1]);
-            Cached_Addresses.LevelLengthAddr = (IntPtr)lvAddr + GDM.Globals.Addresses.LevelLengthOffets1[1];
-            Cached_Addresses.LevelAddr = (IntPtr)Cached_Addresses.ModuleBaseAddr + GDM.Globals.Addresses.LevelIDOffset;
+
+            RefreshLevelInformation();
+
             int nLevelID = GetLevelID();
             if (LevelID != nLevelID)
             {

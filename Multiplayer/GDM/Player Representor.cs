@@ -264,7 +264,7 @@ namespace Multiplayer.GDM
             };
             try
             {
-                ImageBehavior.SetAnimatedSource(_iconpfp, Utilities.TCP.GetPlayerIcon(_client.id.ToString()));
+                // ImageBehavior.SetAnimatedSource(_iconpfp, Utilities.TCP.GetPlayerIcon(_client.id.ToString()));
                 // ImageBehavior.SetAnimatedSource(Main.image6, h);
             }
             catch (Exception ex){

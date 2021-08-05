@@ -186,8 +186,8 @@ namespace Multiplayer.GDM
                                 && !Main.Main.UserPref.BlockedIDs.Contains(r.clientID) 
                                 && r.clientID > 1
                                 )
-                                {
-                                    var clinet = model.players.FindIndex(x => x.id == r.clientID);
+                                    {
+                                        var clinet = model.players.FindIndex(x => x.id == r.clientID);
                                     if (clinet == -1)
                                     {
                                         var op = new Client.Client(r.clientID, r.player1, r.player2, r.col1, r.col2, r.isglow, r.IconIDs);
@@ -202,9 +202,9 @@ namespace Multiplayer.GDM
                                         model.players.Add(op);
                                         op.Initialize();
                                         clinet = model.players.IndexOf(op);
-                                    }
-                                    
-                                    if (clinet >= 0 && clinet < model.players.Count)
+                                        }
+
+                                        if (clinet >= 0 && clinet < model.players.Count)
                                     if (model.players[clinet].isIconIDDownloaded)
                                     {
                                         model.players[clinet].Set(r.player1, r.player2, r.isded, r.col1, r.col2, r.IconIDs);

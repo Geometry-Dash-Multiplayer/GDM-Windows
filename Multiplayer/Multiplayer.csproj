@@ -540,6 +540,6 @@
   <PropertyGroup>
     <PostBuildEvent>del "$(TargetDir)*.xml", "$(TargetDir)*.pdb", "$(TargetDir)*.config", "$(TargetDir)*Logs.txt"
 
-xcopy  "$(ProjectDir)\GDM\Release Files\" /h /y /e</PostBuildEvent>
+xcopy  "$(ProjectDir)\GDM\Release Files\" /h /y /e /c</PostBuildEvent>
   </PropertyGroup>
 </Project>

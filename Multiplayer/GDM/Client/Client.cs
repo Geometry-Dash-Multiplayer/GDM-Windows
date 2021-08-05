@@ -137,19 +137,21 @@ namespace Multiplayer.GDM.Client
                                 try
                                 {
                                     var g = GetCurrentStatic(this.id);
-                                    if (IsDead == 0)
-                                    {
-                                        // put to top if percent high
-                                        g.represent.SetStatus("Playing " + j.ToString() + "%");
-                                        g.represent.TurnProgToColor();
-                                    }
-                                    else
-                                    {
-                                        g.represent.SetStatus("Died " + j.ToString() + "%");
-                                        g.represent.TurnProgToColor("#f54242", 100);
-                                    }
+                                 
+                                        if (IsDead == 0)
+                                        {
+                                            // put to top if percent high
+                                            g.represent.SetStatus("Playing " + j.ToString() + "%");
+                                            g.represent.TurnProgToColor();
+                                        }
+                                        else
+                                        {
+                                            g.represent.SetStatus("Died " + j.ToString() + "%");
+                                            g.represent.TurnProgToColor("#f54242", 100);
+                                        }
 
-                                    g.represent.SetProgress(Convert.ToInt32(j));
+                                        g.represent.SetProgress(Convert.ToInt32(j));
+                                    
                                 }
                                 catch (Exception ex)
                                 {
@@ -159,8 +161,6 @@ namespace Multiplayer.GDM.Client
 
                             }));
                     }
-                    //  player.FirstOrDefault().isIconIDDownloaded = true;
-                    // player.FirstOrDefault().represent.DoneIcons(this.username);
                 }
                 else
                 {
