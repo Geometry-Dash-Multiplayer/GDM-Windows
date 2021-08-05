@@ -137,21 +137,21 @@ namespace Multiplayer.GDM.Client
                                 try
                                 {
                                     var g = GetCurrentStatic(this.id);
-                                 
-                                        if (IsDead == 0)
-                                        {
-                                            // put to top if percent high
-                                            g.represent.SetStatus("Playing " + j.ToString() + "%");
-                                            g.represent.TurnProgToColor();
-                                        }
-                                        else
-                                        {
-                                            g.represent.SetStatus("Died " + j.ToString() + "%");
-                                            g.represent.TurnProgToColor("#f54242", 100);
-                                        }
 
-                                        g.represent.SetProgress(Convert.ToInt32(j));
-                                    
+                                    if (IsDead == 0)
+                                    {
+                                        // put to top if percent high
+                                        g.represent.SetStatus("Playing " + j.ToString() + "%");
+                                        g.represent.TurnProgToColor();
+                                    }
+                                    else
+                                    {
+                                        g.represent.SetStatus("Died " + j.ToString() + "%");
+                                        g.represent.TurnProgToColor("#f54242", 100);
+                                    }
+
+                                    g.represent.SetProgress(Convert.ToInt32(j));
+
                                 }
                                 catch (Exception ex)
                                 {
@@ -314,7 +314,6 @@ namespace Multiplayer.GDM.Client
                             {
                                 try
                                 {
-
                                     var prog = (u / 6f) * 100f;
                                     if (_g.represent != null)
                                     {
@@ -389,7 +388,6 @@ namespace Multiplayer.GDM.Client
             {
                 if (IconsAlreadyLoaded.Contains(this.id))
                 {
-
                     try
                     {
                         if (IsVIP == 0x1)
@@ -414,14 +412,14 @@ namespace Multiplayer.GDM.Client
                     if (File.Exists(j))
                         Application.Current.Dispatcher.Invoke(new Action(() =>
                         {
-                            //try
-                            //{
-                            //    represent.SetVIPIcon(j);
-                            //}
-                            //catch (Exception ex)
-                            //{
-                            //    Utilities.Utils.HandleException(ex);
-                            //}
+                            try
+                            {
+                                represent.SetVIPIcon(j);
+                            }
+                            catch (Exception ex)
+                            {
+                                Utilities.Utils.HandleException(ex);
+                            }
                         }));
 
                     if (represent != null)
