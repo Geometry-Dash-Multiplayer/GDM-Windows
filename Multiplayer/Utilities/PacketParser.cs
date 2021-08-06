@@ -17,7 +17,6 @@ namespace Multiplayer.Utilities
             List<byte> bytes = new List<byte>();
             bytes.Add((byte)Prefixes.Disconnext);
             bytes.AddRange(GDM.Globals.Global_Data.ClientID);
-            
             bytes.AddRange(GDM.Globals.Global_Data.Main.UserPref.Key);
             return bytes.ToArray();
         }
@@ -34,7 +33,7 @@ namespace Multiplayer.Utilities
             bytes.Add((byte)Prefixes.Ping);
             bytes.AddRange(GDM.Globals.Global_Data.ClientID);
             bytes.AddRange(GDM.Globals.Global_Data.Main.UserPref.Key);
-            bytes.AddRange(Encoding.UTF8.GetBytes("i like sex"));
+            bytes.AddRange(Encoding.UTF8.GetBytes("i like mating intercourse"));
             return bytes.ToArray();
         }
         public static byte[] OutsideLevel()
