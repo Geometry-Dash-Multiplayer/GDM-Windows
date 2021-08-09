@@ -948,7 +948,7 @@
                     </Border>
                 </materialDesign:DialogHost.DialogContent>
             </materialDesign:DialogHost>
-            <materialDesign:DialogHost x:Name="langs" IsOpen="false" d:IsHidden="True">
+            <materialDesign:DialogHost x:Name="langs" IsOpen="false" d:IsHidden="true">
                 <materialDesign:DialogHost.DialogContent>
                     <Border CornerRadius="3" Background="{DynamicResource BackgroundNormal}" Width="300" >
                         <DockPanel Margin="10">
@@ -964,7 +964,6 @@
                                     <DockPanel Width="70">
                                         <Image  DockPanel.Dock="Top" Source="UI/Images/Icons/icons8-russian-federation-80.png"></Image>
                                         <Label  DockPanel.Dock="Top" Content="Русский" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                                        <Label  DockPanel.Dock="Top" Content="by LolsShow" VerticalAlignment="Top" FontSize="10" Foreground="#7FFFFFFF" HorizontalAlignment="Center"/>
                                     </DockPanel>
                                 </DockPanel>
                             </Grid>
@@ -973,14 +972,12 @@
                                     <DockPanel HorizontalAlignment="Left" Width="70">
                                         <Image  DockPanel.Dock="Top" Source="UI/Images/Large/icons8-spain-flag-80.png"></Image>
                                         <Label  DockPanel.Dock="Top" Content="Español" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                                        <Label  DockPanel.Dock="Top" Content="by Sharpy88" VerticalAlignment="Top" FontSize="10" Foreground="#7FFFFFFF" HorizontalAlignment="Center"/>
                                     </DockPanel>
                                 </DockPanel>
                                 <DockPanel  MouseDown="SetLang" Tag="pt"  DockPanel.Dock="Left" Cursor="Hand" Margin="0,0,30,0" HorizontalAlignment="Right">
                                     <DockPanel Width="70">
                                         <Image  DockPanel.Dock="Top" Source="UI/Images/Icons/icons8-portugal-80.png"></Image>
                                         <Label  DockPanel.Dock="Top" Content="Portuguese" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="11"/>
-                                        <Label  DockPanel.Dock="Top" Content="by Dycool" VerticalAlignment="Top" FontSize="10" Foreground="#7FFFFFFF" HorizontalAlignment="Center"/>
                                     </DockPanel>
                                 </DockPanel>
                             </Grid>
@@ -989,7 +986,12 @@
                                     <DockPanel HorizontalAlignment="Left" Width="70">
                                         <Image  DockPanel.Dock="Top" Source="UI/Images/Icons/icons8-finland-80.png"></Image>
                                         <Label  DockPanel.Dock="Top" Content="Finnish" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                                        <Label  DockPanel.Dock="Top" Content="by CodeBoi00" VerticalAlignment="Top" FontSize="9" Foreground="#7FFFFFFF" HorizontalAlignment="Center"/>
+                                    </DockPanel>
+                                </DockPanel>
+                                <DockPanel  MouseDown="SetLang" Tag="it" DockPanel.Dock="Left" Cursor="Hand" Margin="0,0,30,0" HorizontalAlignment="Right">
+                                    <DockPanel Width="70">
+                                        <Image  DockPanel.Dock="Top" Source="/UI/Images/Icons/icons8-italy-80.png"></Image>
+                                        <Label  DockPanel.Dock="Top" Content="Itialian" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="11"/>
                                     </DockPanel>
                                 </DockPanel>
                             </Grid>
