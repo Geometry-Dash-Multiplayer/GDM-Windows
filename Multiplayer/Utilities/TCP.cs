@@ -19,14 +19,14 @@ namespace Multiplayer.Utilities
         {
             string result = null;
             while (string.IsNullOrWhiteSpace(result))
-                result = Post("http://www.boomlings.com/database/getGJLevels21.php", "gameVersion=21&binaryVersion=35&gdw=0&type=0&str=" + levelid + "&diff=-&len=-&page=0&total=0&uncompleted=0&onlyCompleted=0&featured=0&original=0&twoPlayer=0&coins=0&epic=0&secret=Wmfd2893gb7");
+                result = Post("http://172.104.26.87/database/getGJLevels21.php", "gameVersion=21&binaryVersion=35&gdw=0&type=0&str=" + levelid + "&diff=-&len=-&page=0&total=0&uncompleted=0&onlyCompleted=0&featured=0&original=0&twoPlayer=0&coins=0&epic=0&secret=Wmfd2893gb7");
             return result;
         }
         public static string GetUsernameFromPlayerID(int playerID)
         {
             string result = null;
             while (string.IsNullOrWhiteSpace(result))
-                result = Post("http://www.boomlings.com/database/getGJUsers20.php", "gameVersion=21&binaryVersion=35&gdw=0&str=" + playerID.ToString() + "&total=0&page=0&secret=Wmfd2893gb7");
+                result = Post("http://172.104.26.87/database/getGJUsers20.php", "gameVersion=21&binaryVersion=35&gdw=0&str=" + playerID.ToString() + "&total=0&page=0&secret=Wmfd2893gb7");
             return Utils.FindTextBetween(result, "1:", ":2:");
         }
         public static string Post(string url, string param)
