@@ -15,7 +15,7 @@ namespace Multiplayer.Utilities
         private int position = 0;
         private int bytesleft = 0;
 
-        public string ErrorMessage = "Unkown error, server just disconnected you.";
+        public string ErrorMessage = "Unknown error, server just disconnected you.";
         public GDM.PositionMemory player1;
         public GDM.PositionMemory player2;
         public byte col1, col2, activeiconid, isglow, isded, isvip;
