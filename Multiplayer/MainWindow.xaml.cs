@@ -111,7 +111,7 @@ namespace Multiplayer
             {
                 Utilities.Utils.HandleException(ex);
             }
-            Environment.Exit(0);
+            Application.Current.Shutdown();
         }
 
         private void Minimize(object sender, MouseButtonEventArgs e)

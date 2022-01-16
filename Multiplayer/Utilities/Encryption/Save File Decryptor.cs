@@ -34,12 +34,16 @@ namespace Multiplayer.Utilities.Encryption
 					(byte)int.Parse(Utils.FindTextBetween(a, "<k>playerRobot</k><i>", "</i>")),
 					(byte)int.Parse(Utils.FindTextBetween(a, "<k>playerSpider</k><i>", "</i>")),
 				};
+
+				GDM.Player_Watcher.Memory.AccountID = int.Parse(Utils.FindTextBetween(a, "<k>GJA_003</k><i>", "</i>"));
+
 				try {
 					// player colors are not in the savefile by default this is fixed in newer gdm
 					GDM.Player_Watcher.Memory.Col1 = (byte)int.Parse(Utils.FindTextBetween(a, "<k>playerColor</k><i>", "</i>"));
 					GDM.Player_Watcher.Memory.Col2 = (byte)int.Parse(Utils.FindTextBetween(a, "<k>playerColor2</k><i>", "</i>"));
 
 				} catch { }
+			
 			
 			
 				string playerID = Utils.FindTextBetween(a, "<k>playerUserID</k><i>", "</i>");

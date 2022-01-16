@@ -11,7 +11,7 @@ namespace Multiplayer.GDM.Globals
 {
     public static class Global_Data
     {
-        public static double Version = 4.01;
+        public static double Version = 4.03;
         public static int KeySize = 4; // for now, somehow secure
         public static int GIFDelay = 10;
         public static int RefreshRate = 16;

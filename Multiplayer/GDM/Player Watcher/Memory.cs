@@ -16,6 +16,7 @@ namespace Multiplayer.GDM.Player_Watcher
         public static byte[] Icons = new byte[] { 0, 0, 0, 0, 0, 0 };
         public static byte Col1 = 0x1, Col2 = 0x2, IsGlow;
         public static int LevelID;
+        public static int AccountID;
 
         public static Process gd;
         public static Utilities.Memory.aMemory aMemory;
@@ -231,7 +232,7 @@ namespace Multiplayer.GDM.Player_Watcher
             if (GDM.Globals.Global_Data.ClientID == null)
             {
                 GDM.Globals.Global_Data.ClientID = BitConverter.GetBytes(GDM.Globals.Global_Data.PlayerID);
-                GDM.Globals.Global_Data.Initializer.SetAccountID(GDM.Globals.Global_Data.PlayerID);
+                GDM.Globals.Global_Data.Initializer.SetPlayerID(GDM.Globals.Global_Data.PlayerID);
 
                 new Thread(() =>
                 {
@@ -244,7 +245,7 @@ namespace Multiplayer.GDM.Player_Watcher
 
                         if (GDM.Globals.Global_Data.PlayerID <= 0)
                         {
-                            GDM.Globals.Global_Data.Initializer.SetAccountID("Unregistered");
+                            GDM.Globals.Global_Data.Initializer.SetPlayerID("Unregistered");
                             GDM.Globals.Global_Data.Initializer.SetPlayerName("Player");
                         }
                         else
@@ -347,7 +348,7 @@ namespace Multiplayer.GDM.Player_Watcher
             {
                 Globals.Global_Data.PlayerID = pLid2;
                 Globals.Global_Data.PlayerIDLoaded = true;
-                Globals.Global_Data.Initializer.SetAccountID(GDM.Globals.Global_Data.PlayerID);
+                Globals.Global_Data.Initializer.SetPlayerID(GDM.Globals.Global_Data.PlayerID);
             }
             Globals.Global_Data.IsInjected = true;
         }

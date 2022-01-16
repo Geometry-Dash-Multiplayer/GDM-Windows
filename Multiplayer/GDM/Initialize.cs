@@ -142,8 +142,8 @@ namespace Multiplayer.GDM
                     if (Globals.Global_Data.PlayerIDLoaded)
                         DownloadSelfIcons();
                     // Globals.Global_Data.Initializer.SetPlayerName(Utilities.TCP.GetUsernameFromPlayerID(Globals.Global_Data.PlayerID));
-
-                    Globals.Global_Data.Initializer.SetAccountID(Globals.Global_Data.PlayerID);
+                 
+                    Globals.Global_Data.Initializer.SetPlayerID(Globals.Global_Data.PlayerID);
 
                     // check server statuses
 
@@ -157,8 +157,7 @@ namespace Multiplayer.GDM
         public void LoadPlayerIDFromSaveFile()
         {
             int q = Utilities.Encryption.Save_File_Decryptor.GetPlayerID();
-            if (q > 0)
-            {
+            if (q > 0) {
                 Globals.Global_Data.PlayerID = q;
                 Globals.Global_Data.PlayerIDLoaded = true;
                 // try to add the user to server db if he doesnt exist
@@ -166,9 +165,10 @@ namespace Multiplayer.GDM
                 GDM.Player_Watcher.Memory.InitClient();
                 Debug.WriteLine("User check: " + temp);
 
-            }
-            else
+            } else {
+                Debug.WriteLine("Failed loading from savefile.");
                 Globals.Global_Data.PlayerIDLoaded = false;
+            }
         }
         public void ShowFireWall()
         {
@@ -724,11 +724,11 @@ namespace Multiplayer.GDM
                 });
             }
         }
-        public void SetAccountID(int id)
+        public void SetPlayerID(int id)
         {
-            SetAccountID(id.ToString());
+            SetPlayerID(id.ToString());
         }
-        public void SetAccountID(string id)
+        public void SetPlayerID(string id)
         {
             new Thread(() =>
             {
