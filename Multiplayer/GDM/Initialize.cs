@@ -141,7 +141,8 @@ namespace Multiplayer.GDM
                     LoadPlayerIDFromSaveFile();
                     if (Globals.Global_Data.PlayerIDLoaded)
                         DownloadSelfIcons();
-                    Globals.Global_Data.Initializer.SetPlayerName(Utilities.TCP.GetUsernameFromPlayerID(Globals.Global_Data.PlayerID));
+                    // Globals.Global_Data.Initializer.SetPlayerName(Utilities.TCP.GetUsernameFromPlayerID(Globals.Global_Data.PlayerID));
+
                     Globals.Global_Data.Initializer.SetAccountID(Globals.Global_Data.PlayerID);
 
                     // check server statuses

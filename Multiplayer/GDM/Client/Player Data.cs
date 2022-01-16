@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Multiplayer.GDM.Client
 {
-    public class Player_Data
+    public class Player_Data // player data
     {
     }
 }
