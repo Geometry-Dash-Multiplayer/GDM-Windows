@@ -11,10 +11,10 @@ namespace Multiplayer.GDM.Globals
 {
     public static class Global_Data
     {
-        public static double Version = 4.03;
+        public static double Version = 5;
         public static int KeySize = 4; // for now, somehow secure
         public static int GIFDelay = 10;
-        public static int RefreshRate = 16;
+        public static int RefreshRate = 30;
         public static string LanguageFile = "Language.json";
         public static string InjectorName = "Injector.exe";
         public static bool IsGDThere = false;
@@ -35,7 +35,7 @@ namespace Multiplayer.GDM.Globals
         public static string ClientName;
         public static int StandardPort = 7010;
         public static string ActiveServer = ""; // 194.233.71.142
-        public static string[] ServerIPs = new string[] { "206.189.50.40", "194.233.71.142" };
+        public static string[] ServerIPs = new string[] { "158.69.122.197", "194.233.71.142" };
         public static int VipKey = 0;
 
         public static bool PlayerIDLoaded = false;

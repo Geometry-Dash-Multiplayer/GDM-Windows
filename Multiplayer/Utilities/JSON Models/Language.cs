@@ -12,7 +12,7 @@ namespace Multiplayer.Utilities.JSON_Models
 
         public string SelectServer = "Select a Server";
         public string Preferably = "Preferably pick the nearest to your location.";
-        public string Europe = "Europe";
+        public string Europe = "North America"; // wtf
         public string Online = "Online";
 
         public string Welcome = "Welcome back, %username%!";

@@ -248,10 +248,7 @@ namespace Multiplayer.GDM
                     }
                     catch (Exception ex)
                     {
-                        Utilities.Utils.HandleException(ex);
-                        Thread.Sleep(20);
-                        Main.Announce("Disconnected from server.");
-                        Reconnect();
+                        MessageBox.Show(ex.ToString());
                     }
 
                 }

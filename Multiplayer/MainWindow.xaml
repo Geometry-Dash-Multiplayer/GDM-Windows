@@ -715,10 +715,10 @@
                                     <DropShadowEffect BlurRadius="25" Direction="0" ShadowDepth="0" Opacity="0.25"/>
                                 </Border.Effect>
                                 <DockPanel Margin="10,0">
-                                    <Image Source="UI/Images/Icons/icons8-europe-64.png" Margin="10,10,0,10" HorizontalAlignment="Left" DockPanel.Dock="Left" Width="35" VerticalAlignment="Center"/>
+                                    <Image Source="UI/Images/Icons/icons8-america-64.png" Margin="10,10,0,10" HorizontalAlignment="Left" DockPanel.Dock="Left" Width="35" VerticalAlignment="Center"/>
                                     <StackPanel Orientation="Vertical" Opacity="0.75" Margin="10,10,0,0">
 
-                                        <TextBlock x:Name="europe1" FontFamily="{DynamicResource Avenir}" Text="Europe" Foreground="White" Margin="2,0,0,2" FontSize="14"/>
+                                        <TextBlock x:Name="europe1" FontFamily="{DynamicResource Avenir}" Text="North America" Foreground="White" Margin="2,0,0,2" FontSize="14"/>
 
                                         <TextBlock x:Name="sg_ping" FontFamily="{DynamicResource Avenir}" Text="Online" Foreground="#FF4BBEFF" Margin="2,0,0,0"/>
                                     </StackPanel>
