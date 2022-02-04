@@ -17,6 +17,7 @@
 > ❗ This version of .NET is used for maximum OS compatibility. More info on [.NET system requirements](https://docs.microsoft.com/en-us/dotnet/framework/get-started/system-requirements).
 
 ## How To Install
+> !! THIS IS FOR WINDOWS DEFENDER !!
 - Step 1. Search for Windows Security and open it
 - <img src="Repo/step1.png" alt="Windows defender thing"/>
 - Step 2. Click Virus & Threat Protection
