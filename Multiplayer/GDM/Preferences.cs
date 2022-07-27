@@ -14,9 +14,6 @@ namespace Multiplayer.GDM
         public int NewThreadDelay = 20;
         public double FileSystemversion = 2;
         public string MainModule = "GeometryDash.exe";
-        public bool IsVIP = false;
-        public bool RenderCustomIcons = true;
-        public bool MinimalAnimations = false;
         public int PlayerID = 0;
         public DateTime Used = DateTime.Now;
         public byte[] Key = new byte[] { };

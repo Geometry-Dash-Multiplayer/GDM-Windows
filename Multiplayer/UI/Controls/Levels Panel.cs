@@ -108,7 +108,7 @@ namespace Multiplayer.UI.Controls
         {
             try
             {
-                if (!GDM.Globals.Global_Data.Main.UserPref.MinimalAnimations)
+                if (!Properties.Settings.Default.MinimalAnimations)
                 {
                     var anim = new DoubleAnimation
                     {
@@ -328,7 +328,7 @@ namespace Multiplayer.UI.Controls
             DockPanel.SetDock(playerCount, Dock.Top);
 
 
-            if (!GDM.Globals.Global_Data.Main.UserPref.MinimalAnimations)
+            if (!Properties.Settings.Default.MinimalAnimations)
             {
                 // do animation
                 var anim = new DoubleAnimation

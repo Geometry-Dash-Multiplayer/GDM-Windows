@@ -68,13 +68,12 @@ namespace Multiplayer.Utilities
         public static void HandleException(Exception ex, string handled = "Handled", bool IsNoise = false)
         {
             // send to server
-           
             try
             {
-                if (!System.IO.File.Exists("Error Logs.txt"))
+                if (!File.Exists("Error Logs.txt"))
                 {
-                    System.IO.File.Create("Error Logs.txt").Close();
-                    System.IO.File.AppendAllText("Error Logs.txt", "WPF throws exception everytime everything happens." +
+                    File.Create("Error Logs.txt").Close();
+                    File.AppendAllText("Error Logs.txt", "WPF throws exception everytime everything happens." +
                         Environment.NewLine +
                         Environment.NewLine);
                 }

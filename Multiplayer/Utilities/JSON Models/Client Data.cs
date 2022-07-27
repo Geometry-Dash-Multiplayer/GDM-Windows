@@ -8,8 +8,8 @@ namespace Multiplayer.Utilities.JSON_Models
 {
    public class Client_Data
     {
-        public int israinbow { get; set; }
-        public int israinbowpastel { get; set; }
+        public int? israinbow { get; set; }
+        public int? israinbowpastel { get; set; }
         public string hexcolor { get; set; }
     }
 }

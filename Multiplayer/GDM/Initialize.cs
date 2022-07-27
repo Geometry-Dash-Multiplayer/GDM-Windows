@@ -23,6 +23,8 @@ namespace Multiplayer.GDM
         public Server Connection;
         public MainWindow Main;
 
+        private Identity.AssemblyMetadata metadata = new Identity.AssemblyMetadata();
+
         public Utilities.JSON_Models.Level_Data CurrentLevelData;
 
         public Initialize(MainWindow _main)
@@ -142,7 +144,7 @@ namespace Multiplayer.GDM
                     if (Globals.Global_Data.PlayerIDLoaded)
                         DownloadSelfIcons();
                     // Globals.Global_Data.Initializer.SetPlayerName(Utilities.TCP.GetUsernameFromPlayerID(Globals.Global_Data.PlayerID));
-                 
+
                     Globals.Global_Data.Initializer.SetPlayerID(Globals.Global_Data.PlayerID);
 
                     // check server statuses
@@ -157,7 +159,8 @@ namespace Multiplayer.GDM
         public void LoadPlayerIDFromSaveFile()
         {
             int q = Utilities.Encryption.Save_File_Decryptor.GetPlayerID();
-            if (q > 0) {
+            if (q > 0)
+            {
                 Globals.Global_Data.PlayerID = q;
                 Globals.Global_Data.PlayerIDLoaded = true;
                 // try to add the user to server db if he doesnt exist
@@ -165,7 +168,9 @@ namespace Multiplayer.GDM
                 GDM.Player_Watcher.Memory.InitClient();
                 Debug.WriteLine("User check: " + temp);
 
-            } else {
+            }
+            else
+            {
                 Debug.WriteLine("Failed loading from savefile.");
                 Globals.Global_Data.PlayerIDLoaded = false;
             }
@@ -195,7 +200,7 @@ namespace Multiplayer.GDM
                 try
                 {
                     // check if show self rainbow
-                    Utilities.JSON_Models.Version_Update deserializedProduct = JsonConvert.DeserializeObject<Utilities.JSON_Models.Version_Update>(
+                    Models.UpdateData deserializedProduct = JsonConvert.DeserializeObject<Models.UpdateData>(
                         Utilities.TCP.ReadURL(Globals.Global_Data.VersionLink).Result
                         );
 
@@ -208,7 +213,7 @@ namespace Multiplayer.GDM
                         {
                             Main.arelevelscached.IsChecked = Main.UserPref.CachedLevels;
                             Main.areusernamescached.IsChecked = Main.UserPref.CachedUsernames;
-                            if (deserializedProduct.Version > Globals.Global_Data.Version)
+                            if (deserializedProduct.Version > metadata.Version)
                             {
                                 // Main.arelevelscached.IsChecked = Main.UserPref.CachedLevels;
                                 // Main.areusernamescached.IsChecked = Main.UserPref.CachedUsernames;
@@ -256,7 +261,7 @@ namespace Multiplayer.GDM
                 if (Main.UserPref == null) Main.UserPref = new Preferences();
                 if (Main.UserPref.Key.Length <= 0) Main.UserPref.Key = Utilities.Randomness.RandomBytes(4);
                 Globals.Global_Data.VipKey = BitConverter.ToInt32(Main.UserPref.Key, 0);
-                if (Main.UserPref.IsVIP) 
+                if (Properties.Settings.Default.IsVIP)
                     Main.border5.Visibility = Visibility.Collapsed;
 
                 Main.areiconscached.IsChecked = Main.UserPref.CachedIcons;
@@ -273,11 +278,11 @@ namespace Multiplayer.GDM
 
                 Globals.Global_Data.ShowUsernames = Main.UserPref.ShowSelfUsername;
                 // Main.UserPref.RenderCustomIcons = false;
-                if (Main.UserPref.Version != Globals.Global_Data.Version)
+                if (Main.UserPref.Version != metadata.Version)
                 {
                     Directory.Delete(Globals.Paths.IconsFolder, true);
                 }
-                Main.UserPref.Version = Globals.Global_Data.Version;
+                Main.UserPref.Version = metadata.Version;
 
             }
             catch (Exception ex)
@@ -337,7 +342,7 @@ namespace Multiplayer.GDM
                                                                           * Europe Connection = 0 */, this);
                 Globals.Global_Data.Connection = Connection;
                 Globals.Global_Data.ActiveServer = Globals.Global_Data.ServerIPs[index];
-                Main.SG_Key.Text = "Secret Key: " + Utilities.Converter.BytesToString(Main.UserPref.Key);
+             //   Main.SG_Key.Text = "Secret Key: " + Utilities.Converter.BytesToString(Main.UserPref.Key);
                 Main.StartAnimation("ServerSelected");
 
                 Main.border5.Visibility = Visibility.Collapsed;
@@ -355,7 +360,7 @@ namespace Multiplayer.GDM
             {
                 Application.Current.Dispatcher.Invoke(new Action(() =>
                 {
-                    Main.SG_Key.Text = "Online : ";
+                  //  Main.SG_Key.Text = "Online : ";
                     // Main.sg_badge.Badge = players.ToString();
                 }));
             });
@@ -509,18 +514,9 @@ namespace Multiplayer.GDM
             });
         }
         public bool pfpset = false;
-        public void DisableCustomIcons()
-        {
-            Preferences j = new Preferences
-            {
-                RenderCustomIcons = false
-            };
-            if (!File.Exists(Globals.Paths.GDMTempDataFile)) File.Create(Globals.Paths.GDMTempDataFile).Close();
-
-            string output = JsonConvert.SerializeObject(j);
-            File.WriteAllText(Globals.Paths.GDMTempDataFile, output);
-            // File.WriteAllText(Globals.Paths.GDMTempDataFile, output);
-        }
+        public void DisableCustomIcons() =>
+            Properties.Settings.Default.RenderCustomAnimations = true;
+        
         public void EnableCustomIcons()
         {
             if (!File.Exists(Globals.Paths.GDMTempDataFile)) File.Create(Globals.Paths.GDMTempDataFile).Close();
@@ -551,12 +547,12 @@ namespace Multiplayer.GDM
                 if (!pfpset)
                 {
                     Announce(Globals.Global_Data.Lang.DownloadingIcons);
-                    if (!Main.UserPref.IsVIP)
+                    if (!Properties.Settings.Default.IsVIP)
                     {
-                        Main.UserPref.RenderCustomIcons = false;
+                        Properties.Settings.Default.RenderCustomAnimations = false;
                         SaveUserPref();
                     }
-                    if (Main.UserPref.RenderCustomIcons)
+                    if (Properties.Settings.Default.RenderCustomAnimations)
                         DisableCustomIcons();
                     ShowMainProgressBar();
                     SetMainProgressBarValue(10);
@@ -697,7 +693,7 @@ namespace Multiplayer.GDM
             Application.Current.Dispatcher.Invoke(new Action(() =>
             {
                 Main.author.Text = Main.Master.GetRoom(Globals.Global_Data.Room);
-                Main.elapsed.Text = Main.Master.GetRoom(Globals.Global_Data.Room);
+               // Main.elapsed.Text = Main.Master.GetRoom(Globals.Global_Data.Room);
             }));
         }
         public void SetPing(int milliseconds)
@@ -735,27 +731,30 @@ namespace Multiplayer.GDM
 
                 try
                 {
-                    Globals.Global_Data.Main.UserPref.IsVIP = Utilities.TCP.isVip(Globals.Global_Data.PlayerID.ToString());
-                    Debug.WriteLine("IsVip: " + Globals.Global_Data.Main.UserPref.IsVIP.ToString());
-                    string j = Utilities.TCP.ReadURL("http://95.111.251.138/gdm/isRainbow.php?id=" + Globals.Global_Data.PlayerID.ToString()).Result;
-                    var deserializedProduct = JsonConvert.DeserializeObject<Utilities.JSON_Models.Client_Data>(j);
-                    Globals.Global_Data.Main.UserPref.ShowSelfRainbow = Convert.ToBoolean(deserializedProduct.israinbow);
-                    Globals.Global_Data.Main.UserPref.ShowSelfRainbowPastel = Convert.ToBoolean(deserializedProduct.israinbowpastel);
+                    Properties.Settings.Default.IsVIP = Utilities.TCP.isVip(Globals.Global_Data.PlayerID.ToString());
+                    Debug.WriteLine("IsVip: " + Properties.Settings.Default.IsVIP.ToString());
+                    if (Properties.Settings.Default.IsVIP)
+                    {
+                        string j = Utilities.TCP.ReadURL("http://95.111.251.138/gdm/isRainbow.php?id=" + Globals.Global_Data.PlayerID.ToString()).Result;
+                        var deserializedProduct = JsonConvert.DeserializeObject<Utilities.JSON_Models.Client_Data>(j);
+                        Globals.Global_Data.Main.UserPref.ShowSelfRainbow = Convert.ToBoolean(deserializedProduct.israinbow);
+                        Globals.Global_Data.Main.UserPref.ShowSelfRainbowPastel = Convert.ToBoolean(deserializedProduct.israinbowpastel);
 
-                    Color color = (Color)ColorConverter.ConvertFromString(deserializedProduct.hexcolor);
+                        Color color = (Color)ColorConverter.ConvertFromString(deserializedProduct.hexcolor);
 
-                    Globals.Global_Data.Main.UserPref.R = color.R;
-                    Globals.Global_Data.Main.UserPref.G = color.G;
-                    Globals.Global_Data.Main.UserPref.B = color.B;
+                        Globals.Global_Data.Main.UserPref.R = color.R;
+                        Globals.Global_Data.Main.UserPref.G = color.G;
+                        Globals.Global_Data.Main.UserPref.B = color.B;
+                    }
 
                     if (Globals.Global_Data.Initializer.iconsDownloaded)
                         Globals.Global_Data.Main.Master.SaveUserPref();
 
                     Globals.Global_Data.Initializer.DownloadSelfIcons();
 
-                    if (!Globals.Global_Data.Main.UserPref.IsVIP)
+                    if (!Properties.Settings.Default.IsVIP)
                     {
-                        Globals.Global_Data.Main.UserPref.RenderCustomIcons = false;
+                        Properties.Settings.Default.RenderCustomAnimations = false;
                         DisableCustomIcons();
                     }
                     // Globals.Paths.Initializer.SetMyPFP();
@@ -775,13 +774,13 @@ namespace Multiplayer.GDM
         }
         public void SetPing(string milliseconds)
         {
-            Application.Current.Dispatcher.Invoke(new Action(() =>
-            {
-                if (ServerIndex == 0)
-                    Main.sg_ping.Text = milliseconds;
-                else if (ServerIndex == 1)
-                    Main.sg_ping2.Text = milliseconds;
-            }));
+            //Application.Current.Dispatcher.Invoke(new Action(() =>
+            //{
+            //    if (ServerIndex == 0)
+            //        Main.sg_ping.Text = milliseconds;
+            //    else if (ServerIndex == 1)
+            //        Main.sg_ping2.Text = milliseconds;
+            //}));
         }
         public string GetRoom(short room)
         {
@@ -798,7 +797,7 @@ namespace Multiplayer.GDM
         {
             Application.Current.Dispatcher.Invoke(new Action(() =>
             {
-                Main.server_online.Text = "Local Port : " + milliseconds.ToString();
+              //  Main.server_online.Text = "Local Port : " + milliseconds.ToString();
             }));
         }
         public void InitializeDirectories()

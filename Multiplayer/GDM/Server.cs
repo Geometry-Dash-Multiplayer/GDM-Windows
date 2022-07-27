@@ -248,7 +248,7 @@ namespace Multiplayer.GDM
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.ToString());
+
                     }
 
                 }

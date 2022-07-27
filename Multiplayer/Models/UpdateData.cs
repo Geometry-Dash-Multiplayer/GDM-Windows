@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Multiplayer.Utilities.JSON_Models
+namespace Multiplayer.Models
 {
-    public class Version_Update
+    public class UpdateData
     {
         [JsonProperty("version")]
         public double Version { get; set; }

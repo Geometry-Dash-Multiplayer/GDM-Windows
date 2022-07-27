@@ -132,7 +132,7 @@ namespace Multiplayer.GDM
 
             if (val > 0)
             {
-                if (!GDM.Globals.Global_Data.Main.UserPref.MinimalAnimations)
+                if (!Properties.Settings.Default.MinimalAnimations)
                 {
                     var anim = new DoubleAnimation
                     {
@@ -318,7 +318,7 @@ namespace Multiplayer.GDM
             sp.Children.Add(_progress);
             b.Child = dp;
             Me = b;
-            if (!GDM.Globals.Global_Data.Main.UserPref.MinimalAnimations)
+            if (!Properties.Settings.Default.MinimalAnimations)
             {
                 // do animation
                 var anim = new DoubleAnimation

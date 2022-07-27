@@ -33,13 +33,13 @@ namespace Multiplayer.GDM
 
             Globals.Global_Data.Main.textBlock1.Text = Globals.Global_Data.Lang.SelectServer;
             Globals.Global_Data.Main.serverdesc.Text = Globals.Global_Data.Lang.Preferably;
-            Globals.Global_Data.Main.europe1.Text = Globals.Global_Data.Lang.Europe;
+           // Globals.Global_Data.Main.europe1.Text = Globals.Global_Data.Lang.Europe;
 
             Globals.Global_Data.Main.menuItem.Content = Globals.Global_Data.Lang.Lobbies;
             Globals.Global_Data.Main.customizer.Content = Globals.Global_Data.Lang.Customize;
             Globals.Global_Data.Main.settings1.Content = Globals.Global_Data.Lang.Settings;
-            Globals.Global_Data.Main.sg_ping.Text = Globals.Global_Data.Lang.Online;
-            Globals.Global_Data.Main.sg_ping2.Text = Globals.Global_Data.Lang.Online;
+          //  Globals.Global_Data.Main.sg_ping.Text = Globals.Global_Data.Lang.Online;
+            //Globals.Global_Data.Main.sg_ping2.Text = Globals.Global_Data.Lang.Online;
 
             Globals.Global_Data.Main.vipaccfeatures.Text = Globals.Global_Data.Lang.VIPAccountFeatures;
             Globals.Global_Data.Main.feature1.Text = Globals.Global_Data.Lang.Feature1;

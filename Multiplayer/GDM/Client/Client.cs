@@ -394,8 +394,11 @@ namespace Multiplayer.GDM.Client
                         {
                             string lj = Utilities.TCP.ReadURL("http://95.111.251.138/gdm/isRainbow.php?id=" + id.ToString()).Result;
                             var deserializedProduct = JsonConvert.DeserializeObject<Utilities.JSON_Models.Client_Data>(lj);
-                            IsRainbow = (byte)deserializedProduct.israinbow;
-                            IsPastelColor = (byte)deserializedProduct.israinbowpastel;
+                           
+                            if (!(deserializedProduct.israinbow is null))
+                                IsRainbow = (byte)deserializedProduct.israinbow;
+                            if (!(deserializedProduct.israinbowpastel is null))
+                                IsPastelColor = (byte)deserializedProduct.israinbowpastel;
 
                             Color color = (Color)ColorConverter.ConvertFromString(deserializedProduct.hexcolor);
                             colorR = color.R;

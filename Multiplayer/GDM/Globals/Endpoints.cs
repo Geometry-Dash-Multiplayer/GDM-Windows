@@ -11,7 +11,7 @@ namespace Multiplayer.GDM.Globals
     /// </summary>
     public static class Endpoints
     {
-        public const string ProxiedGDBrowser = "http://95.111.251.138:2000";
+        public const string ProxiedGDBrowser = "http://107.152.47.25:10100";
 
         public const string APIEndpoint = "http://95.111.251.138/gdm/";
 

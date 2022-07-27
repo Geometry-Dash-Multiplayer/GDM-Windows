@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Multiplayer.GDM;
+using Multiplayer.Identity;
 
 namespace Multiplayer
 {
@@ -26,8 +27,12 @@ namespace Multiplayer
     {
         public GDM.Initialize Master;
         public GDM.Preferences UserPref = new GDM.Preferences();
-        public MainWindow()
+        private readonly AssemblyMetadata assemblyMetadata;
+
+        public MainWindow(Identity.AssemblyMetadata assemblyMetadata)
         {
+            this.assemblyMetadata = assemblyMetadata;
+
             InitializeComponent();
 
             AppDomain.CurrentDomain.FirstChanceException += (sender, eventArgs) =>
@@ -43,7 +48,7 @@ namespace Multiplayer
             settings.Visibility = Visibility.Visible;
             border6.Opacity = 0;
 
-            vinfo.Text = "public release " + GDM.Globals.Global_Data.Version.ToString("0.00") + "-main";
+            vinfo.Text = "public release " + assemblyMetadata.Version.ToString("0.00") + "-main";
 
             GDM.Globals.Global_Data.Main = this;
 
@@ -62,7 +67,7 @@ namespace Multiplayer
             UI.TransparencyFix transparencyFix = new UI.TransparencyFix(this);
             transparencyFix.MakeTransparent();
 
-            if (!UserPref.IsVIP)
+            if (!Properties.Settings.Default.IsVIP)
                 StartAnimation("ShowCost");
         }
 
@@ -88,7 +93,7 @@ namespace Multiplayer
             {
                 Storyboard board = (Storyboard)this.FindResource(animation);
                 board.Begin();
-                if (UserPref.MinimalAnimations)
+                if (Properties.Settings.Default.MinimalAnimations)
                 {
                     board.SkipToFill();
                 }
@@ -99,6 +104,9 @@ namespace Multiplayer
         {
             try
             {
+
+                Properties.Settings.Default.Save();
+
                 Master.SaveUserPref();
                 Master.SaveCaches();
                 GDM.Load_Language.SaveJSON();
@@ -146,7 +154,8 @@ namespace Multiplayer
         private void CheckVIP(object sender, RoutedEventArgs e)
         {
             // check if actual VIP from server
-            if (!UserPref.IsVIP) ShowError(GDM.Globals.Global_Data.Lang.YouNeedVIP, GDM.Globals.Global_Data.Lang.NeedToCustomize, "ShowCost", GDM.Globals.Global_Data.Lang.BuyVIP);
+            if (!Properties.Settings.Default.IsVIP)
+                ShowError(GDM.Globals.Global_Data.Lang.YouNeedVIP, GDM.Globals.Global_Data.Lang.NeedToCustomize, "ShowCost", GDM.Globals.Global_Data.Lang.BuyVIP);
             else Process.Start("https://adaf.xyz/gdm/vip/index.php?u=" + GDM.Globals.Global_Data.Username);
             e.Handled = true;
         }
@@ -157,9 +166,9 @@ namespace Multiplayer
             windowname.Text = UserPref.WindowName;
             modulename.Text = UserPref.MainModule;
 
-            minimalanims.IsChecked = UserPref.MinimalAnimations;
+            minimalanims.IsChecked = Properties.Settings.Default.MinimalAnimations;
 
-            renderselficons.IsChecked = UserPref.RenderCustomIcons;
+            renderselficons.IsChecked = Properties.Settings.Default.RenderCustomAnimations;
             showplayerusernames.IsChecked = GDM.Globals.Global_Data.ShowUsernames;
 
             playersopactiry.Value = UserPref.PlayersOpacity;
@@ -177,13 +186,13 @@ namespace Multiplayer
                     UserPref.MainModule = modulename.Text;
 
                 bool restart = false;
-                if (UserPref.MinimalAnimations != (bool)minimalanims.IsChecked)
+                if (Properties.Settings.Default.MinimalAnimations != (bool)minimalanims.IsChecked)
                 {
                     restart = true;
                 }
 
-                UserPref.MinimalAnimations = (bool)minimalanims.IsChecked;
-                UserPref.RenderCustomIcons = (bool)renderselficons.IsChecked;
+                Properties.Settings.Default.MinimalAnimations = (bool)minimalanims.IsChecked;
+                Properties.Settings.Default.RenderCustomAnimations = (bool)renderselficons.IsChecked;
                 GDM.Globals.Global_Data.ShowUsernames = (bool)showplayerusernames.IsChecked;
                 UserPref.PlayersOpacity = (float)playersopactiry.Value;
                 UserPref.ShowSelfUsername = GDM.Globals.Global_Data.ShowUsernames;
@@ -197,7 +206,7 @@ namespace Multiplayer
                     GDM.Globals.Global_Data.VipKey = BitConverter.ToInt32(bytes, 0);
                     Debug.WriteLine("Key: " + GDM.Globals.Global_Data.VipKey);
                     GDM.Globals.Global_Data.VIPKeyOk = true;
-                    UserPref.IsVIP = Utilities.TCP.isVip(GDM.Globals.Global_Data.PlayerID.ToString(), GDM.Globals.Global_Data.VipKey);
+                    Properties.Settings.Default.IsVIP = Utilities.TCP.isVip(GDM.Globals.Global_Data.PlayerID.ToString(), GDM.Globals.Global_Data.VipKey);
 
                 }
 
@@ -348,7 +357,7 @@ namespace Multiplayer
             try
             {
                 e.Handled = true;
-                if (!UserPref.IsVIP)
+                if (!Properties.Settings.Default.IsVIP)
                 {
                     ShowError(GDM.Globals.Global_Data.Lang.YouNeedVIP, GDM.Globals.Global_Data.Lang.NeedToCreateLobby, "ShowCost", GDM.Globals.Global_Data.Lang.BuyVIP);
                     return;
@@ -387,8 +396,8 @@ namespace Multiplayer
                 {
                     try
                     {
-                        UserPref.IsVIP = Utilities.TCP.isVip(GDM.Globals.Global_Data.PlayerID.ToString(), GDM.Globals.Global_Data.VipKey);
-                        if (UserPref.IsVIP)
+                        Properties.Settings.Default.IsVIP = Utilities.TCP.isVip(GDM.Globals.Global_Data.PlayerID.ToString(), GDM.Globals.Global_Data.VipKey);
+                        if (Properties.Settings.Default.IsVIP)
                         {
 
                             Application.Current.Dispatcher.Invoke(new Action(() =>
@@ -396,7 +405,7 @@ namespace Multiplayer
                                 vipstatus.Text = "VIP Status confirmed!";
                             }));
 
-                            UserPref.RenderCustomIcons = true;
+                            Properties.Settings.Default.RenderCustomAnimations = true;
                             Master.ClearSelfIcons();
                             Master.DownloadSelfIcons();
                         }

@@ -11,7 +11,6 @@ namespace Multiplayer.GDM.Globals
 {
     public static class Global_Data
     {
-        public static double Version = 5;
         public static int KeySize = 4; // for now, somehow secure
         public static int GIFDelay = 10;
         public static int RefreshRate = 30;
@@ -35,7 +34,7 @@ namespace Multiplayer.GDM.Globals
         public static string ClientName;
         public static int StandardPort = 7010;
         public static string ActiveServer = ""; // 194.233.71.142
-        public static string[] ServerIPs = new string[] { "158.69.122.197", "194.233.71.142", "104.248.33.114"};
+        public static string[] ServerIPs = new string[] { "194.233.71.142", "95.111.251.138"};
         public static int VipKey = 0;
 
         public static bool PlayerIDLoaded = false;
