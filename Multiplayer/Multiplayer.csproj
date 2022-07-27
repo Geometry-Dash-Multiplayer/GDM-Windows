@@ -51,6 +51,9 @@
     <Reference Include="DotNetZip, Version=1.15.0.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
       <HintPath>..\packages\DotNetZip.1.15.0\lib\net40\DotNetZip.dll</HintPath>
     </Reference>
+    <Reference Include="LiteNetLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiteNetLib.0.9.5.2\lib\net35\LiteNetLib.dll</HintPath>
+    </Reference>
     <Reference Include="MaterialDesignColors, Version=2.0.0.2422, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignColors.2.0.0\lib\net452\MaterialDesignColors.dll</HintPath>
     </Reference>
@@ -165,11 +168,14 @@
     <Compile Include="Identity\GeometryDashMetadata.cs" />
     <Compile Include="IService.cs" />
     <Compile Include="Models\UpdateData.cs" />
+    <Compile Include="Networking\PlayerColorPacket.cs" />
+    <Compile Include="Networking\PlayerIconIDsPacket.cs" />
+    <Compile Include="Networking\PlayerStatePacket.cs" />
+    <Compile Include="Networking\PositionPacket.cs" />
     <Compile Include="UI\Controls\Levels Panel.cs" />
     <Compile Include="GDM\Lobby Status.cs" />
     <Compile Include="GDM\Player Representor.cs" />
     <Compile Include="GDM\Player Watcher\Memory.cs" />
-    <Compile Include="GDM\PositionMemory.cs" />
     <Compile Include="GDM\Preferences.cs" />
     <Compile Include="UI\TransparencyFix.cs" />
     <Compile Include="Updater\UpdateChecker.cs" />

@@ -16,18 +16,11 @@ namespace Multiplayer.GDM.Client
     {
         public string username;
         public int id;
-        public PositionMemory player_1, player_2;
 
-        public byte IsDead = 0x0;
-        // public byte Opacity = 0x64; // 100
-        public byte IsVIP = 0x0;
-
-        public byte IsRainbow = 0x0;
-        public byte IsPastelColor = 0x0;
-
-        public byte colorR = 255;
-        public byte colorG = 255;
-        public byte colorB = 255;
+        Networking.PositionPacket player_1 = new Networking.PositionPacket();
+        Networking.PositionPacket player_2 = new Networking.PositionPacket();
+        Networking.PlayerStatePacket player_state = new Networking.PlayerStatePacket();
+        Networking.PlayerIconIDsPacket icon_ids = new Networking.PlayerIconIDsPacket();
 
         [JsonIgnore]
         public string h_username;
@@ -35,8 +28,6 @@ namespace Multiplayer.GDM.Client
         public short Lobby = 0;
         [JsonIgnore]
         public byte color_1, color_2, isGlow;
-        [JsonIgnore]
-        public byte[] IconIDs = new byte[] { 0, 0, 0, 0, 0, 0, 0 };
         [JsonIgnore]
         public static Dictionary<int, string> IconsAndIDs = new Dictionary<int, string>();
         [JsonIgnore]
@@ -55,14 +46,16 @@ namespace Multiplayer.GDM.Client
         public Utilities.JSON_Models.Player PlayerData;
         [JsonIgnore]
         System.Timers.Timer ProgressTimer = new System.Timers.Timer();
-        public Client(int clientID, PositionMemory _p1, PositionMemory _p2, byte Color1, byte Color2, byte isGlow, byte[] iconIDs)
+        public Client(int clientID,
+            Networking.PositionPacket _p1, Networking.PositionPacket _p2,
+            byte Color1, byte Color2, byte isGlow, byte[] iconIDs)
         {
             IconsDirectory = Path.GetFullPath(Globals.Paths.IconsFolder + "/" + clientID.ToString());
             if (!Directory.Exists(IconsDirectory)) Directory.CreateDirectory(IconsDirectory);
 
             this.id = clientID;
             player_1 = _p1; player_2 = _p2;
-            this.IconIDs = iconIDs;
+            this.icon_ids.IconIDs = iconIDs;
             this.color_1 = Color1;
             this.color_2 = Color2;
             SetUsername("Player " + id.ToString());
@@ -126,7 +119,7 @@ namespace Multiplayer.GDM.Client
                 {
                     if (isIconIDDownloaded)
                     {
-                        float y = BitConverter.ToSingle(BitConverter.GetBytes(player_1.x_position), 0);
+                        float y = BitConverter.ToSingle(BitConverter.GetBytes(player_1.XPosition), 0);
 
                         float percentage = (y / Globals.Addresses.LevelLength) * 100;
                         double j = Math.Round(percentage, 2, MidpointRounding.AwayFromZero);
@@ -138,7 +131,7 @@ namespace Multiplayer.GDM.Client
                                 {
                                     var g = GetCurrentStatic(this.id);
 
-                                    if (IsDead == 0)
+                                    if (player_state.IsDead == 0)
                                     {
                                         // put to top if percent high
                                         g.represent.SetStatus("Playing " + j.ToString() + "%");
@@ -283,7 +276,7 @@ namespace Multiplayer.GDM.Client
                         {
                             // add downloading icons progress bar
                             string icon_type = IconsAndIDs[u];
-                            int iconID = (int)IconIDs[u];
+                            int iconID = (int)icon_ids.IconIDs[u];
                             string apiurl = Utilities.TCP.GetAPIUrl(
                                 icon_type,
                                 ((int)color_1).ToString(),
@@ -291,7 +284,7 @@ namespace Multiplayer.GDM.Client
                                 iconID.ToString(),
                                 id.ToString(),
                                 ((int)isGlow).ToString(),
-                                IconIDs[0].ToString()
+                                icon_ids.IconIDs[0].ToString()
                                 );
 
                             string path = null;
@@ -338,18 +331,18 @@ namespace Multiplayer.GDM.Client
 
                     try
                     {
-                        if (IsVIP == 0x1)
-                        {
-                            string j = Utilities.TCP.ReadURL("http://95.111.251.138/gdm/isRainbow.php?id=" + id.ToString()).Result;
-                            var deserializedProduct = JsonConvert.DeserializeObject<Utilities.JSON_Models.Client_Data>(j);
-                            IsRainbow = (byte)deserializedProduct.israinbow;
-                            IsPastelColor = (byte)deserializedProduct.israinbowpastel;
+                        //if (IsVIP == 0x1)
+                        //{
+                        //    string j = Utilities.TCP.ReadURL("http://95.111.251.138/gdm/isRainbow.php?id=" + id.ToString()).Result;
+                        //    var deserializedProduct = JsonConvert.DeserializeObject<Utilities.JSON_Models.Client_Data>(j);
+                        //    IsRainbow = (byte)deserializedProduct.israinbow;
+                        //    IsPastelColor = (byte)deserializedProduct.israinbowpastel;
 
-                            Color color = (Color)ColorConverter.ConvertFromString(deserializedProduct.hexcolor);
-                            colorR = color.R;
-                            colorG = color.G;
-                            colorB = color.B;
-                        }
+                        //    Color color = (Color)ColorConverter.ConvertFromString(deserializedProduct.hexcolor);
+                        //    colorR = color.R;
+                        //    colorG = color.G;
+                        //    colorB = color.B;
+                        //}
                     }
                     catch (Exception ex)
                     {
@@ -390,20 +383,20 @@ namespace Multiplayer.GDM.Client
                 {
                     try
                     {
-                        if (IsVIP == 0x1)
+                        if (player_state.IsVip)
                         {
-                            string lj = Utilities.TCP.ReadURL("http://95.111.251.138/gdm/isRainbow.php?id=" + id.ToString()).Result;
-                            var deserializedProduct = JsonConvert.DeserializeObject<Utilities.JSON_Models.Client_Data>(lj);
-                           
-                            if (!(deserializedProduct.israinbow is null))
-                                IsRainbow = (byte)deserializedProduct.israinbow;
-                            if (!(deserializedProduct.israinbowpastel is null))
-                                IsPastelColor = (byte)deserializedProduct.israinbowpastel;
+                            //    string lj = Utilities.TCP.ReadURL("http://95.111.251.138/gdm/isRainbow.php?id=" + id.ToString()).Result;
+                            //    var deserializedProduct = JsonConvert.DeserializeObject<Utilities.JSON_Models.Client_Data>(lj);
 
-                            Color color = (Color)ColorConverter.ConvertFromString(deserializedProduct.hexcolor);
-                            colorR = color.R;
-                            colorG = color.G;
-                            colorB = color.B;
+                            //if (!(deserializedProduct.israinbow is null))
+                            //    IsRainbow = (byte)deserializedProduct.israinbow;
+                            //if (!(deserializedProduct.israinbowpastel is null))
+                            //    IsPastelColor = (byte)deserializedProduct.israinbowpastel;
+
+                            //Color color = (Color)ColorConverter.ConvertFromString(deserializedProduct.hexcolor);
+                            //colorR = color.R;
+                            //colorG = color.G;
+                            //colorB = color.B;
                         }
                     }
                     catch (Exception ex)
@@ -456,13 +449,23 @@ namespace Multiplayer.GDM.Client
         {
             return System.IO.Path.GetExtension(fil);
         }
-        public void Set(PositionMemory _p1, PositionMemory _p2, byte isDead, byte Color1, byte Color2, byte[] iconIDs)
+
+        public void Set(
+            Networking.PositionPacket _p1,
+            Networking.PositionPacket _p2)
         {
             player_1 = _p1; player_2 = _p2;
-            this.color_1 = Color1;
-            this.color_2 = Color2;
-            this.IconIDs = iconIDs;
-            this.IsDead = isDead;
+        }
+
+        public void Set(Networking.PlayerStatePacket playerStatePacket)
+        {
+            player_state = playerStatePacket;
+        }
+
+
+        public void Set(Networking.PlayerIconIDsPacket playerIconIDsPacket)
+        {
+            icon_ids = playerIconIDsPacket;
         }
     }
 }
