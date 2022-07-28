@@ -9,7 +9,7 @@ namespace Multiplayer.Identity
 {
     public class AssemblyMetadata : IData
     {
-        public double Version => 5.4;
+        public double Version => 5.5;
 
         public string Name => "Geometry Dash Multiplayer";
     }
