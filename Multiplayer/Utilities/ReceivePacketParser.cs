@@ -75,7 +75,6 @@ namespace Multiplayer.Utilities
                     col2 = readByte();
                     isglow = readByte();
                     IconIDs = readByteLenth(7).ToArray();
-                    isvip = readByte();
                     break;
                 case Prefixes.PlayerDisconnect:
                     clientID = readInt32();
