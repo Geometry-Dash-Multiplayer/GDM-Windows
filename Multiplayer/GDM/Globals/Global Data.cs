@@ -34,7 +34,7 @@ namespace Multiplayer.GDM.Globals
         public static string ClientName;
         public static int StandardPort = 7010;
         public static string ActiveServer = ""; // 194.233.71.142
-        public static string[] ServerIPs = new string[] { "194.233.71.142", "95.111.251.138"};
+        public static string[] ServerIPs = new string[] { "194.233.71.142", "95.111.251.138" };
         public static int VipKey = 0;
 
         public static bool PlayerIDLoaded = false;
@@ -48,6 +48,7 @@ namespace Multiplayer.GDM.Globals
         public static string DLLPath = AppDomain.CurrentDomain.BaseDirectory + @"\Multiplayer.dll";
         public static Utilities.JSON_Models.Players ActiveModel;
         public static bool LevelStatsShow = false;
+
         public static void HandleException(Exception ex)
         {
             Utilities.Utils.HandleException(ex);

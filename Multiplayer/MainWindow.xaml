@@ -18,9 +18,11 @@
         ResizeMode="CanResize"
         UseLayoutRounding="True"
         Closing="Closing_"    
-    MinHeight="500" MinWidth="300"
+        MinHeight="500" MinWidth="300"
         MaxWidth="510" SizeChanged="SizeChangedf"
-        Title="Geometry Dash Multiplayer" Height="500" Width="510"  Background="{x:Null}" MouseDown="MoveWindow" Loaded="WindowLoaded" Foreground="White" FontFamily="{DynamicResource TTNorms}" Icon="icon.ico">
+        Title="Geometry Dash Multiplayer" Height="500" Width="510"  Background="{x:Null}"
+        MouseDown="MoveWindow" 
+        Loaded="WindowLoaded" Foreground="White" FontFamily="{DynamicResource TTNorms}" Icon="icon.ico">
     <Window.Resources>
         <SolidColorBrush x:Key="StandardBorderBrush" Color="#888" />
         <SolidColorBrush x:Key="StandardBackgroundBrush" Color="Black" />
@@ -990,8 +992,8 @@
                                 </TextBox>
                             </DockPanel>
                             <DockPanel DockPanel.Dock="Top" Margin="0,15,0,0" VerticalAlignment="Top">
-                                <TextBlock x:Name="vipkey" DockPanel.Dock="Left" Text="VIP Key" FontSize="14" FontFamily="{DynamicResource TTNorms}" Foreground="#BFFFFFFF" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
-                                <TextBox x:Name="vipkey_" materialDesign:HintAssist.HelperText="your key, if you bought vip" DockPanel.Dock="Right"  Width="150" HorizontalAlignment="Right">
+                                <TextBlock x:Name="serverIp" DockPanel.Dock="Left" Text="Server IP:" FontSize="14" FontFamily="{DynamicResource TTNorms}" Foreground="#BFFFFFFF" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
+                                <TextBox x:Name="serverIp_Text" DockPanel.Dock="Right"  Width="150" HorizontalAlignment="Right">
                                     <TextBox.BorderBrush>
                                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                             <LinearGradientBrush.RelativeTransform>
@@ -1008,6 +1010,28 @@
                                     </TextBox.BorderBrush>
                                 </TextBox>
                             </DockPanel>
+                            <!-- <DockPanel DockPanel.Dock="Top" Margin="0,15,0,0" VerticalAlignment="Top"> -->
+                            <!--     <TextBlock x:Name="vipkey" DockPanel.Dock="Left" Text="Server IP:"  -->
+                            <!--                FontSize="14" FontFamily="{DynamicResource TTNorms}"  -->
+                            <!--                Foreground="#BFFFFFFF" HorizontalAlignment="Left" -->
+                            <!--                VerticalAlignment="Center"></TextBlock> -->
+                            <!--     <TextBox x:Name="vipkey_" materialDesign:HintAssist.HelperText="Server IP to connect to" DockPanel.Dock="Right"  Width="150" HorizontalAlignment="Right"> -->
+                            <!--         <TextBox.BorderBrush> -->
+                            <!--             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0"> -->
+                            <!--                 <LinearGradientBrush.RelativeTransform> -->
+                            <!--                     <TransformGroup> -->
+                            <!--                         <ScaleTransform CenterY="0.5" CenterX="0.5"/> -->
+                            <!--                         <SkewTransform CenterY="0.5" CenterX="0.5"/> -->
+                            <!--                         <RotateTransform Angle="-45" CenterY="0.5" CenterX="0.5"/> -->
+                            <!--                         <TranslateTransform/> -->
+                            <!--                     </TransformGroup> -->
+                            <!--                 </LinearGradientBrush.RelativeTransform> -->
+                            <!--                 <GradientStop Color="#FF02CDF8" Offset="0"/> -->
+                            <!--                 <GradientStop Color="#FF2736E6" Offset="1"/> -->
+                            <!--             </LinearGradientBrush> -->
+                            <!--         </TextBox.BorderBrush> -->
+                            <!--     </TextBox> -->
+                            <!-- </DockPanel> -->
                             <DockPanel DockPanel.Dock="Top"  Margin="0,30,0,0" VerticalAlignment="Top">
                                 <TextBlock TextWrapping="Wrap" x:Name="rendercustomicons" DockPanel.Dock="Left" Text="Render My Custom Icon" FontSize="14" FontFamily="{DynamicResource TTNorms}" Foreground="#BFFFFFFF" HorizontalAlignment="Left" VerticalAlignment="Center" Width="150"></TextBlock>
                                 <CheckBox x:Name="renderselficons" DockPanel.Dock="Right" HorizontalAlignment="Right" Content="" BorderBrush="#FF60B3D8" IsChecked="True">

@@ -21,6 +21,7 @@ namespace Multiplayer.GDM
         public int IsAlizer = 0;
         public bool CachedIcons = true;
         public bool CachedLevels = true;
+        public string ServerIp = "";
         public bool CachedUsernames = true;
         public float PlayersOpacity = 1.0f;
         public bool ShowSelfUsername = true;

@@ -34,7 +34,6 @@ namespace Multiplayer
             this.assemblyMetadata = assemblyMetadata;
 
             InitializeComponent();
-
             AppDomain.CurrentDomain.FirstChanceException += (sender, eventArgs) =>
             {
                 Utilities.Utils.HandleException(eventArgs.Exception, "Noise", true);
@@ -56,6 +55,10 @@ namespace Multiplayer
             Master = new GDM.Initialize(this);
         }
 
+        private void LoadEverything()
+        {
+        }
+
         private void MoveWindow(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left) this.DragMove();
@@ -66,9 +69,6 @@ namespace Multiplayer
         {
             UI.TransparencyFix transparencyFix = new UI.TransparencyFix(this);
             transparencyFix.MakeTransparent();
-
-            if (!Properties.Settings.Default.IsVIP)
-                StartAnimation("ShowCost");
         }
 
         private void MainWindow_StateChanged(object sender, EventArgs e)
@@ -76,7 +76,8 @@ namespace Multiplayer
             GDM.Globals.Global_Data.MainState = this.WindowState;
         }
 
-        public void ShowError(string title, string desc, string help = "https://discord.gg/mNvPDCgB5M", string helpS = "Need Help?")
+        public void ShowError(string title, string desc, string help = "https://discord.gg/mNvPDCgB5M",
+            string helpS = "Need Help?")
         {
             Application.Current.Dispatcher.Invoke(new Action(() =>
             {
@@ -87,6 +88,7 @@ namespace Multiplayer
                 n_h.Content = helpS;
             }));
         }
+
         public void StartAnimation(string animation)
         {
             Application.Current.Dispatcher.Invoke(new Action(() =>
@@ -104,7 +106,6 @@ namespace Multiplayer
         {
             try
             {
-
                 Properties.Settings.Default.Save();
 
                 Master.SaveUserPref();
@@ -145,6 +146,7 @@ namespace Multiplayer
                 {
                     StartAnimation(tag);
                 }
+
                 StartAnimation("ErrorDis");
                 if (e != null)
                     e.Handled = true;
@@ -155,7 +157,8 @@ namespace Multiplayer
         {
             // check if actual VIP from server
             if (!Properties.Settings.Default.IsVIP)
-                ShowError(GDM.Globals.Global_Data.Lang.YouNeedVIP, GDM.Globals.Global_Data.Lang.NeedToCustomize, "ShowCost", GDM.Globals.Global_Data.Lang.BuyVIP);
+                ShowError(GDM.Globals.Global_Data.Lang.YouNeedVIP, GDM.Globals.Global_Data.Lang.NeedToCustomize,
+                    "ShowCost", GDM.Globals.Global_Data.Lang.BuyVIP);
             else Process.Start("https://adaf.xyz/gdm/vip/index.php?u=" + GDM.Globals.Global_Data.Username);
             e.Handled = true;
         }
@@ -196,19 +199,20 @@ namespace Multiplayer
                 GDM.Globals.Global_Data.ShowUsernames = (bool)showplayerusernames.IsChecked;
                 UserPref.PlayersOpacity = (float)playersopactiry.Value;
                 UserPref.ShowSelfUsername = GDM.Globals.Global_Data.ShowUsernames;
+                UserPref.ServerIp = serverIp_Text.Text;
                 Debug.WriteLine("Player Opacity: " + UserPref.PlayersOpacity);
 
-                if (!string.IsNullOrEmpty(vipkey_.Text))
-                {
-
-                    var bytes = Utilities.Converter.StringToByteArray(vipkey_.Text.Replace(" ", ""));
-                    UserPref.Key = bytes;
-                    GDM.Globals.Global_Data.VipKey = BitConverter.ToInt32(bytes, 0);
-                    Debug.WriteLine("Key: " + GDM.Globals.Global_Data.VipKey);
-                    GDM.Globals.Global_Data.VIPKeyOk = true;
-                    Properties.Settings.Default.IsVIP = Utilities.TCP.isVip(GDM.Globals.Global_Data.PlayerID.ToString(), GDM.Globals.Global_Data.VipKey);
-
-                }
+                // if (!string.IsNullOrEmpty(vipkey_.Text))
+                // {
+                //
+                //     var bytes = Utilities.Converter.StringToByteArray(vipkey_.Text.Replace(" ", ""));
+                //     UserPref.Key = bytes;
+                //     GDM.Globals.Global_Data.VipKey = BitConverter.ToInt32(bytes, 0);
+                //     Debug.WriteLine("Key: " + GDM.Globals.Global_Data.VipKey);
+                //     GDM.Globals.Global_Data.VIPKeyOk = true;
+                //     Properties.Settings.Default.IsVIP = Utilities.TCP.isVip(GDM.Globals.Global_Data.PlayerID.ToString(), GDM.Globals.Global_Data.VipKey);
+                //
+                // }
 
                 Master.SaveUserPref();
                 if (restart)
@@ -216,13 +220,11 @@ namespace Multiplayer
                     System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
                     Application.Current.Shutdown();
                 }
-
             }
             catch (Exception ex)
             {
                 Utilities.Utils.HandleException(ex);
             }
-
         }
 
         private void ResetSettings(object sender, RoutedEventArgs e)
@@ -280,8 +282,10 @@ namespace Multiplayer
             {
                 GDM.Globals.Global_Data.HandleException(ex);
             }
+
             e.Handled = true;
         }
+
         public async void SetLobby(short room)
         {
             GDM.Globals.Global_Data.IsPlayingLevel = false;
@@ -304,9 +308,10 @@ namespace Multiplayer
                     GDM.Globals.Global_Data.HandleException(ex);
                 }
             }
-            GDM.Globals.Global_Data.IsPlayingLevel = true;
 
+            GDM.Globals.Global_Data.IsPlayingLevel = true;
         }
+
         private void ChangeLobby(object sender, RoutedEventArgs e)
         {
             try
@@ -354,12 +359,14 @@ namespace Multiplayer
                 Master.Announce("Please connect to a server first.");
                 return;
             }
+
             try
             {
                 e.Handled = true;
                 if (!Properties.Settings.Default.IsVIP)
                 {
-                    ShowError(GDM.Globals.Global_Data.Lang.YouNeedVIP, GDM.Globals.Global_Data.Lang.NeedToCreateLobby, "ShowCost", GDM.Globals.Global_Data.Lang.BuyVIP);
+                    ShowError(GDM.Globals.Global_Data.Lang.YouNeedVIP, GDM.Globals.Global_Data.Lang.NeedToCreateLobby,
+                        "ShowCost", GDM.Globals.Global_Data.Lang.BuyVIP);
                     return;
                 }
                 else
@@ -367,7 +374,8 @@ namespace Multiplayer
                     // var bytes = Utilities.Converter.StringToByteArray(tb_lc.Text); SetLobby(BitConverter.ToInt16(bytes, 0));
                     var h = (short)Utilities.Randomness.rand.Next(short.MinValue, short.MaxValue);
                     SetLobby(h);
-                    string Copyable = Utilities.Converter.BytesToString(BitConverter.GetBytes(h)).Replace(" ", "").ToLower();
+                    string Copyable = Utilities.Converter.BytesToString(BitConverter.GetBytes(h)).Replace(" ", "")
+                        .ToLower();
                     Clipboard.SetText(Copyable);
                     Master.Announce("Lobby code copied to clipboard.");
                     SetLobby(h);
@@ -396,10 +404,11 @@ namespace Multiplayer
                 {
                     try
                     {
-                        Properties.Settings.Default.IsVIP = Utilities.TCP.isVip(GDM.Globals.Global_Data.PlayerID.ToString(), GDM.Globals.Global_Data.VipKey);
+                        Properties.Settings.Default.IsVIP =
+                            Utilities.TCP.isVip(GDM.Globals.Global_Data.PlayerID.ToString(),
+                                GDM.Globals.Global_Data.VipKey);
                         if (Properties.Settings.Default.IsVIP)
                         {
-
                             Application.Current.Dispatcher.Invoke(new Action(() =>
                             {
                                 vipstatus.Text = "VIP Status confirmed!";
@@ -411,28 +420,25 @@ namespace Multiplayer
                         }
                         else
                         {
-                            Application.Current.Dispatcher.Invoke(new Action(() =>
-                            {
-                                vipstatus.Text = "Not VIP...";
-                            }));
+                            Application.Current.Dispatcher.Invoke(new Action(() => { vipstatus.Text = "Not VIP..."; }));
                         }
                     }
                     catch (Exception ex)
                     {
                         GDM.Globals.Global_Data.HandleException(ex);
                     }
+
                     Task.Delay(2000);
                 });
                 Master.SaveUserPref();
-
             }
             catch (Exception ex)
             {
                 GDM.Globals.Global_Data.HandleException(ex);
             }
+
             login.IsOpen = false;
             new Thread(() => { Master.DownloadSelfIcons(); }).Start();
-
         }
 
         private void CloseLobbyDialogue(object sender, RoutedEventArgs e)
@@ -444,10 +450,7 @@ namespace Multiplayer
         {
             StartAnimation("UnShowCost");
             if (!GDM.Globals.Global_Data.PlayerIDLoaded)
-                await Task.Run(() =>
-                {
-                    Master.WaitForGeometryDash();
-                });
+                await Task.Run(() => { Master.WaitForGeometryDash(); });
             Master.Relogin();
         }
 
@@ -496,7 +499,6 @@ namespace Multiplayer
         {
             new Thread(() =>
             {
-
                 if (GDM.Player_Watcher.Memory.aMemory != null)
                 {
                     GDM.Player_Watcher.Memory.aMemory.isAlreadyInjected = false;
@@ -536,6 +538,7 @@ namespace Multiplayer
 
                 leftgrid.Width = 210d;
             }
+
             e.Handled = true;
         }
 
@@ -548,11 +551,13 @@ namespace Multiplayer
         {
             StartAnimation("ShowAbout_R");
         }
+
         private void OpenServer(object sender, MouseButtonEventArgs e)
         {
             var ui_sender = sender as FrameworkElement;
             int server_index = int.Parse(ui_sender.Tag.ToString());
-            if (GDM.Globals.Global_Data.PlayerID != 0 && GDM.Globals.Global_Data.IsInjected) Master.ServerConnected(server_index);
+            if (GDM.Globals.Global_Data.PlayerID != 0 && GDM.Globals.Global_Data.IsInjected)
+                Master.ServerConnected(server_index);
             else if (!GDM.Globals.Global_Data.IsInjected)
             {
                 if (!GDM.Globals.Global_Data.IsGDThere)
@@ -561,18 +566,21 @@ namespace Multiplayer
             }
             else
             {
-                ShowError("You're not registered on Geometry Dash", "Please login an account on Geometry Dash to play Multiplayer, need help?", "https://www.youtube.com/watch?v=2KcWgc3xYhc");
+                ShowError("You're not registered on Geometry Dash",
+                    "Please login an account on Geometry Dash to play Multiplayer, need help?",
+                    "https://www.youtube.com/watch?v=2KcWgc3xYhc");
             }
+
             e.Handled = true;
         }
 
         public void SetLang(string code)
         {
-
             UserPref.Lang = code;
             GDM.Load_Language.Load();
             langs.IsOpen = false;
         }
+
         private void SetLang(object sender, MouseButtonEventArgs e)
         {
             var control = sender as FrameworkElement;

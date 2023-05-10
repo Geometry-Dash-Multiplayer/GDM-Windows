@@ -44,22 +44,27 @@ namespace Multiplayer.GDM
                 GDM.Client.Client.IconsAndIDs.Add((int)foo, foo.ToString());
             }
         }
+
         public void LoadCaches()
         {
             if (!File.Exists(Globals.Paths.LevelsCache)) File.Create(Globals.Paths.LevelsCache).Close();
             Utilities.JSON_Models.Level_Cache.LevelIDandData = JsonConvert.DeserializeObject<Dictionary<int, string>>(
                 File.ReadAllText(Globals.Paths.LevelsCache)
-                   );
+            );
 
-            if (Utilities.JSON_Models.Level_Cache.LevelIDandData == null) Utilities.JSON_Models.Level_Cache.LevelIDandData = new Dictionary<int, string>();
+            if (Utilities.JSON_Models.Level_Cache.LevelIDandData == null)
+                Utilities.JSON_Models.Level_Cache.LevelIDandData = new Dictionary<int, string>();
 
 
             if (!File.Exists(Globals.Paths.UsernamesCache)) File.Create(Globals.Paths.UsernamesCache).Close();
-            Utilities.JSON_Models.Username_Cache.PlayerIDAndUsername = JsonConvert.DeserializeObject<Dictionary<int, string>>(
-                File.ReadAllText(Globals.Paths.UsernamesCache)
-                   );
-            if (Utilities.JSON_Models.Username_Cache.PlayerIDAndUsername == null) Utilities.JSON_Models.Username_Cache.PlayerIDAndUsername = new Dictionary<int, string>();
+            Utilities.JSON_Models.Username_Cache.PlayerIDAndUsername =
+                JsonConvert.DeserializeObject<Dictionary<int, string>>(
+                    File.ReadAllText(Globals.Paths.UsernamesCache)
+                );
+            if (Utilities.JSON_Models.Username_Cache.PlayerIDAndUsername == null)
+                Utilities.JSON_Models.Username_Cache.PlayerIDAndUsername = new Dictionary<int, string>();
         }
+
         public void SaveCaches()
         {
             string output = JsonConvert.SerializeObject(Utilities.JSON_Models.Level_Cache.LevelIDandData);
@@ -107,6 +112,7 @@ namespace Multiplayer.GDM
                 {
                     Utilities.Utils.HandleException(ex);
                 }
+
                 Client.Client.IconsAlreadyBeingLoaded.Clear();
                 Client.Client.IconsAlreadyLoaded.Clear();
 
@@ -122,14 +128,15 @@ namespace Multiplayer.GDM
                 Announce("Cache cleared! It make take a while to load new content now.");
 
                 new Thread(() => { DownloadSelfIcons(); }).Start();
-
             }
             catch (Exception ex)
             {
                 Utilities.Utils.HandleException(ex);
             }
+
             Globals.Global_Data.ReceiveNewClients = true;
         }
+
         public void InitializeClient()
         {
             InitializeDirectories();
@@ -148,7 +155,6 @@ namespace Multiplayer.GDM
                     Globals.Global_Data.Initializer.SetPlayerID(Globals.Global_Data.PlayerID);
 
                     // check server statuses
-
                 }
                 catch (Exception ex)
                 {
@@ -156,6 +162,7 @@ namespace Multiplayer.GDM
                 }
             }).Start();
         }
+
         public void LoadPlayerIDFromSaveFile()
         {
             int q = Utilities.Encryption.Save_File_Decryptor.GetPlayerID();
@@ -167,7 +174,6 @@ namespace Multiplayer.GDM
                 var temp = Utilities.TCP.ReadURL("http://95.111.251.138/gdm/getInfo.php?id=" + q.ToString()).Result;
                 GDM.Player_Watcher.Memory.InitClient();
                 Debug.WriteLine("User check: " + temp);
-
             }
             else
             {
@@ -175,6 +181,7 @@ namespace Multiplayer.GDM
                 Globals.Global_Data.PlayerIDLoaded = false;
             }
         }
+
         public void ShowFireWall()
         {
             new Thread(() =>
@@ -193,6 +200,7 @@ namespace Multiplayer.GDM
                 }
             }).Start();
         }
+
         public void CheckVersion()
         {
             new Thread(() =>
@@ -202,7 +210,7 @@ namespace Multiplayer.GDM
                     // check if show self rainbow
                     Models.UpdateData deserializedProduct = JsonConvert.DeserializeObject<Models.UpdateData>(
                         Utilities.TCP.ReadURL(Globals.Global_Data.VersionLink).Result
-                        );
+                    );
 
                     if (deserializedProduct != null)
                     {
@@ -229,7 +237,6 @@ namespace Multiplayer.GDM
                             }
                         }));
                         // Globals.Paths.Main.UserPref.CachedLevels = deserializedProduct.caching != ":)";
-
                     }
                 }
                 catch (Exception ex)
@@ -238,12 +245,10 @@ namespace Multiplayer.GDM
                 }
             }).Start();
         }
+
         public void Relogin()
         {
-            Application.Current.Dispatcher.Invoke(new Action(() =>
-            {
-                Main.login.IsOpen = true;
-            }));
+            Application.Current.Dispatcher.Invoke(new Action(() => { Main.login.IsOpen = true; }));
         }
 
         public void LoadUserPrefs()
@@ -267,23 +272,35 @@ namespace Multiplayer.GDM
                 Main.areiconscached.IsChecked = Main.UserPref.CachedIcons;
                 Main.arelevelscached.IsChecked = Main.UserPref.CachedLevels;
                 Main.areusernamescached.IsChecked = Main.UserPref.CachedUsernames;
+             
 
-                if (!Main.UserPref.CachedLevels) if (File.Exists(Globals.Paths.LevelsCache)) File.Delete(Globals.Paths.LevelsCache);
-                    else if (!File.Exists(Globals.Paths.LevelsCache)) File.Create(Globals.Paths.LevelsCache).Close();
-                if (!Main.UserPref.CachedUsernames) if (File.Exists(Globals.Paths.UsernamesCache)) File.Delete(Globals.Paths.UsernamesCache);
-                    else if (!File.Exists(Globals.Paths.UsernamesCache)) File.Create(Globals.Paths.UsernamesCache).Close();
+                if (!Main.UserPref.CachedLevels)
+                    if (File.Exists(Globals.Paths.LevelsCache))
+                        File.Delete(Globals.Paths.LevelsCache);
+                    else if (!File.Exists(Globals.Paths.LevelsCache))
+                        File.Create(Globals.Paths.LevelsCache).Close();
+                if (!Main.UserPref.CachedUsernames)
+                    if (File.Exists(Globals.Paths.UsernamesCache)) File.Delete(Globals.Paths.UsernamesCache);
+                    else if (!File.Exists(Globals.Paths.UsernamesCache))
+                        File.Create(Globals.Paths.UsernamesCache).Close();
 
-                if (string.IsNullOrEmpty(Main.UserPref.WindowName)) Main.UserPref.WindowName = "Geometry Dash";
-                if (string.IsNullOrEmpty(Main.UserPref.MainModule)) Main.UserPref.WindowName = "GeometryDash.exe";
+                if (string.IsNullOrEmpty(Main.UserPref.WindowName))
+                    Main.UserPref.WindowName = "Geometry Dash";
+                if (string.IsNullOrEmpty(Main.UserPref.MainModule))
+                    Main.UserPref.WindowName = "GeometryDash.exe";
 
+                if (string.IsNullOrEmpty(Main.UserPref.ServerIp))
+                    Main.UserPref.ServerIp = "176.106.230.48";
+                Main.serverIp_Text.Text = Main.UserPref.ServerIp;
+                
                 Globals.Global_Data.ShowUsernames = Main.UserPref.ShowSelfUsername;
                 // Main.UserPref.RenderCustomIcons = false;
                 if (Main.UserPref.Version != metadata.Version)
                 {
                     Directory.Delete(Globals.Paths.IconsFolder, true);
                 }
-                Main.UserPref.Version = metadata.Version;
 
+                Main.UserPref.Version = metadata.Version;
             }
             catch (Exception ex)
             {
@@ -292,6 +309,7 @@ namespace Multiplayer.GDM
                 File.Delete(Globals.Paths.UserDataFile);
             }
         }
+
         public void ResetPrefs()
         {
             try
@@ -307,13 +325,14 @@ namespace Multiplayer.GDM
             }
             catch (Exception ex)
             {
-
                 Utilities.Utils.HandleException(ex);
             }
+
             Announce("Settings reset!");
             Process.Start(Process.GetCurrentProcess().MainModule.FileName);
             Environment.Exit(0);
         }
+
         public void SaveUserPref()
         {
             // Announce("stats saved");
@@ -332,17 +351,18 @@ namespace Multiplayer.GDM
             if (!File.Exists(Globals.Paths.GDMTempDataFile)) File.Create(Globals.Paths.GDMTempDataFile).Close();
             File.WriteAllText(Globals.Paths.GDMTempDataFile, output);
         }
+
         int ServerIndex = 0;
+
         public void ServerConnected(int index)
         {
             try
             {
                 ServerIndex = index;
-                Connection = new Server(Globals.Global_Data.ServerIPs[index] /* 
-                                                                          * Europe Connection = 0 */, this);
+                Connection = new Server(Main.UserPref.ServerIp, this);
                 Globals.Global_Data.Connection = Connection;
-                Globals.Global_Data.ActiveServer = Globals.Global_Data.ServerIPs[index];
-             //   Main.SG_Key.Text = "Secret Key: " + Utilities.Converter.BytesToString(Main.UserPref.Key);
+                Globals.Global_Data.ActiveServer = Main.UserPref.ServerIp;
+                //   Main.SG_Key.Text = "Secret Key: " + Utilities.Converter.BytesToString(Main.UserPref.Key);
                 Main.StartAnimation("ServerSelected");
 
                 Main.border5.Visibility = Visibility.Collapsed;
@@ -360,18 +380,17 @@ namespace Multiplayer.GDM
             {
                 Application.Current.Dispatcher.Invoke(new Action(() =>
                 {
-                  //  Main.SG_Key.Text = "Online : ";
+                    //  Main.SG_Key.Text = "Online : ";
                     // Main.sg_badge.Badge = players.ToString();
                 }));
             });
         }
+
         public void ClearLevels()
         {
-            Application.Current.Dispatcher.Invoke(new Action(() =>
-            {
-                Main.levels.Children.Clear();
-            }));
+            Application.Current.Dispatcher.Invoke(new Action(() => { Main.levels.Children.Clear(); }));
         }
+
         public async void LoadLevelID(int levelid)
         {
             Debug.WriteLine("New level id: " + levelid);
@@ -383,7 +402,6 @@ namespace Multiplayer.GDM
                     string output = Utilities.TCP.GetLevelDataResponse(levelid.ToString());
                     if (output != "-1")
                     {
-
                         Utilities.Encryption.Robtop_Parser i = new Utilities.Encryption.Robtop_Parser(output);
                         if (i.Parse())
                         {
@@ -416,6 +434,7 @@ namespace Multiplayer.GDM
                             }
                         }
                     }
+
                     Tries = -1;
                 }
                 catch (Exception ex)
@@ -425,18 +444,22 @@ namespace Multiplayer.GDM
                 }
             }
         }
+
         bool isAttemptsReset = false;
+
         public void SetPlayerName(string name)
         {
             Task.Run(() =>
             {
                 Application.Current.Dispatcher.Invoke(new Action(() =>
                 {
-                    Main.playerW.Text = Globals.Global_Data.Lang.Welcome.Replace("%username%", name);//"Welcome back, " + name + "!";
+                    Main.playerW.Text =
+                        Globals.Global_Data.Lang.Welcome.Replace("%username%", name); //"Welcome back, " + name + "!";
                     Globals.Global_Data.Username = name;
                 }));
             });
         }
+
         public void AddPlayer(Border border)
         {
             Task.Run(() =>
@@ -448,6 +471,7 @@ namespace Multiplayer.GDM
                 }));
             });
         }
+
         public async void SetLevelDiff(string diff)
         {
             Debug.WriteLine("Set diff: " + diff);
@@ -457,7 +481,8 @@ namespace Multiplayer.GDM
                 {
                     try
                     {
-                        BitmapImage image = new BitmapImage(new Uri("UI/Images/Difficulties/" + diff + ".png", UriKind.Relative));
+                        BitmapImage image = new BitmapImage(new Uri("UI/Images/Difficulties/" + diff + ".png",
+                            UriKind.Relative));
 
                         if (image != null)
                             Main.leveldif.Source = image;
@@ -468,25 +493,22 @@ namespace Multiplayer.GDM
                     }
                 }));
             }
-            catch { }
-
+            catch
+            {
+            }
         }
+
         public void WaitForGeometryDash()
         {
-            Application.Current.Dispatcher.Invoke(new Action(() =>
-            {
-                Main.waitinggd.IsOpen = true;
-            }));
+            Application.Current.Dispatcher.Invoke(new Action(() => { Main.waitinggd.IsOpen = true; }));
 
 
             while (!Globals.Global_Data.IsInjected) Task.Delay(500);
 
 
-            Application.Current.Dispatcher.Invoke(new Action(() =>
-            {
-                Main.waitinggd.IsOpen = false;
-            }));
+            Application.Current.Dispatcher.Invoke(new Action(() => { Main.waitinggd.IsOpen = false; }));
         }
+
         public void Announce(string text)
         {
             Application.Current.Dispatcher.Invoke(new Action(() =>
@@ -502,6 +524,7 @@ namespace Multiplayer.GDM
                 }
             }));
         }
+
         public void ClearPlayers()
         {
             Task.Run(() =>
@@ -513,10 +536,12 @@ namespace Multiplayer.GDM
                 }));
             });
         }
+
         public bool pfpset = false;
+
         public void DisableCustomIcons() =>
             Properties.Settings.Default.RenderCustomAnimations = true;
-        
+
         public void EnableCustomIcons()
         {
             if (!File.Exists(Globals.Paths.GDMTempDataFile)) File.Create(Globals.Paths.GDMTempDataFile).Close();
@@ -524,6 +549,7 @@ namespace Multiplayer.GDM
             string output = JsonConvert.SerializeObject(Main.UserPref);
             File.WriteAllText(Globals.Paths.GDMTempDataFile, output);
         }
+
         public void ClearSelfIcons()
         {
             try
@@ -531,14 +557,18 @@ namespace Multiplayer.GDM
                 string IconsDirectory = Path.GetFullPath(Globals.Paths.IconsFolder + "/0");
                 if (Directory.Exists(IconsDirectory)) Directory.Delete(IconsDirectory, true);
 
-                pfpset = false; iconsDownloaded = false; DownloadSelfIcons();
+                pfpset = false;
+                iconsDownloaded = false;
+                DownloadSelfIcons();
             }
             catch (Exception ex)
             {
                 Globals.Global_Data.HandleException(ex);
             }
         }
+
         public bool iconsDownloaded = false;
+
         public void DownloadSelfIcons()
         {
             try
@@ -552,6 +582,7 @@ namespace Multiplayer.GDM
                         Properties.Settings.Default.RenderCustomAnimations = false;
                         SaveUserPref();
                     }
+
                     if (Properties.Settings.Default.RenderCustomAnimations)
                         DisableCustomIcons();
                     ShowMainProgressBar();
@@ -561,7 +592,8 @@ namespace Multiplayer.GDM
                     {
                         if (!Main.UserPref.CachedIcons)
                         {
-                            if (!Directory.Exists(Globals.Paths.SelfIconsFolder)) Directory.CreateDirectory(Globals.Paths.SelfIconsFolder);
+                            if (!Directory.Exists(Globals.Paths.SelfIconsFolder))
+                                Directory.CreateDirectory(Globals.Paths.SelfIconsFolder);
                             Utilities.Utils.DeleteFilesOfExtension(Globals.Paths.SelfIconsFolder, "png");
                             Utilities.Utils.DeleteFilesOfExtension(Globals.Paths.SelfIconsFolder, "gif");
                         }
@@ -570,6 +602,7 @@ namespace Multiplayer.GDM
                     {
                         Globals.Global_Data.HandleException(ex);
                     }
+
                     for (int i = 0; i < 7; i++)
                     {
                         string icon_type = Client.Client.IconsAndIDs[i];
@@ -582,20 +615,23 @@ namespace Multiplayer.GDM
                             Globals.Global_Data.PlayerID.ToString(),
                             ((int)GDM.Player_Watcher.Memory.IsGlow).ToString(),
                             GDM.Player_Watcher.Memory.Icons[0].ToString()
-                            );
+                        );
                         string path = null;
                         if (Main.UserPref.CachedIcons)
                         {
                             path = CheckIfIconExists(IconsDirectory, i.ToString());
                         }
+
                         while (path is null)
                         {
-                            path = Utilities.TCP.DownloadImageToDir(apiurl, Globals.Paths.SelfIconsFolder, i.ToString());
+                            path = Utilities.TCP.DownloadImageToDir(apiurl, Globals.Paths.SelfIconsFolder,
+                                i.ToString());
                             // Debug.WriteLine("Downloaded at " + path);
                         }
-                        SetMainProgressBarValue(((i + 1) / 5d) * 100);
 
+                        SetMainProgressBarValue(((i + 1) / 5d) * 100);
                     }
+
                     SaveUserPref();
                     HideMainProgressBar();
                     Announce(Globals.Global_Data.Lang.IconsLoaded);
@@ -608,6 +644,7 @@ namespace Multiplayer.GDM
                 Utilities.Utils.HandleException(ex);
             }
         }
+
         public string CheckIfIconExists(string u, string index)
         {
             if (File.Exists(u + "/" + index + ".png"))
@@ -616,10 +653,12 @@ namespace Multiplayer.GDM
                 return u + "/" + index + "/image.gif";
             return null;
         }
+
         public void ShowMainProgressBar()
         {
             Main.StartAnimation("ShowMainProg");
         }
+
         public void SetMainProgressBarValue(double value)
         {
             Application.Current.Dispatcher.Invoke(new Action(() =>
@@ -645,12 +684,13 @@ namespace Multiplayer.GDM
                     Utilities.Utils.HandleException(ex);
                 }
             }));
-
         }
+
         public void HideMainProgressBar()
         {
             Main.StartAnimation("ShowMainProgR");
         }
+
         public void SetMyPFP()
         {
             // string y = Utilities.TCP.GetAPIUrl("cube","","","",Globals.Paths.PlayerID.ToString(),"");
@@ -686,16 +726,17 @@ namespace Multiplayer.GDM
                     Utilities.Utils.HandleException(ex);
                 }
             }));
-
         }
+
         public void SetRoom(short room)
         {
             Application.Current.Dispatcher.Invoke(new Action(() =>
             {
                 Main.author.Text = Main.Master.GetRoom(Globals.Global_Data.Room);
-               // Main.elapsed.Text = Main.Master.GetRoom(Globals.Global_Data.Room);
+                // Main.elapsed.Text = Main.Master.GetRoom(Globals.Global_Data.Room);
             }));
         }
+
         public void SetPing(int milliseconds)
         {
             if (milliseconds > 0)
@@ -706,7 +747,9 @@ namespace Multiplayer.GDM
                     {
                         try
                         {
-                            Main.accountID.Text = Globals.Global_Data.Lang.ping.Replace("%ping%", milliseconds.ToString()); // "Ping : " + milliseconds.ToString() + "ms";
+                            Main.accountID.Text =
+                                Globals.Global_Data.Lang.ping.Replace("%ping%",
+                                    milliseconds.ToString()); // "Ping : " + milliseconds.ToString() + "ms";
                             if (milliseconds > 200)
                                 Main.accountID.Foreground = Main.redc.Background;
                             else
@@ -720,25 +763,29 @@ namespace Multiplayer.GDM
                 });
             }
         }
+
         public void SetPlayerID(int id)
         {
             SetPlayerID(id.ToString());
         }
+
         public void SetPlayerID(string id)
         {
             new Thread(() =>
             {
-
                 try
                 {
                     Properties.Settings.Default.IsVIP = Utilities.TCP.isVip(Globals.Global_Data.PlayerID.ToString());
                     Debug.WriteLine("IsVip: " + Properties.Settings.Default.IsVIP.ToString());
                     if (Properties.Settings.Default.IsVIP)
                     {
-                        string j = Utilities.TCP.ReadURL("http://95.111.251.138/gdm/isRainbow.php?id=" + Globals.Global_Data.PlayerID.ToString()).Result;
+                        string j = Utilities.TCP.ReadURL("http://95.111.251.138/gdm/isRainbow.php?id=" +
+                                                         Globals.Global_Data.PlayerID.ToString()).Result;
                         var deserializedProduct = JsonConvert.DeserializeObject<Utilities.JSON_Models.Client_Data>(j);
-                        Globals.Global_Data.Main.UserPref.ShowSelfRainbow = Convert.ToBoolean(deserializedProduct.israinbow);
-                        Globals.Global_Data.Main.UserPref.ShowSelfRainbowPastel = Convert.ToBoolean(deserializedProduct.israinbowpastel);
+                        Globals.Global_Data.Main.UserPref.ShowSelfRainbow =
+                            Convert.ToBoolean(deserializedProduct.israinbow);
+                        Globals.Global_Data.Main.UserPref.ShowSelfRainbowPastel =
+                            Convert.ToBoolean(deserializedProduct.israinbowpastel);
 
                         Color color = (Color)ColorConverter.ConvertFromString(deserializedProduct.hexcolor);
 
@@ -772,6 +819,7 @@ namespace Multiplayer.GDM
                 Main.accountID.Text = Globals.Global_Data.Lang.Accountid.Replace("%accountid%", id);
             }));
         }
+
         public void SetPing(string milliseconds)
         {
             //Application.Current.Dispatcher.Invoke(new Action(() =>
@@ -782,6 +830,7 @@ namespace Multiplayer.GDM
             //        Main.sg_ping2.Text = milliseconds;
             //}));
         }
+
         public string GetRoom(short room)
         {
             switch (room)
@@ -790,16 +839,17 @@ namespace Multiplayer.GDM
                     return "Lobby : Public";
                 default:
                     return "Lobby : " + Utilities.Converter.ToString(room);
-
             }
         }
+
         public void SetLocalPort(int milliseconds)
         {
             Application.Current.Dispatcher.Invoke(new Action(() =>
             {
-              //  Main.server_online.Text = "Local Port : " + milliseconds.ToString();
+                //  Main.server_online.Text = "Local Port : " + milliseconds.ToString();
             }));
         }
+
         public void InitializeDirectories()
         {
             if (!Directory.Exists(Globals.Paths.DataFolder))

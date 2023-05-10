@@ -52,7 +52,7 @@ namespace Multiplayer.GDM
             Globals.Global_Data.Main.settingss.Text = Globals.Global_Data.Lang.Settings;
             Globals.Global_Data.Main.settings5.Header = Globals.Global_Data.Lang.Settings;
             Globals.Global_Data.Main.windowname.Text = Globals.Global_Data.Lang.WindowName;
-            Globals.Global_Data.Main.vipkey.Text = Globals.Global_Data.Lang.VIPKey;
+            // Globals.Global_Data.Main.vipkey.Text = Globals.Global_Data.Lang.VIPKey;
             Globals.Global_Data.Main.rendercustomicons.Text = Globals.Global_Data.Lang.RenderSelfIcons;
             Globals.Global_Data.Main.renderusernames.Text = Globals.Global_Data.Lang.RenderUsernames;
             Globals.Global_Data.Main.playersopactiry1.Text = Globals.Global_Data.Lang.PlayersOpacity;
