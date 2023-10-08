@@ -18,6 +18,19 @@
 - .NET 4.6.1 framework
 > ❗ This version of .NET is used for maximum OS compatibility. More info on [.NET system requirements](https://docs.microsoft.com/en-us/dotnet/framework/get-started/system-requirements).
 
+## How To Install
+> ❗❗ THIS IS FOR WINDOWS DEFENDER ❗❗
+- Step 1. Search for Windows Security and open it
+- <img src="Repo/step1.png" alt="Windows defender thing"/>
+- Step 2. Click Virus & Threat Protection
+- <img src="Repo/step2.png" alt="virus&threatprotection"/>
+- Step 3. Click manage settings and all the way down annd then click Exclusions
+- <img src="Repo/step3.png" alt="exclusionsimg"/>
+- Step 4. Add the "Downloads" folder
+- <img src="Repo/step4.png" alt="thing"/>
+Congrats! You have now successfully installed GDM!!!!
+
+
 ## 🏗️ Compiling
 1. Make sure you have the requirements above.
 1. Clone this repository.
